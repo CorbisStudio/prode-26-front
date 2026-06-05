@@ -76,7 +76,8 @@ function getDateLabel(dateStr: string): string {
             <div class="flex items-center gap-2 glass-pill rounded-full px-3 py-1.5">
               <svg lucideFilter class="w-4 h-4 text-gris shrink-0"></svg>
               <select
-                [(ngModel)]="statusFilter"
+                [ngModel]="statusFilter()"
+                (ngModelChange)="statusFilter.set($event)"
                 class="bg-transparent border-0 text-sm text-gris focus:outline-none pr-1 cursor-pointer"
               >
                 <option value="ALL">Todos</option>
