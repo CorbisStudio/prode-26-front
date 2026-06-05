@@ -1,4 +1,4 @@
-import { format, parseISO, isToday, isTomorrow, isYesterday } from 'date-fns';
+import { format, parseISO, isToday, isTomorrow, isYesterday, differenceInMinutes } from 'date-fns';
 import { es } from 'date-fns/locale';
 
 export function getRelativeDateLabel(date: string | Date): string {
@@ -13,4 +13,14 @@ export function getRelativeDateLabel(date: string | Date): string {
 export function formatMatchTime(date: string | Date): string {
   const d = typeof date === 'string' ? parseISO(date) : date;
   return format(d, 'HH:mm', { locale: es });
+}
+
+/**
+ * Determina si aún se pueden ingresar predicciones para un partido.
+ * Las predicciones se cierran 1 hora antes del inicio.
+ */
+export function canPredict(date: string | Date): boolean {
+  const matchDate = typeof date === 'string' ? parseISO(date) : date;
+  const now = new Date();
+  return differenceInMinutes(matchDate, now) > 60;
 }

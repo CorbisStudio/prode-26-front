@@ -1,5 +1,7 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
+import confetti from 'canvas-confetti';
 import { ProdeApiService } from '../../../../core/services/prode-api.service';
+import { AuthService } from '../../../../core/services/auth.service';
 import { LucideTrophy, LucideChevronLeft, LucideChevronRight } from '@lucide/angular';
 
 const PAGE_SIZE = 20;
@@ -18,7 +20,7 @@ const PAGE_SIZE = 20;
         </div>
         <div>
           <h1 class="text-2xl font-black text-noche">Ranking Global</h1>
-          <p class="text-sm text-gris mt-0.5">¿Quién predice mejor en Corbis Studio?</p>
+          <p class="text-sm text-gris mt-0.5">¿Quién predice mejor en Corbis?</p>
         </div>
       </div>
 
@@ -137,9 +139,11 @@ const PAGE_SIZE = 20;
 })
 export class RankingPageComponent {
   private readonly api = inject(ProdeApiService);
+  private readonly auth = inject(AuthService);
 
   readonly rankingResource = this.api.getRanking();
   readonly currentPage = signal(1);
+  private readonly confettiLaunched = signal(false);
 
   readonly entries = computed(() => this.rankingResource.value() ?? []);
 
@@ -155,6 +159,49 @@ export class RankingPageComponent {
     const all = this.entries();
     return all.slice(this.startIndex(), this.endIndex());
   });
+
+  constructor() {
+    effect(() => {
+      const entries = this.entries();
+      const user = this.auth.user();
+
+      if (entries.length === 0 || !user || this.confettiLaunched()) return;
+
+      const top1 = entries.find((e) => e.position === 1);
+      if (top1 && top1.user_id === user.id) {
+        this.confettiLaunched.set(true);
+        this.launchConfetti();
+      }
+    });
+  }
+
+  private launchConfetti(): void {
+    const duration = 3000;
+    const end = Date.now() + duration;
+
+    const frame = () => {
+      confetti({
+        particleCount: 3,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0 },
+        colors: ['#FCB500', '#2563EB', '#e6e6e6'],
+      });
+      confetti({
+        particleCount: 3,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1 },
+        colors: ['#FCB500', '#2563EB', '#e6e6e6'],
+      });
+
+      if (Date.now() < end) {
+        requestAnimationFrame(frame);
+      }
+    };
+
+    frame();
+  }
 
   prevPage(): void {
     if (this.currentPage() > 1) {

@@ -1,7 +1,7 @@
 import { Component, input, computed, inject, signal } from '@angular/core';
 import { Match } from '../../../../core/models/match.model';
 import { PredictionService } from '../../../../core/services/prediction.service';
-import { getRelativeDateLabel, formatMatchTime } from '../../../../shared/utils/date.utils';
+import { getRelativeDateLabel, formatMatchTime, canPredict } from '../../../../shared/utils/date.utils';
 
 @Component({
   selector: 'app-match-card',
@@ -25,6 +25,11 @@ import { getRelativeDateLabel, formatMatchTime } from '../../../../shared/utils/
           <span class="inline-flex items-center gap-1.5 bg-red-500/10 text-red-500 text-xs font-bold px-2.5 py-1 rounded-full">
             <span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span>
             En vivo
+          </span>
+        } @else if (!predictionOpen()) {
+          <span class="inline-flex items-center gap-1.5 bg-gris/10 text-gris text-xs font-bold px-2.5 py-1 rounded-full">
+            <span class="w-1.5 h-1.5 rounded-full bg-gris"></span>
+            Cerrado
           </span>
         } @else {
           <span class="text-xs text-gris font-medium">{{ dateLabel() }} · {{ matchTime() }}</span>
@@ -50,13 +55,20 @@ import { getRelativeDateLabel, formatMatchTime } from '../../../../shared/utils/
                 {{ match().home_score ?? 0 }}&nbsp;–&nbsp;{{ match().away_score ?? 0 }}
               </div>
             </div>
+          } @else if (!predictionOpen()) {
+            <div class="glass-heavy rounded-2xl px-5 py-3 text-center">
+              <div class="text-3xl font-black text-noche tracking-tight tabular-nums">
+                {{ predictionHome() !== '' ? predictionHome() : '–' }}&nbsp;–&nbsp;{{ predictionAway() !== '' ? predictionAway() : '–' }}
+              </div>
+            </div>
+            <span class="text-[10px] text-gris/60 font-medium uppercase tracking-wider">Predicción cerrada</span>
           } @else {
             <div class="flex items-center gap-2">
               <input
                 type="number"
                 min="0"
                 [value]="predictionHome()"
-                (change)="updatePrediction($event, 'home')"
+                (input)="onInput($event, 'home')"
                 [disabled]="saving()"
                 class="glass-score-input w-14 text-center text-2xl font-black text-noche rounded-xl py-2 disabled:opacity-50"
               />
@@ -65,13 +77,21 @@ import { getRelativeDateLabel, formatMatchTime } from '../../../../shared/utils/
                 type="number"
                 min="0"
                 [value]="predictionAway()"
-                (change)="updatePrediction($event, 'away')"
+                (input)="onInput($event, 'away')"
                 [disabled]="saving()"
                 class="glass-score-input w-14 text-center text-2xl font-black text-noche rounded-xl py-2 disabled:opacity-50"
               />
             </div>
 
-            @if (hasPrediction() && !saveError()) {
+            @if (pendingSave()) {
+              <span class="inline-flex items-center gap-1.5 text-xs text-gris font-medium">
+                <svg class="animate-spin h-3 w-3 text-gris" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Guardando...
+              </span>
+            } @else if (hasPrediction() && !saveError()) {
               <span class="inline-flex items-center gap-1.5 text-xs text-cancha font-semibold">
                 <span class="w-1.5 h-1.5 rounded-full bg-cancha"></span>
                 Guardado
@@ -101,11 +121,16 @@ export class MatchCardComponent {
   readonly match = input.required<Match>();
   readonly saving = signal(false);
   readonly saveError = signal(false);
+  readonly pendingSave = signal(false);
+
+  private debounceTimer: ReturnType<typeof setTimeout> | null = null;
+  private readonly DEBOUNCE_MS = 800;
 
   readonly isFinished = computed(() => this.match().status === 'FINISHED');
   readonly isLive = computed(() => this.match().status === 'IN_PLAY' || this.match().status === 'PAUSED');
   readonly dateLabel = computed(() => getRelativeDateLabel(this.match().utc_date));
   readonly matchTime = computed(() => formatMatchTime(this.match().utc_date));
+  readonly predictionOpen = computed(() => canPredict(this.match().utc_date));
 
   readonly predictionHome = computed(() => {
     const p = this.predictions.getPrediction(this.match().id);
@@ -122,27 +147,53 @@ export class MatchCardComponent {
     return p !== undefined;
   });
 
-  async updatePrediction(event: Event, side: 'home' | 'away'): Promise<void> {
-    const value = parseInt((event.target as HTMLInputElement).value, 10);
+  onInput(event: Event, side: 'home' | 'away'): void {
+    if (!this.predictionOpen()) return;
+
+    const raw = (event.target as HTMLInputElement).value;
+    const value = raw === '' ? 0 : parseInt(raw, 10);
     if (isNaN(value) || value < 0) return;
+
+    this.pendingSave.set(true);
+    this.saveError.set(false);
+
+    if (this.debounceTimer) {
+      clearTimeout(this.debounceTimer);
+    }
+
+    this.debounceTimer = setTimeout(() => {
+      this.saveDebounced(value, side);
+    }, this.DEBOUNCE_MS);
+  }
+
+  private async saveDebounced(value: number, side: 'home' | 'away'): Promise<void> {
+    if (!this.predictionOpen()) {
+      this.pendingSave.set(false);
+      return;
+    }
 
     const current = this.predictions.getPrediction(this.match().id);
     const home = side === 'home' ? value : (current?.homeScore ?? 0);
     const away = side === 'away' ? value : (current?.awayScore ?? 0);
 
-    this.saving.set(true);
-    this.saveError.set(false);
+    if (current && current.homeScore === home && current.awayScore === away) {
+      this.pendingSave.set(false);
+      return;
+    }
 
+    this.saving.set(true);
     try {
       await this.predictions.savePrediction({
         matchId: this.match().id,
         homeScore: home,
         awayScore: away,
       });
+      this.saveError.set(false);
     } catch {
       this.saveError.set(true);
     } finally {
       this.saving.set(false);
+      this.pendingSave.set(false);
     }
   }
 }

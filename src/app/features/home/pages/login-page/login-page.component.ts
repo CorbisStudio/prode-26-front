@@ -1,13 +1,13 @@
 import { Component, signal, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../../core/services/auth.service';
-import { LucideMail, LucideLock, LucideAlertCircle } from '@lucide/angular';
+import { LucideMail, LucideLock, LucideAlertCircle, LucideArrowLeft } from '@lucide/angular';
 
 @Component({
   selector: 'app-login-page',
   standalone: true,
-  imports: [FormsModule, LucideMail, LucideLock, LucideAlertCircle],
+  imports: [FormsModule, RouterLink, LucideMail, LucideLock, LucideAlertCircle, LucideArrowLeft],
   templateUrl: './login-page.component.html',
 })
 export class LoginPageComponent {

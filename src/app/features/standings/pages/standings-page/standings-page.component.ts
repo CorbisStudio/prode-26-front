@@ -53,7 +53,7 @@ import { LucideChartColumn } from '@lucide/angular';
                       </thead>
                       <tbody>
                         @for (stats of group.table; track stats.team.id; let i = $index) {
-                          <app-standing-row [stats]="stats" [position]="i + 1" />
+                          <tr app-standing-row [stats]="stats" [position]="i + 1"></tr>
                         }
                       </tbody>
                     </table>
