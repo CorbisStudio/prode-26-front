@@ -19,6 +19,8 @@ export function calculateStandingsFromMatches(matches: Match[]): GroupStanding[]
 
     const home = match.home_team;
     const away = match.away_team;
+    if (!home || !away) continue;
+
     const homeScore = match.home_score ?? 0;
     const awayScore = match.away_score ?? 0;
 

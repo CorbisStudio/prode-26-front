@@ -29,8 +29,8 @@ export interface BackendMatch {
   stage: string;
   group: string;
   matchday: number;
-  home_team: BackendTeam;
-  away_team: BackendTeam;
+  home_team: BackendTeam | null;
+  away_team: BackendTeam | null;
   utc_date: string;
   status: BackendMatchStatus;
   home_score: number | null;

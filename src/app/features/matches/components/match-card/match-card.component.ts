@@ -42,9 +42,13 @@ import { getRelativeDateLabel, formatMatchTime, canPredict } from '../../../../s
         <!-- Home team -->
         <div class="flex-1 flex flex-col items-center gap-2">
           <div class="w-14 h-14 rounded-2xl bg-white/70 shadow-sm flex items-center justify-center p-1.5">
-            <img [src]="match().home_team.flag_url" [alt]="match().home_team.name" class="w-10 h-10 object-contain" />
+            @if (match().home_team?.flag_url) {
+              <img [src]="match().home_team!.flag_url" [alt]="match().home_team?.name ?? 'Local'" class="w-10 h-10 object-contain" />
+            } @else {
+              <span class="text-xs font-bold text-gris">?</span>
+            }
           </div>
-          <span class="text-sm font-bold text-noche text-center leading-tight">{{ match().home_team.name }}</span>
+          <span class="text-sm font-bold text-noche text-center leading-tight">{{ match().home_team?.name ?? 'Por definir' }}</span>
         </div>
 
         <!-- Score / Input -->
@@ -106,9 +110,13 @@ import { getRelativeDateLabel, formatMatchTime, canPredict } from '../../../../s
         <!-- Away team -->
         <div class="flex-1 flex flex-col items-center gap-2">
           <div class="w-14 h-14 rounded-2xl bg-white/70 shadow-sm flex items-center justify-center p-1.5">
-            <img [src]="match().away_team.flag_url" [alt]="match().away_team.name" class="w-10 h-10 object-contain" />
+            @if (match().away_team?.flag_url) {
+              <img [src]="match().away_team!.flag_url" [alt]="match().away_team?.name ?? 'Visitante'" class="w-10 h-10 object-contain" />
+            } @else {
+              <span class="text-xs font-bold text-gris">?</span>
+            }
           </div>
-          <span class="text-sm font-bold text-noche text-center leading-tight">{{ match().away_team.name }}</span>
+          <span class="text-sm font-bold text-noche text-center leading-tight">{{ match().away_team?.name ?? 'Por definir' }}</span>
         </div>
 
       </div>

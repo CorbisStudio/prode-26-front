@@ -57,9 +57,13 @@ import { LucideTrophy } from '@lucide/angular';
                           <div class="flex items-center justify-between">
                             <div class="flex items-center gap-2.5">
                               <div class="w-8 h-8 rounded-xl bg-white/70 flex items-center justify-center p-0.5 shrink-0">
-                                <img [src]="match.home_team.flag_url" class="w-6 h-6 object-contain" />
+                                @if (match.home_team?.flag_url) {
+                                  <img [src]="match.home_team!.flag_url" [alt]="match.home_team?.name ?? 'Local'" class="w-6 h-6 object-contain" />
+                                } @else {
+                                  <span class="text-[10px] font-bold text-gris">?</span>
+                                }
                               </div>
-                              <span class="text-sm font-bold text-noche">{{ match.home_team.code }}</span>
+                              <span class="text-sm font-bold text-noche">{{ match.home_team?.code ?? 'TBD' }}</span>
                             </div>
                             @if (match.status === 'FINISHED') {
                               <span class="font-black text-noche text-lg tabular-nums">{{ match.home_score ?? 0 }}</span>
@@ -73,9 +77,13 @@ import { LucideTrophy } from '@lucide/angular';
                           <div class="flex items-center justify-between">
                             <div class="flex items-center gap-2.5">
                               <div class="w-8 h-8 rounded-xl bg-white/70 flex items-center justify-center p-0.5 shrink-0">
-                                <img [src]="match.away_team.flag_url" class="w-6 h-6 object-contain" />
+                                @if (match.away_team?.flag_url) {
+                                  <img [src]="match.away_team!.flag_url" [alt]="match.away_team?.name ?? 'Visitante'" class="w-6 h-6 object-contain" />
+                                } @else {
+                                  <span class="text-[10px] font-bold text-gris">?</span>
+                                }
                               </div>
-                              <span class="text-sm font-bold text-noche">{{ match.away_team.code }}</span>
+                              <span class="text-sm font-bold text-noche">{{ match.away_team?.code ?? 'TBD' }}</span>
                             </div>
                             @if (match.status === 'FINISHED') {
                               <span class="font-black text-noche text-lg tabular-nums">{{ match.away_score ?? 0 }}</span>

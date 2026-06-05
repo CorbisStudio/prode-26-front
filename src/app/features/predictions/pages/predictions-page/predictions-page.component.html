@@ -98,7 +98,7 @@
             <div class="flex-1 flex flex-col items-center gap-2">
               @if (match?.home_team?.flag_url) {
                 <div class="w-12 h-12 rounded-2xl bg-white/70 shadow-sm flex items-center justify-center p-1">
-                  <img [src]="match!.home_team.flag_url" [alt]="match!.home_team.name" class="w-9 h-9 object-contain" />
+                  <img [src]="match!.home_team!.flag_url" [alt]="match!.home_team!.name" class="w-9 h-9 object-contain" />
                 </div>
               }
               <span class="text-sm font-bold text-noche text-center">
@@ -152,7 +152,7 @@
             <div class="flex-1 flex flex-col items-center gap-2">
               @if (match?.away_team?.flag_url) {
                 <div class="w-12 h-12 rounded-2xl bg-white/70 shadow-sm flex items-center justify-center p-1">
-                  <img [src]="match!.away_team.flag_url" [alt]="match!.away_team.name" class="w-9 h-9 object-contain" />
+                  <img [src]="match!.away_team!.flag_url" [alt]="match!.away_team!.name" class="w-9 h-9 object-contain" />
                 </div>
               }
               <span class="text-sm font-bold text-noche text-center">
