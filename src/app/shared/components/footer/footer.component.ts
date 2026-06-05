@@ -15,7 +15,6 @@ import { Component } from '@angular/core';
           <div class="flex items-center gap-2">
             <span class="text-white/25 text-xs">Un proyecto de</span>
             <span class="text-white/55 text-xs font-bold tracking-widest uppercase">Corbis</span>
-            <span class="text-white/25 text-xs">- Desarrollador por Eder</span>
           </div>
         </div>
       </div>

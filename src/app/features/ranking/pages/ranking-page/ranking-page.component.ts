@@ -176,23 +176,23 @@ export class RankingPageComponent {
   }
 
   private launchConfetti(): void {
-    const duration = 3000;
+    const duration = 5000;
     const end = Date.now() + duration;
 
     const frame = () => {
       confetti({
-        particleCount: 3,
+        particleCount: 4,
         angle: 60,
         spread: 55,
         origin: { x: 0 },
-        colors: ['#FCB500', '#2563EB', '#e6e6e6'],
+        colors: ['#FCB500', '#2563EB', '#e6e6e6', '#0000FF'],
       });
       confetti({
-        particleCount: 3,
+        particleCount: 4,
         angle: 120,
         spread: 55,
         origin: { x: 1 },
-        colors: ['#FCB500', '#2563EB', '#e6e6e6'],
+        colors: ['#FCB500', '#2563EB', '#e6e6e6', '#0000FF'],
       });
 
       if (Date.now() < end) {
