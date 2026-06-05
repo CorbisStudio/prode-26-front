@@ -14,7 +14,7 @@ const PAGE_SIZE = 20;
       <!-- Header -->
       <div class="flex items-center gap-4">
         <div class="w-12 h-12 rounded-2xl bg-dorado/12 flex items-center justify-center">
-          <svg lucideTrophy class="w-6 h-6 text-dorado"></svg>
+          <svg lucideTrophy class="w-6 h-6 text-dorado-dark"></svg>
         </div>
         <div>
           <h1 class="text-2xl font-black text-noche">Ranking Global</h1>
@@ -54,7 +54,7 @@ const PAGE_SIZE = 20;
                     >
                       <td class="py-4 px-5 text-center">
                         @if (entry.position === 1) {
-                          <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-dorado text-white text-xs font-black shadow-sm">
+                          <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-dorado text-noche text-xs font-black shadow-sm">
                             <svg lucideTrophy class="w-3.5 h-3.5"></svg>
                           </span>
                         } @else if (entry.position === 2) {

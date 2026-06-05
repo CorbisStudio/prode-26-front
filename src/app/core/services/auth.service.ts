@@ -11,6 +11,8 @@ export interface AuthUser {
   id: number;
   username: string;
   name: string;
+  first_name: string;
+  last_name: string;
   email: string;
   profile_picture_url?: string | null;
 }
@@ -34,18 +36,57 @@ export class AuthService {
     localStorage.setItem(ACCESS_KEY, tokens.access);
     localStorage.setItem(REFRESH_KEY, tokens.refresh);
 
-    const payload = this.decodeJwt(tokens.access);
+    const profile = await this.fetchProfile();
+    if (profile) {
+      this.currentUser.set(profile);
+      localStorage.setItem('prode_user_data', JSON.stringify(profile));
+    } else {
+      const payload = this.decodeJwt(tokens.access);
+      const fallbackUser: AuthUser = {
+        id: payload['user_id'] || 0,
+        username: payload['username'] || '',
+        name: payload['first_name'] || payload['username'] || '',
+        first_name: payload['first_name'] || '',
+        last_name: payload['last_name'] || '',
+        email: payload['email'] || '',
+        profile_picture_url: payload['profile_picture_url'] || null,
+      };
+      this.currentUser.set(fallbackUser);
+      localStorage.setItem('prode_user_data', JSON.stringify(fallbackUser));
+    }
+  }
 
-    const user: AuthUser = {
-      id: payload['user_id'] || 0,
-      username: payload['username'] || '',
-      name: payload['first_name'] || payload['username'] || '',
-      email: payload['email'] || '',
-      profile_picture_url: payload['profile_picture_url'] || null,
-    };
+  async fetchProfile(): Promise<AuthUser | null> {
+    const token = this.getAccessToken();
+    if (!token) return null;
 
-    this.currentUser.set(user);
-    localStorage.setItem('prode_user_data', JSON.stringify(user));
+    try {
+      const data = await firstValueFrom(
+        this.http.get<{
+          id: number;
+          username: string;
+          email: string;
+          first_name: string;
+          last_name: string;
+          is_staff: boolean;
+          profile_picture_url?: string | null;
+        }>(`${this.baseUrl}/profile/`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+      );
+
+      return {
+        id: data.id,
+        username: data.username,
+        name: data.first_name || data.username,
+        first_name: data.first_name,
+        last_name: data.last_name,
+        email: data.email,
+        profile_picture_url: data.profile_picture_url || null,
+      };
+    } catch {
+      return null;
+    }
   }
 
   logout(): void {

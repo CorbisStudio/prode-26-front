@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../../../../core/services/auth.service';
 import {
   LucideCalendar,
   LucideTarget,
@@ -47,8 +48,8 @@ import {
 
         <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
           <a
-            routerLink="/login"
-            class="btn-dorado inline-flex items-center gap-2 text-white font-bold px-8 py-3.5 rounded-full text-sm"
+            [routerLink]="isAuthenticated() ? '/partidos' : '/login'"
+            class="btn-dorado inline-flex items-center gap-2 font-bold px-8 py-3.5 rounded-full text-sm"
           >
             <svg lucideTarget class="w-4 h-4"></svg>
             Empezar a jugar
@@ -57,13 +58,15 @@ import {
             routerLink="/partidos"
             class="surface-elevated inline-flex items-center gap-2 text-noche font-semibold px-7 py-3.5 rounded-full text-sm"
           >
-            Ver el fixture
+            Ver los Partidos
             <svg lucideArrowRight class="w-4 h-4"></svg>
           </a>
         </div>
         <p class="text-xs text-gris/50 tracking-wide mt-5">Velocidad · Precisión · Resultados</p>
       </section>
 
+      <!-- Reglas del juego — Jerarquía alta -->
+    
       <!-- Mundial 2026 info -->
       <section class="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div class="surface rounded-2xl p-6 text-center">
@@ -145,6 +148,60 @@ import {
         </div>
       </section>
 
+        <section class="surface-heavy rounded-3xl p-8 sm:p-10">
+        <div class="flex items-center gap-4 mb-8">
+          <div class="w-12 h-12 rounded-xl bg-dorado-light flex items-center justify-center shrink-0">
+            <svg lucideBookOpen class="w-6 h-6 text-dorado-dark"></svg>
+          </div>
+          <div>
+            <h2 class="text-xl sm:text-xl font-black text-noche">Las Reglas del Juego</h2>
+            <p class="text-sm text-gris mt-0.5">Cómo se suman los puntos</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8">
+          <div class="surface rounded-2xl p-6 flex items-start gap-5">
+            <div class="w-12 h-12 rounded-xl bg-celeste-light flex items-center justify-center shrink-0">
+              <svg lucideShield class="w-6 h-6 text-celeste"></svg>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-3 mb-2">
+                <p class="font-black text-noche text-base">Resultado correcto</p>
+                <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-celeste text-white text-xs font-black">1</span>
+              </div>
+              <p class="text-sm text-gris leading-relaxed">
+                Acertás quién gana (o si empata), sin importar los goles exactos.
+              </p>
+              <p class="text-sm text-celeste-dark font-semibold mt-3">Ej: predecís 2-1 y termina 3-1 → <span class="text-noche">1 punto</span></p>
+            </div>
+          </div>
+
+          <div class="surface rounded-2xl p-6 flex items-start gap-5">
+            <div class="w-12 h-12 rounded-xl bg-dorado-light flex items-center justify-center shrink-0">
+              <svg lucideTarget class="w-6 h-6 text-dorado-dark"></svg>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-3 mb-2">
+                <p class="font-black text-noche text-base">Resultado exacto</p>
+                <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-dorado text-noche text-xs font-black">3</span>
+              </div>
+              <p class="text-sm text-gris leading-relaxed">
+                Acertás el marcador exacto del partido, gol por gol.
+              </p>
+              <p class="text-sm text-dorado-dark font-semibold mt-3">Ej: predecís 2-1 y termina 2-1 → <span class="text-noche">3 puntos</span></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="border-t border-slate-100 pt-6">
+          <p class="text-sm text-gris/60 leading-relaxed text-center max-w-2xl mx-auto">
+            Los puntos se acreditan automáticamente al finalizar cada partido.
+            El ranking refleja la suma total de puntos de todos los partidos jugados.
+          </p>
+        </div>
+      </section>
+
+
       <!-- Quick links -->
       <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <a
@@ -200,61 +257,10 @@ import {
         </a>
       </section>
 
-      <!-- Reglas del juego -->
-      <section class="surface rounded-2xl p-8">
-        <div class="flex items-center gap-3 mb-6">
-          <div class="w-9 h-9 rounded-lg bg-dorado-light flex items-center justify-center shrink-0">
-            <svg lucideBookOpen class="w-5 h-5 text-dorado"></svg>
-          </div>
-          <div>
-            <h2 class="text-lg font-black text-noche">Las Reglas del Juego</h2>
-            <p class="text-xs text-gris mt-0.5">Cómo se suman los puntos</p>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-          <div class="surface-heavy rounded-2xl p-5 flex items-start gap-4">
-            <div class="w-11 h-11 rounded-xl bg-celeste-light flex items-center justify-center shrink-0">
-              <svg lucideShield class="w-5 h-5 text-celeste"></svg>
-            </div>
-            <div class="flex-1">
-              <div class="flex items-center gap-2 mb-1">
-                <p class="font-black text-noche text-sm">Resultado correcto</p>
-                <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-celeste text-white text-[10px] font-black">1</span>
-              </div>
-              <p class="text-xs text-gris leading-relaxed">
-                Acertás quién gana (o si empata), sin importar los goles exactos.
-              </p>
-              <p class="text-xs text-celeste-dark font-semibold mt-2">Ej: predecís 2-1 y termina 3-1 → <span class="text-noche">1 punto</span></p>
-            </div>
-          </div>
-
-          <div class="surface-heavy rounded-2xl p-5 flex items-start gap-4">
-            <div class="w-11 h-11 rounded-xl bg-dorado-light flex items-center justify-center shrink-0">
-              <svg lucideTarget class="w-5 h-5 text-dorado"></svg>
-            </div>
-            <div class="flex-1">
-              <div class="flex items-center gap-2 mb-1">
-                <p class="font-black text-noche text-sm">Resultado exacto</p>
-                <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-dorado text-white text-[10px] font-black">3</span>
-              </div>
-              <p class="text-xs text-gris leading-relaxed">
-                Acertás el marcador exacto del partido, gol por gol.
-              </p>
-              <p class="text-xs text-dorado-dark font-semibold mt-2">Ej: predecís 2-1 y termina 2-1 → <span class="text-noche">3 puntos</span></p>
-            </div>
-          </div>
-        </div>
-
-        <div class="border-t border-slate-100 pt-5">
-          <p class="text-xs text-gris/60 leading-relaxed text-center">
-            Los puntos se acreditan automáticamente al finalizar cada partido.
-            El ranking refleja la suma total de puntos de todos los partidos jugados.
-          </p>
-        </div>
-      </section>
-
     </div>
   `,
 })
-export class HomePageComponent {}
+export class HomePageComponent {
+  private readonly auth = inject(AuthService);
+  readonly isAuthenticated = computed(() => this.auth.isAuthenticated());
+}

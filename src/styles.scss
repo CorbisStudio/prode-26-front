@@ -3,9 +3,9 @@
 @theme {
   --color-celeste: #2563EB;
   --color-celeste-light: #EFF6FF;
-  --color-celeste-dark: #1E40AF;
+  --color-celeste-dark: #007DB6;
 
-  --color-dorado: #B45309;
+  --color-dorado: #FCB500;
   --color-dorado-light: #FEF3C7;
   --color-dorado-dark: #78350F;
 
@@ -175,6 +175,7 @@ body {
 
 .btn-dorado {
   background-color: var(--color-dorado);
+  color: var(--color-noche);
   transition:
     background-color 0.2s ease,
     box-shadow 0.2s ease,
@@ -182,12 +183,12 @@ body {
 }
 
 .btn-dorado:hover:not(:disabled) {
-  background-color: var(--color-dorado-dark);
+  background-color: #E5A300;
 }
 
 .btn-dorado:active:not(:disabled) {
   transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(180, 83, 9, 0.25);
+  box-shadow: 0 2px 8px rgba(252, 181, 0, 0.35);
 }
 
 /* ─── Text Utilities ─────────────────────────────────────────────────────── */

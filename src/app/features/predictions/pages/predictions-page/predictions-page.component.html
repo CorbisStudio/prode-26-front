@@ -39,7 +39,7 @@
       <p class="text-gris/60 text-sm mb-5">Velocidad. Precisión. Resultados.</p>
       <a
         routerLink="/partidos"
-        class="inline-flex items-center gap-2 btn-dorado text-white font-semibold px-6 py-2.5 rounded-full text-sm"
+        class="inline-flex items-center gap-2 btn-dorado font-semibold px-6 py-2.5 rounded-full text-sm"
       >
         Ir a partidos
         <svg lucideArrowRight class="w-4 h-4"></svg>
@@ -70,7 +70,8 @@
             <span
               class="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold"
               [class.bg-dorado]="badge.color === 'dorado'"
-              [class.text-white]="badge.color === 'dorado' || badge.color === 'red' || badge.color === 'gris'"
+              [class.text-noche]="badge.color === 'dorado' "
+              [class.text-white]="badge.color === 'gris'"
               [class.bg-celeste]="badge.color === 'celeste'"
               [class.bg-red-500]="badge.color === 'red'"
               [class.bg-gris]="badge.color === 'gris'"
@@ -122,14 +123,14 @@
                   <div class="flex items-center justify-center gap-2">
                     <span
                       class="text-base font-bold tabular-nums"
-                      [class.text-dorado]="pred.is_exact"
+                      [class.text-dorado-dark]="pred.is_exact"
                       [class.text-celeste-dark]="!pred.is_exact && pred.points > 0"
                       [class.text-red-400]="!pred.is_exact && pred.points === 0"
                     >{{ match!.home_score ?? '-' }}</span>
                     <span class="text-gris/40">-</span>
                     <span
                       class="text-base font-bold tabular-nums"
-                      [class.text-dorado]="pred.is_exact"
+                      [class.text-dorado-dark]="pred.is_exact"
                       [class.text-celeste-dark]="!pred.is_exact && pred.points > 0"
                       [class.text-red-400]="!pred.is_exact && pred.points === 0"
                     >{{ match!.away_score ?? '-' }}</span>

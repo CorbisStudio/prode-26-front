@@ -13,7 +13,7 @@ import { LucideTrophy } from '@lucide/angular';
       <!-- Header -->
       <div class="flex items-center gap-4">
         <div class="w-12 h-12 rounded-2xl bg-dorado/12 flex items-center justify-center">
-          <svg lucideTrophy class="w-6 h-6 text-dorado"></svg>
+          <svg lucideTrophy class="w-6 h-6 text-dorado-dark"></svg>
         </div>
         <div>
           <h1 class="text-2xl font-black text-noche">Fase Eliminatoria</h1>
@@ -29,7 +29,7 @@ import { LucideTrophy } from '@lucide/angular';
           @if (rounds.length === 0) {
             <div class="glass rounded-2xl p-16 text-center">
               <div class="w-16 h-16 rounded-2xl bg-dorado/10 flex items-center justify-center mx-auto mb-4">
-                <svg lucideTrophy class="w-8 h-8 text-dorado/50"></svg>
+                <svg lucideTrophy class="w-8 h-8 text-dorado-dark/40"></svg>
               </div>
               <p class="text-gris font-medium">Los partidos de eliminatoria aún no están definidos.</p>
               <p class="text-gris/50 text-sm mt-1">Volvé cuando finalice la fase de grupos.</p>

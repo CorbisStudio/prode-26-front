@@ -13,8 +13,12 @@ export class AppComponent implements OnInit {
   private readonly predictions = inject(PredictionService);
   private readonly auth = inject(AuthService);
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     if (this.auth.isAuthenticated()) {
+      const profile = await this.auth.fetchProfile();
+      if (profile) {
+        localStorage.setItem('prode_user_data', JSON.stringify(profile));
+      }
       this.predictions.loadPredictions();
     }
   }
