@@ -1,0 +1,46 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Build output
+dist
+.angular
+
+# Git
+.git
+.gitignore
+
+# IDE
+.vscode
+.idea
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Testing
+coverage
+.nyc_output
+
+# Environment (except template/example)
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker itself
+Dockerfile*
+docker-compose*
+.dockerignore
+
+# Misc
+README.md
+*.md
+.prettierrc
+.prettierignore
+.eslint*
+.editorconfig

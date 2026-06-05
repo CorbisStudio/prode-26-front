@@ -1,0 +1,38 @@
+# =============================================================================
+# World Cup Prode - Development Compose (Hot Reload)
+# =============================================================================
+
+services:
+  frontend-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+      args:
+        NODE_VERSION: 22
+    image: world-cup-prode-frontend:dev
+    container_name: prode-frontend-dev
+    ports:
+      - "${FRONTEND_PORT:-4200}:4200"
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+    volumes:
+      # Mount source code for hot reload
+      - ./src:/app/src:ro
+      - ./public:/app/public:ro
+      # Named volume for node_modules (don't overwrite with host)
+      - node_modules:/app/node_modules
+    networks:
+      - prode-network
+    stdin_open: true
+    tty: true
+
+volumes:
+  node_modules:
+
+networks:
+  prode-network:
+    driver: bridge
+    name: prode-network

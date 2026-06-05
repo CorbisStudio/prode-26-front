@@ -1,9 +1,5 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ProdeApiService } from '../../../../core/services/prode-api.service';
-import { AuthService } from '../../../../core/services/auth.service';
-import { PredictionService } from '../../../../core/services/prediction.service';
-import { FormatDatePipe } from '../../../../shared/pipes/format-date.pipe';
 import {
   LucideCalendar,
   LucideTarget,
@@ -12,6 +8,8 @@ import {
   LucideArrowRight,
   LucideBookOpen,
   LucideShield,
+  LucideUsers,
+  LucideMapPin,
 } from '@lucide/angular';
 
 @Component({
@@ -19,7 +17,6 @@ import {
   standalone: true,
   imports: [
     RouterLink,
-    FormatDatePipe,
     LucideCalendar,
     LucideTarget,
     LucideTrophy,
@@ -27,6 +24,8 @@ import {
     LucideArrowRight,
     LucideBookOpen,
     LucideShield,
+    LucideUsers,
+    LucideMapPin,
   ],
   template: `
     <div class="space-y-10">
@@ -34,7 +33,7 @@ import {
       <!-- Hero -->
       <section class="text-center py-14 relative">
         <div class="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
-          <div class="w-[500px] h-[500px] bg-celeste/6 rounded-full blur-3xl"></div>
+          <div class="w-[600px] h-[600px] bg-celeste/6 rounded-full blur-3xl"></div>
         </div>
 
         <div class="relative">
@@ -48,110 +47,108 @@ import {
           </h1>
 
           <p class="text-lg text-gris max-w-lg mx-auto leading-relaxed mt-4">
-            El prode del Mundial que une al equipo. Demostrá que sabés más de fútbol que el resto.
+            El prode del Mundial 2026 que une al equipo. Demostrá que sabés más de fútbol que el resto.
           </p>
 
-          @if (!isAuthenticated()) {
-            <div class="mt-9 flex flex-col items-center gap-3">
-              <a
-                routerLink="/login"
-                class="btn-dorado inline-flex items-center gap-2 text-white font-bold px-9 py-4 rounded-full text-base"
-              >
-                <svg lucideTarget class="w-5 h-5"></svg>
-                Empezar a jugar
-              </a>
-              <p class="text-xs text-gris/60 tracking-wide">Velocidad · Precisión · Resultados</p>
-            </div>
-          }
+          <div class="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
+            <a
+              routerLink="/login"
+              class="btn-dorado inline-flex items-center gap-2 text-white font-bold px-9 py-4 rounded-full text-base"
+            >
+              <svg lucideTarget class="w-5 h-5"></svg>
+              Empezar a jugar
+            </a>
+            <a
+              routerLink="/partidos"
+              class="glass glass-interactive inline-flex items-center gap-2 text-noche font-semibold px-7 py-4 rounded-full text-sm"
+            >
+              Ver el fixture
+              <svg lucideArrowRight class="w-4 h-4"></svg>
+            </a>
+          </div>
+          <p class="text-xs text-gris/60 tracking-wide mt-4">Velocidad · Precisión · Resultados</p>
         </div>
       </section>
 
-      <!-- Stats (authenticated) -->
-      @if (isAuthenticated()) {
-        <section class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div class="glass rounded-2xl p-6">
-            <div class="flex items-center gap-3 mb-3">
-              <div class="w-10 h-10 rounded-xl bg-noche/8 flex items-center justify-center">
-                <svg lucideTarget class="w-5 h-5 text-noche"></svg>
-              </div>
-              <span class="text-sm text-gris font-medium">Tus predicciones</span>
-            </div>
-            <p class="text-4xl font-black text-noche">{{ predictionsCount() }}</p>
+      <!-- Mundial 2026 info -->
+      <section class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="glass rounded-2xl p-6 text-center">
+          <div class="w-12 h-12 rounded-2xl bg-celeste/10 flex items-center justify-center mx-auto mb-3">
+            <svg lucideMapPin class="w-6 h-6 text-celeste-dark"></svg>
           </div>
-
-          <div class="glass rounded-2xl p-6">
-            <div class="flex items-center gap-3 mb-3">
-              <div class="w-10 h-10 rounded-xl bg-dorado/10 flex items-center justify-center">
-                <svg lucideTrophy class="w-5 h-5 text-dorado"></svg>
-              </div>
-              <span class="text-sm text-gris font-medium">Puntos totales</span>
-            </div>
-            <p class="text-4xl font-black text-noche">{{ userPoints() }}</p>
-          </div>
-
-          <div class="glass rounded-2xl p-6">
-            <div class="flex items-center gap-3 mb-3">
-              <div class="w-10 h-10 rounded-xl bg-cancha/10 flex items-center justify-center">
-                <svg lucideCalendar class="w-5 h-5 text-cancha"></svg>
-              </div>
-              <span class="text-sm text-gris font-medium">Próximos partidos</span>
-            </div>
-            <p class="text-4xl font-black text-noche">{{ upcomingMatchesCount() }}</p>
-          </div>
-        </section>
-      }
-
-      <!-- Upcoming matches preview -->
-      <section>
-        <div class="flex items-center justify-between mb-5">
-          <h2 class="text-xl font-bold text-noche">Próximos partidos</h2>
-          <a
-            routerLink="/partidos"
-            class="flex items-center gap-1 text-sm text-celeste-dark font-medium hover:gap-2 transition-all duration-200"
-          >
-            Ver todos
-            <svg lucideArrowRight class="w-4 h-4"></svg>
-          </a>
+          <p class="text-2xl font-black text-noche">USA · CAN · MEX</p>
+          <p class="text-xs text-gris mt-1 font-medium">Sedes del Mundial 2026</p>
         </div>
 
-        @if (matchesResource.isLoading()) {
-          <div class="glass rounded-2xl p-10 text-center text-gris">Cargando partidos...</div>
-        } @else if (matchesResource.error()) {
-          <div class="glass rounded-2xl p-10 text-center text-red-500">Error al cargar los partidos</div>
-        } @else {
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            @for (match of upcomingMatches(); track match.id) {
-              <article class="glass glass-interactive rounded-2xl p-5">
-                <div class="text-xs text-gris/70 font-medium mb-4 uppercase tracking-wide">
-                  {{ match.utc_date | formatDate:'PPP p' }}
-                </div>
-                <div class="flex items-center justify-between gap-3">
-                  <div class="flex flex-col items-center gap-2 flex-1">
-                    <div class="w-12 h-12 rounded-2xl bg-white/70 shadow-sm flex items-center justify-center p-1">
-                      <img [src]="match.home_team.flag_url" [alt]="match.home_team.name" class="w-9 h-9 object-contain" />
-                    </div>
-                    <span class="text-sm font-bold text-noche text-center">{{ match.home_team.code }}</span>
-                  </div>
-
-                  <div class="flex flex-col items-center gap-1">
-                    <span class="text-xs font-bold text-gris/50 tracking-widest uppercase">vs</span>
-                  </div>
-
-                  <div class="flex flex-col items-center gap-2 flex-1">
-                    <div class="w-12 h-12 rounded-2xl bg-white/70 shadow-sm flex items-center justify-center p-1">
-                      <img [src]="match.away_team.flag_url" [alt]="match.away_team.name" class="w-9 h-9 object-contain" />
-                    </div>
-                    <span class="text-sm font-bold text-noche text-center">{{ match.away_team.code }}</span>
-                  </div>
-                </div>
-              </article>
-            } @empty {
-              <div class="col-span-full glass rounded-2xl p-10 text-center text-gris">
-                No hay partidos programados próximamente.
-              </div>
-            }
+        <div class="glass rounded-2xl p-6 text-center">
+          <div class="w-12 h-12 rounded-2xl bg-dorado/10 flex items-center justify-center mx-auto mb-3">
+            <svg lucideTrophy class="w-6 h-6 text-dorado"></svg>
           </div>
-        }
+          <p class="text-2xl font-black text-noche">48 equipos</p>
+          <p class="text-xs text-gris mt-1 font-medium">Primer Mundial expandido</p>
+        </div>
+
+        <div class="glass rounded-2xl p-6 text-center">
+          <div class="w-12 h-12 rounded-2xl bg-cancha/10 flex items-center justify-center mx-auto mb-3">
+            <svg lucideCalendar class="w-6 h-6 text-cancha"></svg>
+          </div>
+          <p class="text-2xl font-black text-noche">104 partidos</p>
+          <p class="text-xs text-gris mt-1 font-medium">Para predecir y ganar</p>
+        </div>
+      </section>
+
+      <!-- Features -->
+      <section>
+        <h2 class="text-xl font-bold text-noche mb-5">¿Cómo funciona?</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="glass rounded-2xl p-6 flex items-start gap-4">
+            <div class="w-11 h-11 rounded-xl bg-celeste/10 flex items-center justify-center shrink-0">
+              <svg lucideTarget class="w-5 h-5 text-celeste-dark"></svg>
+            </div>
+            <div>
+              <p class="font-bold text-noche text-sm mb-1">Predecí cada partido</p>
+              <p class="text-xs text-gris leading-relaxed">
+                Antes de que empiece cada partido, ingresá tu pronóstico con el marcador exacto que creés que va a terminar.
+              </p>
+            </div>
+          </div>
+
+          <div class="glass rounded-2xl p-6 flex items-start gap-4">
+            <div class="w-11 h-11 rounded-xl bg-dorado/10 flex items-center justify-center shrink-0">
+              <svg lucideTrophy class="w-5 h-5 text-dorado"></svg>
+            </div>
+            <div>
+              <p class="font-bold text-noche text-sm mb-1">Sumá puntos automáticamente</p>
+              <p class="text-xs text-gris leading-relaxed">
+                Al finalizar cada partido, los puntos se acreditan solos. Acertar el resultado te da 1 punto; el marcador exacto, 3 puntos.
+              </p>
+            </div>
+          </div>
+
+          <div class="glass rounded-2xl p-6 flex items-start gap-4">
+            <div class="w-11 h-11 rounded-xl bg-cancha/10 flex items-center justify-center shrink-0">
+              <svg lucideChartColumn class="w-5 h-5 text-cancha"></svg>
+            </div>
+            <div>
+              <p class="font-bold text-noche text-sm mb-1">Seguí la tabla de posiciones</p>
+              <p class="text-xs text-gris leading-relaxed">
+                Mirá cómo va cada grupo del Mundial en tiempo real y planificá mejor tus próximas predicciones.
+              </p>
+            </div>
+          </div>
+
+          <div class="glass rounded-2xl p-6 flex items-start gap-4">
+            <div class="w-11 h-11 rounded-xl bg-dorado/10 flex items-center justify-center shrink-0">
+              <svg lucideUsers class="w-5 h-5 text-dorado"></svg>
+            </div>
+            <div>
+              <p class="font-bold text-noche text-sm mb-1">Competí contra el equipo</p>
+              <p class="text-xs text-gris leading-relaxed">
+                El ranking muestra a todos los participantes. ¿Quién domina el prode de Corbis Studio este Mundial?
+              </p>
+            </div>
+          </div>
+        </div>
       </section>
 
       <!-- Quick links -->
@@ -222,7 +219,6 @@ import {
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-          <!-- Regla 1: Ganador -->
           <div class="glass-heavy rounded-2xl p-5 flex items-start gap-4">
             <div class="w-12 h-12 rounded-2xl bg-celeste/12 flex items-center justify-center shrink-0">
               <svg lucideShield class="w-6 h-6 text-celeste-dark"></svg>
@@ -239,7 +235,6 @@ import {
             </div>
           </div>
 
-          <!-- Regla 2: Exacto -->
           <div class="glass-heavy rounded-2xl p-5 flex items-start gap-4">
             <div class="w-12 h-12 rounded-2xl bg-dorado/12 flex items-center justify-center shrink-0">
               <svg lucideTarget class="w-6 h-6 text-dorado"></svg>
@@ -268,20 +263,4 @@ import {
     </div>
   `,
 })
-export class HomePageComponent {
-  private readonly api = inject(ProdeApiService);
-  private readonly auth = inject(AuthService);
-  private readonly predictions = inject(PredictionService);
-
-  readonly matchesResource = this.api.getMatches(undefined, undefined, 'SCHEDULED');
-  readonly isAuthenticated = this.auth.isAuthenticated;
-
-  readonly upcomingMatches = computed(() => {
-    const matches = this.matchesResource.value() ?? [];
-    return matches.slice(0, 6);
-  });
-
-  readonly upcomingMatchesCount = computed(() => this.upcomingMatches().length);
-  readonly predictionsCount = computed(() => this.predictions.allPredictions().length);
-  readonly userPoints = computed(() => 0);
-}
+export class HomePageComponent {}

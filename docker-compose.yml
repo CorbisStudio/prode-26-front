@@ -1,0 +1,33 @@
+# =============================================================================
+# World Cup Prode - Production Compose
+# =============================================================================
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+      args:
+        NODE_VERSION: 22
+        NGINX_VERSION: alpine
+    image: world-cup-prode-frontend:${IMAGE_TAG:-latest}
+    container_name: prode-frontend
+    restart: unless-stopped
+    ports:
+      - "${FRONTEND_PORT:-4200}:4200"
+    environment:
+      - NODE_ENV=production
+    networks:
+      - prode-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4200/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+networks:
+  prode-network:
+    driver: bridge
+    name: prode-network
