@@ -1,0 +1,85 @@
+import { Injectable, signal, computed, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
+import { TokenPair } from '../models/backend.model';
+
+const ACCESS_KEY = 'prode_access_token';
+const REFRESH_KEY = 'prode_refresh_token';
+
+export interface AuthUser {
+  id: number;
+  username: string;
+  name: string;
+  email: string;
+  profile_picture_url?: string | null;
+}
+
+@Injectable({ providedIn: 'root' })
+export class AuthService {
+  private readonly http = inject(HttpClient);
+  private readonly router = inject(Router);
+  private readonly baseUrl = 'https://prode.vera-demo.site/api';
+
+  private readonly currentUser = signal<AuthUser | null>(this.loadUser());
+
+  readonly user = computed(() => this.currentUser());
+  readonly isAuthenticated = computed(() => this.currentUser() !== null);
+
+  async login(email: string, password: string): Promise<void> {
+    const tokens = await firstValueFrom(
+      this.http.post<TokenPair>(`${this.baseUrl}/token/`, { email, password })
+    );
+
+    localStorage.setItem(ACCESS_KEY, tokens.access);
+    localStorage.setItem(REFRESH_KEY, tokens.refresh);
+
+    const payload = this.decodeJwt(tokens.access);
+
+    const user: AuthUser = {
+      id: payload['user_id'] || 0,
+      username: payload['username'] || '',
+      name: payload['first_name'] || payload['username'] || '',
+      email: payload['email'] || '',
+      profile_picture_url: payload['profile_picture_url'] || null,
+    };
+
+    this.currentUser.set(user);
+    localStorage.setItem('prode_user_data', JSON.stringify(user));
+  }
+
+  logout(): void {
+    this.currentUser.set(null);
+    localStorage.removeItem(ACCESS_KEY);
+    localStorage.removeItem(REFRESH_KEY);
+    localStorage.removeItem('prode_user_data');
+    this.router.navigate(['/login']);
+  }
+
+  getAccessToken(): string | null {
+    return localStorage.getItem(ACCESS_KEY);
+  }
+
+  getRefreshToken(): string | null {
+    return localStorage.getItem(REFRESH_KEY);
+  }
+
+  private loadUser(): AuthUser | null {
+    try {
+      const raw = localStorage.getItem('prode_user_data');
+      return raw ? (JSON.parse(raw) as AuthUser) : null;
+    } catch {
+      return null;
+    }
+  }
+
+  private decodeJwt(token: string): Record<string, any> {
+    try {
+      const base64 = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+      const json = atob(base64);
+      return JSON.parse(json) as Record<string, any>;
+    } catch {
+      return {};
+    }
+  }
+}

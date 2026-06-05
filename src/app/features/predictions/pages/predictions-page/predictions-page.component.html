@@ -1,0 +1,178 @@
+<div class="space-y-6">
+
+  <!-- Header -->
+  <div class="flex items-center justify-between">
+    <div class="flex items-center gap-4">
+      <div class="w-12 h-12 rounded-2xl bg-noche/8 flex items-center justify-center">
+        <svg lucideTarget class="w-6 h-6 text-noche"></svg>
+      </div>
+      <div>
+        <h1 class="text-2xl font-black text-noche">Mis Predicciones</h1>
+        <p class="text-sm text-gris mt-0.5">Tus pronósticos del Mundial</p>
+      </div>
+    </div>
+
+    @if (rows().length > 0) {
+      <div class="glass-pill rounded-full px-4 py-2 text-sm font-semibold text-noche">
+        {{ totalPoints() }} pts
+      </div>
+    }
+  </div>
+
+  <!-- Loading -->
+  @if (predictionsResource.isLoading() || matchesResource.isLoading()) {
+    <div class="glass rounded-2xl p-16 text-center text-gris">Cargando predicciones...</div>
+
+  <!-- Error -->
+  } @else if (predictionsResource.error()) {
+    <div class="glass rounded-2xl p-16 text-center text-red-500">
+      Error al cargar las predicciones.
+    </div>
+
+  <!-- Empty -->
+  } @else if (rows().length === 0) {
+    <div class="glass rounded-2xl p-12 text-center">
+      <div class="w-16 h-16 rounded-2xl bg-gris/8 flex items-center justify-center mx-auto mb-4">
+        <svg lucideCircleAlert class="w-8 h-8 text-gris"></svg>
+      </div>
+      <p class="text-gris font-medium mb-1">Sin predicciones todavía</p>
+      <p class="text-gris/60 text-sm mb-5">Velocidad. Precisión. Resultados.</p>
+      <a
+        routerLink="/partidos"
+        class="inline-flex items-center gap-2 btn-dorado text-white font-semibold px-6 py-2.5 rounded-full text-sm"
+      >
+        Ir a partidos
+        <svg lucideArrowRight class="w-4 h-4"></svg>
+      </a>
+    </div>
+
+  <!-- List -->
+  } @else {
+    <div class="space-y-3">
+      @for (row of rows(); track row.prediction.id) {
+        @let pred = row.prediction;
+        @let match = row.match;
+        @let badge = getBadge(pred, match);
+
+        <article class="glass rounded-2xl p-5">
+
+          <!-- Top: date + badge -->
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs text-gris/70 font-medium">
+              @if (match) {
+                {{ dateLabel(match.utc_date) }} · {{ timeLabel(match.utc_date) }}
+              } @else {
+                Partido #{{ pred.match }}
+              }
+            </span>
+
+            <!-- Points badge -->
+            <span
+              class="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold"
+              [class.bg-dorado]="badge.color === 'dorado'"
+              [class.text-white]="badge.color === 'dorado' || badge.color === 'red' || badge.color === 'gris'"
+              [class.bg-celeste]="badge.color === 'celeste'"
+              [class.bg-red-500]="badge.color === 'red'"
+              [class.bg-gris]="badge.color === 'gris'"
+              [class.bg-opacity-15]="badge.color === 'gris'"
+              [class.text-gris]="badge.color === 'gris'"
+            >
+              @if (badge.icon === 'target') {
+                <svg lucideTarget class="w-3.5 h-3.5"></svg>
+              } @else if (badge.icon === 'shield') {
+                <svg lucideShield class="w-3.5 h-3.5"></svg>
+              } @else if (badge.icon === 'clock') {
+                <svg lucideClock class="w-3.5 h-3.5"></svg>
+              } @else if (badge.icon === 'x') {
+                <svg lucideX class="w-3.5 h-3.5"></svg>
+              }
+              {{ badge.label }}
+            </span>
+          </div>
+
+          <!-- Teams + scores -->
+          <div class="flex items-center gap-3">
+
+            <!-- Home team -->
+            <div class="flex-1 flex flex-col items-center gap-2">
+              @if (match?.home_team?.flag_url) {
+                <div class="w-12 h-12 rounded-2xl bg-white/70 shadow-sm flex items-center justify-center p-1">
+                  <img [src]="match!.home_team.flag_url" [alt]="match!.home_team.name" class="w-9 h-9 object-contain" />
+                </div>
+              }
+              <span class="text-sm font-bold text-noche text-center">
+                {{ match?.home_team?.code ?? '???' }}
+              </span>
+            </div>
+
+            <!-- Scores center -->
+            <div class="flex flex-col items-center gap-2 min-w-[96px]">
+
+              <!-- Prediction -->
+              <div class="flex items-center gap-2">
+                <span class="text-2xl font-black text-noche tabular-nums">{{ pred.home_score }}</span>
+                <span class="text-lg text-gris/40 font-bold">-</span>
+                <span class="text-2xl font-black text-noche tabular-nums">{{ pred.away_score }}</span>
+              </div>
+              <span class="text-[10px] text-gris/60 uppercase tracking-wider font-semibold">Tu predicción</span>
+
+              <!-- Actual result (only if finished) -->
+              @if (match?.status === 'FINISHED') {
+                <div class="border-t border-white/30 pt-2 mt-1 w-full text-center">
+                  <div class="flex items-center justify-center gap-2">
+                    <span
+                      class="text-base font-bold tabular-nums"
+                      [class.text-dorado]="pred.is_exact"
+                      [class.text-celeste-dark]="!pred.is_exact && pred.points > 0"
+                      [class.text-red-400]="!pred.is_exact && pred.points === 0"
+                    >{{ match!.home_score ?? '-' }}</span>
+                    <span class="text-gris/40">-</span>
+                    <span
+                      class="text-base font-bold tabular-nums"
+                      [class.text-dorado]="pred.is_exact"
+                      [class.text-celeste-dark]="!pred.is_exact && pred.points > 0"
+                      [class.text-red-400]="!pred.is_exact && pred.points === 0"
+                    >{{ match!.away_score ?? '-' }}</span>
+                  </div>
+                  <span class="text-[10px] text-gris/60 uppercase tracking-wider font-semibold">Resultado</span>
+                </div>
+              } @else if (match?.status === 'IN_PLAY' || match?.status === 'PAUSED') {
+                <div class="border-t border-white/30 pt-2 mt-1 w-full text-center">
+                  <div class="flex items-center justify-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span>
+                    <span class="text-xs font-semibold text-red-500">En vivo</span>
+                  </div>
+                </div>
+              }
+
+            </div>
+
+            <!-- Away team -->
+            <div class="flex-1 flex flex-col items-center gap-2">
+              @if (match?.away_team?.flag_url) {
+                <div class="w-12 h-12 rounded-2xl bg-white/70 shadow-sm flex items-center justify-center p-1">
+                  <img [src]="match!.away_team.flag_url" [alt]="match!.away_team.name" class="w-9 h-9 object-contain" />
+                </div>
+              }
+              <span class="text-sm font-bold text-noche text-center">
+                {{ match?.away_team?.code ?? '???' }}
+              </span>
+            </div>
+
+          </div>
+
+          <!-- Stage / Group footer -->
+          @if (match) {
+            <div class="mt-4 pt-3 border-t border-white/20 flex items-center gap-2">
+              <span class="text-[11px] text-gris/50 font-medium uppercase tracking-wide">
+                {{ match.group || match.stage }}
+              </span>
+            </div>
+          }
+
+        </article>
+      }
+    </div>
+  }
+
+</div>

@@ -1,0 +1,48 @@
+{
+  "name": "world-cup-prode",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "ng lint",
+    "format": "prettier --write ."
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/common": "^20.3.24",
+    "@angular/compiler": "^20.3.24",
+    "@angular/core": "^20.3.24",
+    "@angular/forms": "^20.3.24",
+    "@angular/platform-browser": "^20.3.24",
+    "@angular/platform-browser-dynamic": "^20.3.24",
+    "@angular/router": "^20.3.24",
+    "@lucide/angular": "^1.17.0",
+    "date-fns": "^4.1.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@analogjs/vite-plugin-angular": "^1.14.1",
+    "@analogjs/vitest-angular": "^1.14.1",
+    "@angular-devkit/build-angular": "^20.3.25",
+    "@angular/cli": "^20.3.25",
+    "@angular/compiler-cli": "^20.3.24",
+    "@eslint/js": "^9.23.0",
+    "@tailwindcss/postcss": "^4.3.0",
+    "angular-eslint": "^19.3.0",
+    "eslint": "^9.23.0",
+    "globals": "^16.0.0",
+    "jiti": "^2.4.2",
+    "jsdom": "^26.0.0",
+    "postcss": "^8.5.15",
+    "prettier": "^3.5.3",
+    "tailwindcss": "^4.1.0",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.29.0",
+    "vitest": "^3.1.1"
+  }
+}
