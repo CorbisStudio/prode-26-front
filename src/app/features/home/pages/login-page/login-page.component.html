@@ -1,25 +1,18 @@
-<div class="min-h-screen flex items-center justify-center p-4 sm:p-8 relative">
-  <!-- Ambient blobs -->
-  <div class="absolute inset-0 overflow-hidden pointer-events-none">
-    <div class="absolute top-1/4 left-[10%] w-72 h-72 bg-celeste/12 rounded-full blur-3xl"></div>
-    <div class="absolute bottom-1/4 right-[10%] w-80 h-80 bg-dorado/9 rounded-full blur-3xl"></div>
-    <div class="absolute top-3/4 left-1/2 -translate-x-1/2 w-60 h-60 bg-cancha/6 rounded-full blur-3xl"></div>
-  </div>
-
-  <div class="glass-heavy rounded-3xl overflow-hidden max-w-5xl w-full grid grid-cols-1 lg:grid-cols-2 relative shadow-2xl">
+<div class="min-h-screen flex items-center justify-center p-4 sm:p-8">
+  <div class="surface-heavy rounded-3xl overflow-hidden max-w-5xl w-full grid grid-cols-1 lg:grid-cols-2">
 
     <!-- Left: Form -->
     <div class="p-8 sm:p-12 lg:p-14 flex flex-col justify-center">
       <div class="mb-8">
-        <img src="/img/logo-azul.png" alt="Prode Mundial" class="h-16 w-100 object-contain mb-8" />
-        <h1 class="text-3xl sm:text-4xl font-black text-noche mb-2 tracking-tight leading-tight">
+        <img src="/img/logo-azul.png" alt="Prode Mundial" class="h-14 w-auto object-contain mb-6" />
+        <h1 class="text-2xl sm:text-3xl font-black text-noche mb-2 tracking-tight leading-tight">
           Bienvenido al Prode<br />de los Corbisters
         </h1>
-        <p class="text-gris text-base leading-relaxed">Ingresá y demostrá que sabés más de fútbol.</p>
+        <p class="text-gris text-sm leading-relaxed">Ingresá y demostrá que sabés más de fútbol.</p>
       </div>
 
       @if (error()) {
-        <div class="mb-6 flex items-center gap-3 text-red-600 bg-red-50/80 border border-red-100 rounded-2xl px-4 py-3.5 text-sm">
+        <div class="mb-6 flex items-center gap-3 text-red-700 bg-red-50 border border-red-100 rounded-xl px-4 py-3 text-sm">
           <svg lucideAlertCircle class="w-5 h-5 shrink-0"></svg>
           <span>{{ error() }}</span>
         </div>
@@ -36,7 +29,7 @@
               name="email"
               required
               autocomplete="email"
-              class="glass-input w-full pl-11 pr-4 py-3.5 rounded-2xl text-noche placeholder:text-gris/55 outline-none"
+              class="glass-input w-full pl-11 pr-4 py-3 rounded-xl text-noche placeholder:text-gris/50 outline-none text-sm"
               placeholder="tu@corbisstudio.com"
             />
           </div>
@@ -52,7 +45,7 @@
               name="password"
               required
               autocomplete="current-password"
-              class="glass-input w-full pl-11 pr-4 py-3.5 rounded-2xl text-noche placeholder:text-gris/55 outline-none"
+              class="glass-input w-full pl-11 pr-4 py-3 rounded-xl text-noche placeholder:text-gris/50 outline-none text-sm"
               placeholder="••••••••"
             />
           </div>
@@ -61,7 +54,7 @@
         <button
           type="submit"
           [disabled]="loading() || !email().trim() || !password().trim()"
-          class="btn-dorado w-full disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-3.5 rounded-full mt-2"
+          class="btn-dorado w-full disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-3 rounded-full mt-2 text-sm"
         >
           @if (loading()) {
             <span class="inline-flex items-center justify-center gap-2">
@@ -83,15 +76,15 @@
     </div>
 
     <!-- Right: Image -->
-    <div class="hidden lg:block relative">
-      <img src="/img/imagen-login.png" alt="Mundial" class="absolute inset-0 w-full h-full object-cover" />
-      <div class="absolute inset-0 bg-gradient-to-t from-noche/75 via-noche/15 to-transparent"></div>
+    <div class="hidden lg:block relative bg-noche">
+      <img src="/img/imagen-login.png" alt="Mundial" class="absolute inset-0 w-full h-full object-cover opacity-90" />
+      <div class="absolute inset-0 bg-gradient-to-t from-noche via-noche/30 to-transparent"></div>
       <div class="absolute bottom-10 left-10 right-10">
-        <p class="text-white font-black text-4xl leading-tight tracking-tight">
+        <p class="text-white font-black text-3xl leading-tight tracking-tight">
           Predecí.<br />Competí.<br />
           <span class="text-dorado">Dominá.</span>
         </p>
-        <p class="text-white/55 text-sm mt-3 leading-relaxed">
+        <p class="text-white/50 text-sm mt-3 leading-relaxed">
           El prode que une al equipo.<br />¿Quién sabe más de fútbol?
         </p>
       </div>
