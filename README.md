@@ -1,5 +1,6 @@
 # Prode del Mundial
 
+
 Aplicación de pronósticos (prode) para el Mundial de Fútbol, construida con Angular 20 y el ecosistema moderno de la plataforma web.
 
 ## Stack Tecnológico
