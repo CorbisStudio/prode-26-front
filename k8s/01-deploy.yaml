@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prode-front
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      role: prode-front
+  template:
+    metadata:
+      labels:
+        role: prode-front
+    spec:
+      containers:
+      - name: prode-front
+        image: 714022400124.dkr.ecr.us-west-2.amazonaws.com/prode-front:latest
+        ports:
+        - containerPort: 80
