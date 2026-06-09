@@ -54,18 +54,24 @@ import { getRelativeDateLabel, formatMatchTime, canPredict } from '../../../../s
         <!-- Score / Input -->
         <div class="flex flex-col items-center gap-2 min-w-[112px]">
           @if (isFinished()) {
-            <div class="glass-heavy rounded-2xl px-5 py-3 text-center">
-              <div class="text-3xl font-black text-noche tracking-tight tabular-nums">
-                {{ match().home_score ?? 0 }}&nbsp;–&nbsp;{{ match().away_score ?? 0 }}
+            <div class="flex flex-col items-center gap-1.5">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-cancha">Resultado final</span>
+              <div class="glass-heavy rounded-2xl px-5 py-3 text-center ring-1 ring-cancha/25">
+                <div class="text-3xl font-black text-noche tracking-tight tabular-nums">
+                  {{ match().home_score ?? 0 }}&nbsp;–&nbsp;{{ match().away_score ?? 0 }}
+                </div>
               </div>
             </div>
           } @else if (!predictionOpen()) {
-            <div class="glass-heavy rounded-2xl px-5 py-3 text-center">
-              <div class="text-3xl font-black text-noche tracking-tight tabular-nums">
-                {{ predictionHome() !== '' ? predictionHome() : '–' }}&nbsp;–&nbsp;{{ predictionAway() !== '' ? predictionAway() : '–' }}
+            <div class="flex flex-col items-center gap-1.5">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-gris/50">Tu predicción</span>
+              <div class="glass-heavy rounded-2xl px-5 py-3 text-center">
+                <div class="text-3xl font-black text-noche tracking-tight tabular-nums">
+                  {{ predictionHome() !== '' ? predictionHome() : '–' }}&nbsp;–&nbsp;{{ predictionAway() !== '' ? predictionAway() : '–' }}
+                </div>
               </div>
+              <span class="text-[10px] text-gris/50 font-medium uppercase tracking-wider">Predicción cerrada</span>
             </div>
-            <span class="text-[10px] text-gris/60 font-medium uppercase tracking-wider">Predicción cerrada</span>
           } @else {
             <div class="flex items-center gap-2">
               <input
