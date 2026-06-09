@@ -45,7 +45,7 @@ import {
         </h1>
 
         <p class="text-lg text-gris max-w-lg mx-auto leading-relaxed">
-          El prode del Mundial 2026 que une al equipo. Demostrá que sabés más de fútbol que el resto.
+          El prode del Mundial 2026 que une al equipo. Demostrá lo que sabés (o no) de fútbol y divertite
         </p>
 
         <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -90,7 +90,7 @@ import {
                 <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-celeste text-white text-xs font-black">1</span>
               </div>
               <p class="text-sm text-gris leading-relaxed">
-                Acertás quién gana (o si empata), sin importar los goles exactos.
+                Acertás quién gana (o si empatan), sin importar el resultado exacto.
               </p>
               <p class="text-sm text-celeste-dark font-semibold mt-3">Ej: predecís 2-1 y termina 3-1 → <span class="text-noche">1 punto</span></p>
             </div>
@@ -211,7 +211,7 @@ import {
             <div>
               <p class="font-bold text-noche text-sm mb-1">Competí contra el equipo</p>
               <p class="text-xs text-gris leading-relaxed">
-                El ranking muestra a todos los participantes. ¿Quién domina el prode de Corbis Studio este Mundial?
+                El ranking muestra a todos los participantes. ¿Quién domina el Prode de Corbis este Mundial?
               </p>
             </div>
           </div>
