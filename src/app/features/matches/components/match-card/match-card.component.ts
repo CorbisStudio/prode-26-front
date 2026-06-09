@@ -19,7 +19,7 @@ import { getRelativeDateLabel, formatMatchTime, canPredict } from '../../../../s
         @if (isFinished()) {
           <span class="inline-flex items-center gap-1.5 bg-cancha/12 text-cancha text-xs font-bold px-2.5 py-1 rounded-full">
             <span class="w-1.5 h-1.5 rounded-full bg-cancha"></span>
-            Final
+            Finalizado
           </span>
         } @else if (isLive()) {
           <span class="inline-flex items-center gap-1.5 bg-red-500/10 text-red-500 text-xs font-bold px-2.5 py-1 rounded-full">
