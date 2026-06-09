@@ -28,10 +28,11 @@
 
       <form (ngSubmit)="onSubmit()" class="space-y-4">
         <div>
-          <label class="block text-sm font-semibold text-noche mb-2">Email</label>
+          <label for="login-email" class="block text-sm font-semibold text-noche mb-2">Email</label>
           <div class="relative">
             <svg lucideMail class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gris pointer-events-none"></svg>
             <input
+              id="login-email"
               type="email"
               [(ngModel)]="email"
               name="email"
@@ -44,10 +45,11 @@
         </div>
 
         <div>
-          <label class="block text-sm font-semibold text-noche mb-2">Contraseña</label>
+          <label for="login-password" class="block text-sm font-semibold text-noche mb-2">Contraseña</label>
           <div class="relative">
             <svg lucideLock class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gris pointer-events-none"></svg>
             <input
+              id="login-password"
               type="password"
               [(ngModel)]="password"
               name="password"
@@ -79,7 +81,7 @@
       </form>
 
       <p class="mt-8 text-xs text-gris/50 text-center tracking-wide">
-        Un proyecto de <span class="font-semibold text-gris/70">Corbis Studio</span> · Build everything better
+        Un proyecto de <span class="font-semibold text-gris/70">Corbis</span> · Build everything better
       </p>
     </div>
 

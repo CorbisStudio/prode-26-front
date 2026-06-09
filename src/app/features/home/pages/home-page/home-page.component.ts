@@ -131,8 +131,8 @@ import {
 
         <div class="border-t border-slate-100 pt-6">
           <p class="text-sm text-gris/60 leading-relaxed text-center max-w-2xl mx-auto">
-            Los puntos se acreditan automáticamente al finalizar cada partido.
-            El ranking refleja la suma total de puntos de todos los partidos jugados.
+            Los puntos se acreditan automáticamente al finalizar el dia.
+            El ranking refleja la suma total de puntos de todos los partidos jugados esa fecha.
           </p>
         </div>
       </section>
