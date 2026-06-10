@@ -64,7 +64,7 @@ import { getRelativeDateLabel, formatMatchTime, canPredict } from '../../../../s
             </div>
           } @else if (!predictionOpen()) {
             <div class="flex flex-col items-center gap-1.5">
-              <span class="text-[10px] font-bold uppercase tracking-wider text-gris/50">Tu predicción</span>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-gris/50">Mi predicción</span>
               <div class="glass-heavy rounded-2xl px-5 py-3 text-center">
                 <div class="text-3xl font-black text-noche tracking-tight tabular-nums">
                   {{ predictionHome() !== '' ? predictionHome() : '–' }}&nbsp;–&nbsp;{{ predictionAway() !== '' ? predictionAway() : '–' }}
@@ -73,6 +73,9 @@ import { getRelativeDateLabel, formatMatchTime, canPredict } from '../../../../s
               <span class="text-[10px] text-gris/50 font-medium uppercase tracking-wider">Predicción cerrada</span>
             </div>
           } @else {
+            @if (hasPrediction()) {
+              <span class="text-[10px] font-bold uppercase tracking-wider text-cancha">Mi predicción</span>
+            }
             <div class="flex items-center gap-2">
               <input
                 type="number"
@@ -104,7 +107,7 @@ import { getRelativeDateLabel, formatMatchTime, canPredict } from '../../../../s
             } @else if (hasPrediction() && !saveError()) {
               <span class="inline-flex items-center gap-1.5 text-xs text-cancha font-semibold">
                 <span class="w-1.5 h-1.5 rounded-full bg-cancha"></span>
-                Predicción guardada
+                Guardado
               </span>
             }
             @if (saveError()) {

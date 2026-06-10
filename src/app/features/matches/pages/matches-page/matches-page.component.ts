@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { parseISO, format, isToday, isTomorrow } from 'date-fns';
 import { es } from 'date-fns/locale';
@@ -11,6 +11,20 @@ import { LucideFilter, LucideCalendar, LucideChevronDown } from '@lucide/angular
 
 type StatusFilter = 'ALL' | 'FINISHED' | 'UPCOMING' | 'ARGENTINA';
 type ViewMode = 'fecha' | 'grupo' | 'equipos';
+
+interface MatchGroup {
+  dateKey?: string;
+  label: string;
+  matches: Match[];
+  isPast?: boolean;
+}
+
+interface DatePill {
+  key: string;
+  label: string;
+  isToday: boolean;
+  isPast: boolean;
+}
 
 function getDateLabel(dateStr: string): string {
   const d = parseISO(dateStr);
@@ -91,6 +105,27 @@ function getDateLabel(dateStr: string): string {
         </div>
       </div>
 
+      <!-- Date Pills Timeline -->
+      @if (viewMode() === 'fecha' && datePills().length > 0) {
+        <div class="glass-liquid no-scrollbar sticky top-20 z-30 rounded-2xl py-2 px-3 overflow-x-auto flex gap-2">
+          @for (pill of datePills(); track pill.key) {
+            <button
+              (click)="scrollToDate(pill.key)"
+              class="whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-medium transition-colors border shrink-0"
+              [class.bg-celeste]="pill.isToday"
+              [class.text-white]="pill.isToday"
+              [class.border-celeste]="pill.isToday"
+              [class.bg-white]="!pill.isToday"
+              [class.text-gris]="pill.isPast && !pill.isToday"
+              [class.text-noche]="!pill.isPast && !pill.isToday"
+              [class.border-gris-suave]="!pill.isToday"
+            >
+              {{ pill.label }}
+            </button>
+          }
+        </div>
+      }
+
       <!-- Content -->
       @if (matchesResource.isLoading()) {
         <div class="glass rounded-2xl p-16 text-center text-gris">Cargando...</div>
@@ -143,8 +178,8 @@ function getDateLabel(dateStr: string): string {
             <div class="glass rounded-2xl p-16 text-center text-gris">No se encontraron partidos.</div>
           } @else {
             <div class="space-y-10">
-              @for (group of groupedMatches(); track group.label) {
-                <section>
+              @for (group of groupedMatches(); track group.label; let i = $index) {
+                <section [id]="group.dateKey ? 'date-' + group.dateKey : null">
                   <h2 class="text-base font-bold text-noche mb-4 flex items-center gap-2.5">
                     <span class="w-1 h-5 rounded-full bg-celeste"></span>
                     @if (viewMode() === 'fecha') {
@@ -158,6 +193,13 @@ function getDateLabel(dateStr: string): string {
                     }
                   </div>
                 </section>
+                @if (separatorIndex() === i) {
+                  <div class="flex items-center gap-4 py-6">
+                    <div class="flex-1 h-px bg-gris-suave"></div>
+                    <span class="text-xs font-semibold text-gris uppercase tracking-wider">Próximos partidos</span>
+                    <div class="flex-1 h-px bg-gris-suave"></div>
+                  </div>
+                }
               }
             </div>
           }
@@ -187,7 +229,7 @@ export class MatchesPageComponent {
     return matches.filter((m) => m.status === filter);
   });
 
-  readonly groupedMatches = computed(() => {
+  readonly groupedMatches = computed<MatchGroup[]>(() => {
     if (this.viewMode() === 'grupo') {
       return this.groupByCategory();
     }
@@ -199,15 +241,81 @@ export class MatchesPageComponent {
     return calculateStandingsFromMatches(matches);
   });
 
-  private groupByDate() {
-    const map = new Map<string, { label: string; matches: Match[] }>();
+  readonly datePills = computed(() => {
+    const matches = this.filteredMatches();
+    const map = new Map<string, { key: string; label: string; matches: Match[] }>();
+
+    for (const match of matches) {
+      const d = parseISO(match.utc_date);
+      const dateKey = format(d, 'yyyy-MM-dd');
+      if (!map.has(dateKey)) {
+        const label = format(d, 'EEE d', { locale: es });
+        map.set(dateKey, {
+          key: dateKey,
+          label: label.charAt(0).toUpperCase() + label.slice(1),
+          matches: [],
+        });
+      }
+      map.get(dateKey)!.matches.push(match);
+    }
+
+    const sorted = Array.from(map.values()).sort((a, b) => a.key.localeCompare(b.key));
+
+    return sorted.map((g) => ({
+      key: g.key,
+      label: g.label,
+      isToday: isToday(parseISO(g.key)),
+      isPast: g.matches.every((m) => m.status === 'FINISHED'),
+    }));
+  });
+
+  readonly separatorIndex = computed(() => {
+    const groups = this.groupedMatches();
+    if (this.statusFilter() !== 'ALL' || this.viewMode() !== 'fecha') return -1;
+    for (let i = 0; i < groups.length - 1; i++) {
+      if (groups[i].isPast && !groups[i + 1].isPast) {
+        return i;
+      }
+    }
+    return -1;
+  });
+
+  private wasLoading = true;
+
+  constructor() {
+    effect(() => {
+      const isLoading = this.matchesResource.isLoading();
+      const viewMode = this.viewMode();
+      const groups = this.groupedMatches();
+
+      if (this.wasLoading && !isLoading && viewMode === 'fecha' && groups.length > 0) {
+        const upcomingGroup = groups.find((g) => !g.isPast);
+        if (upcomingGroup?.dateKey) {
+          setTimeout(() => this.scrollToDate(upcomingGroup.dateKey!), 150);
+        }
+      }
+      this.wasLoading = isLoading;
+    });
+  }
+
+  scrollToDate(key: string): void {
+    const el = document.getElementById(`date-${key}`);
+    if (!el) return;
+
+    const headerHeight = 88; // header h-16 + padding top
+    const top = el.getBoundingClientRect().top + window.scrollY - headerHeight;
+    window.scrollTo({ top, behavior: 'smooth' });
+  }
+
+  private groupByDate(): MatchGroup[] {
+    const map = new Map<string, { dateKey: string; label: string; matches: Match[] }>();
 
     for (const match of this.filteredMatches()) {
       const dateKey = format(parseISO(match.utc_date), 'yyyy-MM-dd');
       const displayLabel = getDateLabel(match.utc_date);
 
       if (!map.has(dateKey)) {
-        map.set(dateKey, { label: displayLabel, matches: [] });
+        map.set(dateKey, { dateKey, label: displayLabel, matches: [] });
       }
       map.get(dateKey)!.matches.push(match);
     }
@@ -215,12 +323,14 @@ export class MatchesPageComponent {
     const sorted = Array.from(map.entries()).sort((a, b) => a[0].localeCompare(b[0]));
 
     return sorted.map(([_, group]) => ({
-      ...group,
+      dateKey: group.dateKey,
+      label: group.label,
       matches: group.matches.sort((a, b) => a.utc_date.localeCompare(b.utc_date)),
+      isPast: group.matches.every((m) => m.status === 'FINISHED'),
     }));
   }
 
-  private groupByCategory() {
+  private groupByCategory(): MatchGroup[] {
     const map = new Map<string, { label: string; matches: Match[] }>();
     for (const match of this.filteredMatches()) {
       const key = match.group || match.stage || 'Otros';
