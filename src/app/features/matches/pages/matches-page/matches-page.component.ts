@@ -7,10 +7,9 @@ import { ProdeApiService } from '../../../../core/services/prode-api.service';
 import { MatchCardComponent } from '../../components/match-card/match-card.component';
 import { StandingRowComponent } from '../../../standings/components/standing-row/standing-row.component';
 import { calculateStandingsFromMatches } from '../../../../core/utils/standings-calculator';
-import { MatchStatus } from '../../../../core/models/match.model';
-import { LucideFilter, LucideCalendar } from '@lucide/angular';
+import { LucideFilter, LucideCalendar, LucideChevronDown } from '@lucide/angular';
 
-type StatusFilter = 'ALL' | MatchStatus;
+type StatusFilter = 'ALL' | 'FINISHED' | 'UPCOMING' | 'ARGENTINA';
 type ViewMode = 'fecha' | 'grupo' | 'equipos';
 
 function getDateLabel(dateStr: string): string {
@@ -24,7 +23,7 @@ function getDateLabel(dateStr: string): string {
 @Component({
   selector: 'app-matches-page',
   standalone: true,
-  imports: [MatchCardComponent, StandingRowComponent, LucideFilter, LucideCalendar, FormsModule],
+  imports: [MatchCardComponent, StandingRowComponent, LucideFilter, LucideCalendar, LucideChevronDown, FormsModule],
   template: `
     <div class="space-y-6">
 
@@ -73,19 +72,19 @@ function getDateLabel(dateStr: string): string {
 
           <!-- Status filter -->
           @if (viewMode() !== 'equipos') {
-            <div class="flex items-center gap-2 glass-pill rounded-full px-3 py-1.5">
+            <div class="flex items-center gap-1.5 glass-pill rounded-full px-3 py-1.5">
               <svg lucideFilter class="w-4 h-4 text-gris shrink-0"></svg>
               <select
                 [ngModel]="statusFilter()"
                 (ngModelChange)="statusFilter.set($event)"
-                class="bg-transparent border-0 text-sm text-gris focus:outline-none pr-1 cursor-pointer"
+                class="bg-transparent border-0 text-sm text-gris focus:outline-none px-0 cursor-pointer appearance-none min-w-0 max-w-[140px]"
               >
                 <option value="ALL">Todos</option>
-                <option value="SCHEDULED">Programados</option>
-                <option value="TIMED">Confirmados</option>
-                <option value="IN_PLAY">En vivo</option>
+                <option value="UPCOMING">Próximos</option>
                 <option value="FINISHED">Finalizados</option>
+                <option value="ARGENTINA">Argentina 🇦🇷</option>
               </select>
+              <svg lucideChevronDown class="w-3.5 h-3.5 text-gris shrink-0 -ml-0.5"></svg>
             </div>
           }
 
@@ -179,6 +178,12 @@ export class MatchesPageComponent {
     const matches = this.matchesResource.value() ?? [];
     const filter = this.statusFilter();
     if (filter === 'ALL') return matches;
+    if (filter === 'UPCOMING') {
+      return matches.filter((m) => m.status === 'SCHEDULED' || m.status === 'TIMED');
+    }
+    if (filter === 'ARGENTINA') {
+      return matches.filter((m) => m.home_team?.name === 'Argentina' || m.away_team?.name === 'Argentina');
+    }
     return matches.filter((m) => m.status === filter);
   });
 

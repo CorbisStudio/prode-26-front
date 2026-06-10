@@ -57,7 +57,7 @@ import { getRelativeDateLabel, formatMatchTime, canPredict } from '../../../../s
             <div class="flex flex-col items-center gap-1.5">
               <span class="text-[10px] font-bold uppercase tracking-wider text-cancha">Resultado final</span>
               <div class="glass-heavy rounded-2xl px-5 py-3 text-center ring-1 ring-cancha/25">
-                <div class="text-3xl font-black text-noche tracking-tight tabular-nums">
+                <div class="text-3xl font-black text-gris tracking-tight tabular-nums">
                   {{ match().home_score ?? 0 }}&nbsp;–&nbsp;{{ match().away_score ?? 0 }}
                 </div>
               </div>
@@ -104,7 +104,7 @@ import { getRelativeDateLabel, formatMatchTime, canPredict } from '../../../../s
             } @else if (hasPrediction() && !saveError()) {
               <span class="inline-flex items-center gap-1.5 text-xs text-cancha font-semibold">
                 <span class="w-1.5 h-1.5 rounded-full bg-cancha"></span>
-                Guardado
+                Predicción guardada
               </span>
             }
             @if (saveError()) {
