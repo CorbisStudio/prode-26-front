@@ -17,6 +17,22 @@ export interface AuthUser {
   profile_picture_url?: string | null;
 }
 
+export interface RegisterResponse {
+  detail: string;
+}
+
+export interface ActivationResponse extends TokenPair {
+  user: {
+    id: number;
+    username: string;
+    email: string;
+    first_name: string;
+    last_name: string;
+    is_staff: boolean;
+    profile_picture_url?: string | null;
+  };
+}
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly http = inject(HttpClient);
@@ -27,6 +43,34 @@ export class AuthService {
 
   readonly user = computed(() => this.currentUser());
   readonly isAuthenticated = computed(() => this.currentUser() !== null);
+
+  async register(first_name: string, email: string, password: string): Promise<RegisterResponse> {
+    return await firstValueFrom(
+      this.http.post<RegisterResponse>(`${this.baseUrl}/register/`, { first_name, email, password })
+    );
+  }
+
+  async activate(email: string, code: string): Promise<void> {
+    const data = await firstValueFrom(
+      this.http.post<ActivationResponse>(`${this.baseUrl}/activate/`, { email, code })
+    );
+
+    localStorage.setItem(ACCESS_KEY, data.access);
+    localStorage.setItem(REFRESH_KEY, data.refresh);
+
+    const user: AuthUser = {
+      id: data.user.id,
+      username: data.user.username,
+      name: data.user.first_name || data.user.username,
+      first_name: data.user.first_name,
+      last_name: data.user.last_name,
+      email: data.user.email,
+      profile_picture_url: data.user.profile_picture_url || null,
+    };
+
+    this.currentUser.set(user);
+    localStorage.setItem('prode_user_data', JSON.stringify(user));
+  }
 
   async login(email: string, password: string): Promise<void> {
     const tokens = await firstValueFrom(

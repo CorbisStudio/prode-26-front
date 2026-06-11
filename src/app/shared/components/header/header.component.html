@@ -74,9 +74,25 @@
             </button>
           </div>
         } @else {
+          <div class="hidden md:flex items-center gap-2">
+            <a
+              routerLink="/register"
+              class="flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-full text-gris hover:text-noche hover:bg-slate-50 transition-all"
+            >
+              <svg lucideUserPlus class="w-4 h-4"></svg>
+              <span>Registrarse</span>
+            </a>
+            <a
+              routerLink="/login"
+              class="btn-dorado flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-full"
+            >
+              <svg lucideLogIn class="w-4 h-4"></svg>
+              <span>Entrar</span>
+            </a>
+          </div>
           <a
             routerLink="/login"
-            class="btn-dorado flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-full"
+            class="md:hidden btn-dorado flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-full"
           >
             <svg lucideLogIn class="w-4 h-4"></svg>
             <span class="hidden sm:inline">Entrar</span>
@@ -116,6 +132,24 @@
           >
             {{ item.label }}
           </a>
+        }
+        @if (!isAuthenticated()) {
+          <div class="border-t border-slate-100 mt-2 pt-2 space-y-1">
+            <a
+              routerLink="/register"
+              class="block px-4 py-2.5 rounded-xl text-sm text-gris hover:text-noche hover:bg-slate-50 transition-colors"
+              (click)="mobileOpen.set(false)"
+            >
+              Registrarse
+            </a>
+            <a
+              routerLink="/login"
+              class="block px-4 py-2.5 rounded-xl text-sm text-gris hover:text-noche hover:bg-slate-50 transition-colors"
+              (click)="mobileOpen.set(false)"
+            >
+              Entrar
+            </a>
+          </div>
         }
       </nav>
     </div>

@@ -1,7 +1,7 @@
 import { Component, computed, inject, signal, ElementRef, HostListener } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
-import { LucideLogIn, LucideLogOut, LucideMenu, LucideX } from '@lucide/angular';
+import { LucideLogIn, LucideLogOut, LucideMenu, LucideX, LucideUserPlus } from '@lucide/angular';
 
 const NAV_ITEMS = [
   { path: '/', label: 'Inicio', exact: true },
@@ -14,7 +14,7 @@ const NAV_ITEMS = [
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, LucideLogIn, LucideLogOut, LucideMenu, LucideX],
+  imports: [RouterLink, RouterLinkActive, LucideLogIn, LucideLogOut, LucideMenu, LucideX, LucideUserPlus],
   templateUrl: './header.component.html',
 })
 export class HeaderComponent {

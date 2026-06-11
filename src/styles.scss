@@ -120,13 +120,13 @@ body {
 
 /* Liquid glass — translucent, blurred, with a top sheen highlight (Apple-style) */
 .glass-liquid {
-  background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(255, 255, 255, -0.35);
+  backdrop-filter: blur(10px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow:
     0 6px 24px -10px rgba(15, 23, 42, 0.18),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.7);
+    inset 0 1px 0 0 rgba(255, 255, 255, 0);
 }
 
 .glass-pill {
@@ -228,14 +228,23 @@ body {
   background: rgba(15, 23, 42, 0.22);
 }
 
-/* Hide scrollbar on mobile only (keeps scroll working) — for horizontal pill rails */
-@media (max-width: 640px) {
-  .no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+/* Pill rails: scrollbar hidden by default. On desktop it reveals on hover; on mobile it stays hidden. */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@media (min-width: 641px) and (hover: hover) {
+  .no-scrollbar:hover {
+    scrollbar-width: thin;
   }
 
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
+  .no-scrollbar:hover::-webkit-scrollbar {
+    display: block;
+    height: 5px;
   }
 }

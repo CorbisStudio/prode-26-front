@@ -1,0 +1,155 @@
+<div class="min-h-screen flex items-center justify-center p-4 sm:p-8 relative">
+  <a
+    routerLink="/login"
+    class="absolute top-5 left-5 sm:top-6 sm:left-6 flex items-center gap-2 text-sm text-gris hover:text-noche transition-colors duration-200 glass-pill px-3 py-2 rounded-full group"
+  >
+    <svg lucideArrowLeft class="w-4 h-4 transition-transform duration-200 group-hover:-translate-x-0.5"></svg>
+    <span class="font-medium">Volver</span>
+  </a>
+
+  <div class="surface-heavy rounded-3xl overflow-hidden max-w-5xl w-full grid grid-cols-1 lg:grid-cols-2">
+    <!-- Left: Form -->
+    <div class="p-8 sm:p-12 lg:p-14 flex flex-col justify-center">
+      <div class="mb-8">
+        <img src="/img/logo-azul.png" alt="Prode Mundial" class="h-14 w-auto object-contain mb-6" />
+        <h1 class="text-2xl sm:text-3xl font-black text-noche mb-2 tracking-tight leading-tight">
+          Activá tu cuenta
+        </h1>
+        <p class="text-gris text-sm leading-relaxed">
+          Ingresá el correo con el que te registraste y el código de <strong>6 dígitos</strong> que te enviamos.
+          Revisá spam o promociones.
+        </p>
+      </div>
+
+      @if (success()) {
+        <div class="mb-6 flex items-start gap-3 text-green-700 bg-green-50 border border-green-100 rounded-xl px-4 py-4 text-sm">
+          <svg lucideCheckCircle2 class="w-5 h-5 shrink-0 mt-0.5"></svg>
+          <div>
+            <p class="font-semibold">¡Cuenta activada!</p>
+            <p class="mt-1">Te llevamos al inicio...</p>
+          </div>
+        </div>
+      }
+
+      @if (error()) {
+        <div class="mb-6 flex items-center gap-3 text-red-700 bg-red-50 border border-red-100 rounded-xl px-4 py-3 text-sm">
+          <svg lucideAlertCircle class="w-5 h-5 shrink-0"></svg>
+          <span>{{ error() }}</span>
+        </div>
+      }
+
+      @if (resentMessage()) {
+        <div class="mb-6 flex items-start gap-3 text-green-700 bg-green-50 border border-green-100 rounded-xl px-4 py-3 text-sm">
+          <svg lucideCheckCircle2 class="w-5 h-5 shrink-0 mt-0.5"></svg>
+          <span>{{ resentMessage() }}</span>
+        </div>
+      }
+
+      <form (ngSubmit)="onSubmit()" class="space-y-4">
+        <div>
+          <label for="activate-email" class="block text-sm font-semibold text-noche mb-2">Correo</label>
+          <div class="relative">
+            <svg lucideMail class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gris pointer-events-none"></svg>
+            <input
+              id="activate-email"
+              type="email"
+              [(ngModel)]="email"
+              name="email"
+              required
+              autocomplete="email"
+              [disabled]="loading() || success()"
+              class="glass-input w-full pl-11 pr-4 py-3 rounded-xl text-noche placeholder:text-gris/50 outline-none text-sm disabled:opacity-60"
+              placeholder="tu@correo.com"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label for="activation-code" class="block text-sm font-semibold text-noche mb-2">Código de activación</label>
+          <div class="relative">
+            <svg lucideMail class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gris pointer-events-none"></svg>
+            <input
+              id="activation-code"
+              type="text"
+              inputmode="numeric"
+              pattern="\d{6}"
+              maxlength="6"
+              [(ngModel)]="code"
+              name="code"
+              required
+              autocomplete="one-time-code"
+              [disabled]="loading() || success()"
+              class="glass-input w-full pl-11 pr-4 py-3 rounded-xl text-noche placeholder:text-gris/50 outline-none text-sm tracking-[0.5em] font-bold text-center disabled:opacity-60"
+              placeholder="000000"
+            />
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          [disabled]="loading() || success() || !email().trim() || code().trim().length !== 6"
+          class="btn-dorado w-full disabled:opacity-50 disabled:cursor-not-allowed font-bold py-3 rounded-full mt-2 text-sm"
+        >
+          @if (loading()) {
+            <span class="inline-flex items-center justify-center gap-2">
+              <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Activando...
+            </span>
+          } @else {
+            Activar cuenta
+          }
+        </button>
+      </form>
+
+      <div class="mt-6 flex flex-col items-center gap-3 text-sm">
+        @if (canResend()) {
+          <button
+            type="button"
+            (click)="resendCode()"
+            [disabled]="resending()"
+            class="inline-flex items-center gap-1.5 font-semibold text-celeste hover:text-celeste/80 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
+            @if (resending()) {
+              <svg class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Reenviando...
+            } @else {
+              <svg lucideRefreshCw class="w-4 h-4"></svg>
+              Reenviar código
+            }
+          </button>
+        } @else {
+          <p class="text-gris text-center">
+            ¿No tenés el código?
+            <a routerLink="/register" class="font-semibold text-celeste hover:underline">Registrate de nuevo</a>
+            para recibir uno nuevo.
+          </p>
+        }
+      </div>
+
+      <p class="mt-8 text-xs text-gris/50 text-center tracking-wide">
+        Un proyecto de <span class="font-semibold text-gris/70">Corbis</span> · Project Delivery Specialists.
+      </p>
+    </div>
+
+    <!-- Right: Image -->
+    <div class="hidden lg:block relative bg-noche">
+      <img src="/img/imagen-login.png" alt="Mundial" class="absolute inset-0 w-full h-full object-cover opacity-90" />
+      <div class="absolute inset-0 bg-gradient-to-t from-noche via-noche/30 to-transparent"></div>
+      <div class="absolute bottom-10 left-10 right-10">
+        <p class="text-white font-black text-3xl leading-tight tracking-tight">
+          Predecí.<br />Competí.<br />
+          <span class="text-dorado">Dominá.</span>
+        </p>
+        <p class="text-white/50 text-sm mt-3 leading-relaxed">
+          El Prode que une al equipo.<br />¿Quién sabe más de fútbol?
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

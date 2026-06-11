@@ -7,6 +7,14 @@ export const routes: Routes = [
     loadComponent: () => import('./features/home/pages/login-page/login-page.component').then(m => m.LoginPageComponent),
   },
   {
+    path: 'register',
+    loadComponent: () => import('./features/home/pages/register-page/register-page.component').then(m => m.RegisterPageComponent),
+  },
+  {
+    path: 'activate',
+    loadComponent: () => import('./features/home/pages/activate-page/activate-page.component').then(m => m.ActivatePageComponent),
+  },
+  {
     path: '',
     component: LayoutComponent,
     children: [
