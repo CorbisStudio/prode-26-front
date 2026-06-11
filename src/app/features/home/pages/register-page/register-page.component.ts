@@ -6,6 +6,8 @@ import {
   LucideUser,
   LucideMail,
   LucideLock,
+  LucideEye,
+  LucideEyeOff,
   LucideAlertCircle,
   LucideArrowLeft,
   LucideCheckCircle2,
@@ -20,6 +22,8 @@ import {
     LucideUser,
     LucideMail,
     LucideLock,
+    LucideEye,
+    LucideEyeOff,
     LucideAlertCircle,
     LucideArrowLeft,
     LucideCheckCircle2,
@@ -33,10 +37,15 @@ export class RegisterPageComponent {
   readonly firstName = signal('');
   readonly email = signal('');
   readonly password = signal('');
+  readonly showPassword = signal(false);
   readonly error = signal<string | null>(null);
   readonly loading = signal(false);
   readonly successMessage = signal<string | null>(null);
   readonly registeredEmail = signal('');
+
+  togglePasswordVisibility(): void {
+    this.showPassword.update((v) => !v);
+  }
 
   async onSubmit(): Promise<void> {
     const firstName = this.firstName().trim();

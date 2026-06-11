@@ -16,7 +16,7 @@
         <h1 class="text-2xl sm:text-3xl font-black text-noche mb-2 tracking-tight leading-tight">
           Bienvenido al Prode<br />de los Corbisters
         </h1>
-        <p class="text-gris text-sm leading-relaxed">Ingresá con tu Usuario y Contraseña de FRANK.</p>
+        <p class="text-gris text-sm leading-relaxed">Ingresá con tu correo y contraseña.</p>
       </div>
 
       @if (error()) {
@@ -50,14 +50,26 @@
             <svg lucideLock class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gris pointer-events-none"></svg>
             <input
               id="login-password"
-              type="password"
+              [type]="showPassword() ? 'text' : 'password'"
               [(ngModel)]="password"
               name="password"
               required
               autocomplete="current-password"
-              class="glass-input w-full pl-11 pr-4 py-3 rounded-xl text-noche placeholder:text-gris/50 outline-none text-sm"
+              class="glass-input w-full pl-11 pr-11 py-3 rounded-xl text-noche placeholder:text-gris/50 outline-none text-sm"
               placeholder="••••••••"
             />
+            <button
+              type="button"
+              (click)="togglePasswordVisibility()"
+              class="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 text-gris hover:text-noche transition-colors"
+              [attr.aria-label]="showPassword() ? 'Ocultar contraseña' : 'Mostrar contraseña'"
+            >
+              @if (showPassword()) {
+                <svg lucideEyeOff class="w-5 h-5"></svg>
+              } @else {
+                <svg lucideEye class="w-5 h-5"></svg>
+              }
+            </button>
           </div>
         </div>
 

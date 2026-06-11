@@ -2,12 +2,12 @@ import { Component, signal, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../../core/services/auth.service';
-import { LucideMail, LucideLock, LucideAlertCircle, LucideArrowLeft } from '@lucide/angular';
+import { LucideMail, LucideLock, LucideEye, LucideEyeOff, LucideAlertCircle, LucideArrowLeft } from '@lucide/angular';
 
 @Component({
   selector: 'app-login-page',
   standalone: true,
-  imports: [FormsModule, RouterLink, LucideMail, LucideLock, LucideAlertCircle, LucideArrowLeft],
+  imports: [FormsModule, RouterLink, LucideMail, LucideLock, LucideEye, LucideEyeOff, LucideAlertCircle, LucideArrowLeft],
   templateUrl: './login-page.component.html',
 })
 export class LoginPageComponent {
@@ -16,8 +16,13 @@ export class LoginPageComponent {
 
   readonly email = signal('');
   readonly password = signal('');
+  readonly showPassword = signal(false);
   readonly error = signal<string | null>(null);
   readonly loading = signal(false);
+
+  togglePasswordVisibility(): void {
+    this.showPassword.update((v) => !v);
+  }
 
   async onSubmit(): Promise<void> {
     if (!this.email().trim() || !this.password().trim()) return;

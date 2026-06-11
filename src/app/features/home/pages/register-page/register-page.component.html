@@ -79,16 +79,29 @@
             <svg lucideLock class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gris pointer-events-none"></svg>
             <input
               id="register-password"
-              type="password"
+              [type]="showPassword() ? 'text' : 'password'"
               [(ngModel)]="password"
               name="password"
               required
               autocomplete="new-password"
               minlength="8"
               [disabled]="loading() || !!successMessage()"
-              class="glass-input w-full pl-11 pr-4 py-3 rounded-xl text-noche placeholder:text-gris/50 outline-none text-sm disabled:opacity-60"
+              class="glass-input w-full pl-11 pr-11 py-3 rounded-xl text-noche placeholder:text-gris/50 outline-none text-sm disabled:opacity-60"
               placeholder="Mínimo 8 caracteres"
             />
+            <button
+              type="button"
+              (click)="togglePasswordVisibility()"
+              [disabled]="loading() || !!successMessage()"
+              class="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 text-gris hover:text-noche transition-colors disabled:opacity-50"
+              [attr.aria-label]="showPassword() ? 'Ocultar contraseña' : 'Mostrar contraseña'"
+            >
+              @if (showPassword()) {
+                <svg lucideEyeOff class="w-5 h-5"></svg>
+              } @else {
+                <svg lucideEye class="w-5 h-5"></svg>
+              }
+            </button>
           </div>
         </div>
 
