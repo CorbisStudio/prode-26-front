@@ -22,13 +22,13 @@ const PAGE_SIZE = 20;
         </div>
         <div>
           @if (groupFilter()) {
-            <h1 class="text-2xl font-black text-noche">Ranking · {{ groupFilter() }}</h1>
+            <h1 class="font-display text-3xl sm:text-4xl font-bold tracking-tight text-noche">Ranking · {{ groupFilter() }}</h1>
             <div class="flex items-center gap-2 mt-0.5">
               <p class="text-sm text-gris">Filtrado por grupo</p>
               <a routerLink="/ranking" class="text-xs font-semibold text-celeste-dark hover:underline">Ver ranking global</a>
             </div>
           } @else {
-            <h1 class="text-2xl font-black text-noche">Ranking Global</h1>
+            <h1 class="font-display text-3xl sm:text-4xl font-bold tracking-tight text-noche">Ranking Global</h1>
             <p class="text-sm text-gris mt-0.5">¿Quién predice mejor en Corbis?</p>
           }
         </div>

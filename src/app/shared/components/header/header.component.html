@@ -46,7 +46,7 @@
             </div>
             <button
               (click)="logout()"
-              class="btn-dorado flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-full"
+              class="flex items-center gap-1.5 text-sm font-medium px-3.5 py-2 rounded-full text-gris hover:text-noche hover:bg-slate-100 transition-all duration-200"
             >
               <svg lucideLogOut class="w-4 h-4"></svg>
               <span>Salir</span>
@@ -68,7 +68,8 @@
             }
             <button
               (click)="logout()"
-              class="btn-dorado flex items-center gap-1 text-xs font-semibold px-3 py-2 rounded-full"
+              class="flex items-center gap-1 text-xs font-medium px-3 py-2 rounded-full text-gris hover:text-noche hover:bg-slate-100 transition-all duration-200"
+              aria-label="Salir"
             >
               <svg lucideLogOut class="w-3.5 h-3.5"></svg>
             </button>

@@ -7,6 +7,8 @@ import { ProdeApiService } from '../../../../core/services/prode-api.service';
 import { MatchCardComponent } from '../../components/match-card/match-card.component';
 import { StandingRowComponent } from '../../../standings/components/standing-row/standing-row.component';
 import { calculateStandingsFromMatches } from '../../../../core/utils/standings-calculator';
+import { formatStageLabel } from '../../../../shared/utils/label.utils';
+import { canPredict } from '../../../../shared/utils/date.utils';
 import { LucideFilter, LucideCalendar, LucideChevronDown } from '@lucide/angular';
 
 type StatusFilter = 'ALL' | 'FINISHED' | 'UPCOMING' | 'ARGENTINA';
@@ -43,7 +45,7 @@ function getDateLabel(dateStr: string): string {
 
       <!-- Page header + filters -->
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <h1 class="text-2xl font-black text-noche">Partidos</h1>
+        <h1 class="font-display text-3xl sm:text-4xl font-bold tracking-tight text-noche">Partidos</h1>
 
         <div class="flex items-center gap-3 flex-wrap">
 
@@ -105,21 +107,38 @@ function getDateLabel(dateStr: string): string {
         </div>
       </div>
 
+      <!-- Hero: live match or next open-prediction match -->
+      @if (viewMode() === 'fecha' && statusFilter() === 'ALL' && heroMatch(); as hm) {
+        <section>
+          <div class="flex items-center gap-2.5 mb-3">
+            <span class="w-1 h-5 rounded-full bg-dorado"></span>
+            <h2 class="text-[11px] font-bold uppercase tracking-[0.18em] text-gris/70">
+              {{ hm.status === 'IN_PLAY' || hm.status === 'PAUSED' ? 'Ahora en juego' : 'Próximo partido' }}
+            </h2>
+          </div>
+          <app-match-card [match]="hm" [hero]="true" />
+        </section>
+      }
+
       <!-- Date Pills Timeline -->
       @if (viewMode() === 'fecha' && datePills().length > 0) {
         <div class="glass-liquid no-scrollbar sticky top-20 z-30 rounded-2xl py-2 px-3 overflow-x-auto flex gap-2">
           @for (pill of datePills(); track pill.key) {
+            @let isActive = activeDateKey() === pill.key;
             <button
               (click)="scrollToDate(pill.key)"
-              class="whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-medium transition-colors border shrink-0"
-              [class.bg-celeste]="pill.isToday"
-              [class.text-white]="pill.isToday"
-              [class.border-celeste]="pill.isToday"
-              [class.bg-white]="!pill.isToday"
-              [class.text-gris]="pill.isPast && !pill.isToday"
-              [class.text-noche]="!pill.isPast && !pill.isToday"
-              [class.border-gris-suave]="!pill.isToday"
+              class="whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-medium transition-colors border shrink-0 inline-flex items-center gap-1.5"
+              [class.bg-celeste]="isActive"
+              [class.text-white]="isActive"
+              [class.border-celeste]="isActive"
+              [class.bg-white]="!isActive"
+              [class.text-gris]="pill.isPast && !isActive"
+              [class.text-noche]="!pill.isPast && !isActive"
+              [class.border-gris-suave]="!isActive"
             >
+              @if (pill.isToday) {
+                <span class="w-1.5 h-1.5 rounded-full shrink-0" [class.bg-white]="isActive" [class.bg-celeste]="!isActive"></span>
+              }
               {{ pill.label }}
             </button>
           }
@@ -143,7 +162,7 @@ function getDateLabel(dateStr: string): string {
               @for (group of groups; track group.group) {
                 <section class="glass rounded-2xl overflow-hidden">
                   <div class="px-6 py-4 border-b border-white/25">
-                    <h2 class="text-base font-bold text-noche">{{ group.group }}</h2>
+                    <h2 class="text-base font-bold text-noche">{{ formatStageLabel(group.group) }}</h2>
                   </div>
                   <div class="overflow-x-auto">
                     <table class="w-full text-sm">
@@ -180,7 +199,7 @@ function getDateLabel(dateStr: string): string {
             <div class="space-y-10">
               @for (group of groupedMatches(); track group.label; let i = $index) {
                 <section [id]="group.dateKey ? 'date-' + group.dateKey : null">
-                  <h2 class="text-base font-bold text-noche mb-4 flex items-center gap-2.5">
+                  <h2 class="font-display text-lg font-bold tracking-tight text-noche mb-4 flex items-center gap-2.5">
                     <span class="w-1 h-5 rounded-full bg-celeste"></span>
                     @if (viewMode() === 'fecha') {
                       <svg lucideCalendar class="w-4 h-4 text-gris/60"></svg>
@@ -188,8 +207,10 @@ function getDateLabel(dateStr: string): string {
                     {{ group.label }}
                   </h2>
                   <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    @for (match of group.matches; track match.id) {
-                      <app-match-card [match]="match" />
+                    @for (match of group.matches; track match.id; let j = $index) {
+                      <div class="animate-card-in" [style.animation-delay]="(j * 60) + 'ms'">
+                        <app-match-card [match]="match" />
+                      </div>
                     }
                   </div>
                 </section>
@@ -211,10 +232,34 @@ function getDateLabel(dateStr: string): string {
 export class MatchesPageComponent {
   private readonly api = inject(ProdeApiService);
 
+  readonly formatStageLabel = formatStageLabel;
+
   readonly statusFilter = signal<StatusFilter>('ALL');
   readonly viewMode = signal<ViewMode>('fecha');
 
+  /** Date pill currently highlighted: the one the user navigated to (or today as fallback). */
+  readonly selectedDateKey = signal<string | null>(null);
+
+  readonly activeDateKey = computed(() => {
+    const selected = this.selectedDateKey();
+    const pills = this.datePills();
+    if (selected && pills.some((p) => p.key === selected)) return selected;
+    return pills.find((p) => p.isToday)?.key ?? null;
+  });
+
   readonly matchesResource = this.api.getMatches();
+
+  /** Featured match: a live one wins; otherwise the next match still open for predictions. */
+  readonly heroMatch = computed<Match | null>(() => {
+    const matches = this.matchesResource.value() ?? [];
+    const live = matches.find((m) => m.status === 'IN_PLAY' || m.status === 'PAUSED');
+    if (live) return live;
+    return (
+      matches
+        .filter((m) => (m.status === 'SCHEDULED' || m.status === 'TIMED') && canPredict(m.utc_date))
+        .sort((a, b) => a.utc_date.localeCompare(b.utc_date))[0] ?? null
+    );
+  });
 
   readonly filteredMatches = computed(() => {
     const matches = this.matchesResource.value() ?? [];
@@ -299,6 +344,7 @@ export class MatchesPageComponent {
   }
 
   scrollToDate(key: string): void {
+    this.selectedDateKey.set(key);
     const el = document.getElementById(`date-${key}`);
     if (!el) return;
 
@@ -335,7 +381,7 @@ export class MatchesPageComponent {
     for (const match of this.filteredMatches()) {
       const key = match.group || match.stage || 'Otros';
       if (!map.has(key)) {
-        map.set(key, { label: key, matches: [] });
+        map.set(key, { label: formatStageLabel(key) || 'Otros', matches: [] });
       }
       map.get(key)!.matches.push(match);
     }

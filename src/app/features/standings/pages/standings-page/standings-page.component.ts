@@ -2,6 +2,7 @@ import { Component, computed, inject } from '@angular/core';
 import { ProdeApiService } from '../../../../core/services/prode-api.service';
 import { calculateStandingsFromMatches } from '../../../../core/utils/standings-calculator';
 import { StandingRowComponent } from '../../components/standing-row/standing-row.component';
+import { formatStageLabel } from '../../../../shared/utils/label.utils';
 import { LucideChartColumn } from '@lucide/angular';
 
 @Component({
@@ -17,7 +18,7 @@ import { LucideChartColumn } from '@lucide/angular';
           <svg lucideChartColumn class="w-6 h-6 text-celeste-dark"></svg>
         </div>
         <div>
-          <h1 class="text-2xl font-black text-noche">Posiciones por Grupo</h1>
+          <h1 class="font-display text-3xl sm:text-4xl font-bold tracking-tight text-noche">Posiciones por Grupo</h1>
           <p class="text-sm text-gris mt-0.5">Clasificación de la fase de grupos</p>
         </div>
       </div>
@@ -34,7 +35,7 @@ import { LucideChartColumn } from '@lucide/angular';
               @for (group of groups; track group.group) {
                 <section class="glass rounded-2xl overflow-hidden">
                   <div class="px-6 py-4 border-b border-white/25">
-                    <h2 class="text-base font-bold text-noche">{{ group.group }}</h2>
+                    <h2 class="text-base font-bold text-noche">{{ formatStageLabel(group.group) }}</h2>
                   </div>
                   <div class="overflow-x-auto">
                     <table class="w-full text-sm">
@@ -70,6 +71,8 @@ import { LucideChartColumn } from '@lucide/angular';
   `,
 })
 export class StandingsPageComponent {
+  readonly formatStageLabel = formatStageLabel;
+
   private readonly api = inject(ProdeApiService);
 
   readonly matchesResource = this.api.getMatches();

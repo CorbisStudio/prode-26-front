@@ -1,7 +1,8 @@
-import { Component, input, computed, inject, signal } from '@angular/core';
+import { Component, DestroyRef, input, computed, inject, signal } from '@angular/core';
 import { Match } from '../../../../core/models/match.model';
 import { PredictionService } from '../../../../core/services/prediction.service';
 import { getRelativeDateLabel, formatMatchTime, canPredict } from '../../../../shared/utils/date.utils';
+import { formatStageLabel } from '../../../../shared/utils/label.utils';
 import { ImgSkeletonComponent } from '../../../../shared/components/img-skeleton/img-skeleton.component';
 
 @Component({
@@ -9,12 +10,15 @@ import { ImgSkeletonComponent } from '../../../../shared/components/img-skeleton
   standalone: true,
   imports: [ImgSkeletonComponent],
   template: `
-    <article class="glass rounded-2xl p-4 mb-2">
+    <article
+      class="glass-interactive mb-2"
+      [class]="hero() ? 'match-hero rounded-3xl p-4 sm:p-8' : 'glass rounded-2xl p-4'"
+    >
 
       <!-- Header -->
       <div class="flex items-center justify-between mb-5">
-        <span class="text-xs font-bold text-gris/70 uppercase tracking-widest">
-          {{ match().group || match().stage }}
+        <span class="text-[11px] font-bold text-gris/70 uppercase tracking-[0.18em]">
+          {{ stageLabel() }}
         </span>
 
         @if (isFinished()) {
@@ -33,7 +37,14 @@ import { ImgSkeletonComponent } from '../../../../shared/components/img-skeleton
             Cerrado
           </span>
         } @else {
-          <span class="text-xs text-gris font-medium">{{ dateLabel() }} · {{ matchTime() }}</span>
+          <span class="inline-flex items-center justify-end gap-2 flex-wrap">
+            <span class="text-xs text-gris font-medium whitespace-nowrap">{{ dateLabel() }} · {{ matchTime() }}</span>
+            @if (hero() && closesInLabel()) {
+              <span class="inline-flex items-center gap-1.5 bg-dorado/15 text-dorado-dark text-xs font-bold px-2.5 py-1 rounded-full tabular-nums">
+                Cierra en {{ closesInLabel() }}
+              </span>
+            }
+          </span>
         }
       </div>
 
@@ -42,41 +53,43 @@ import { ImgSkeletonComponent } from '../../../../shared/components/img-skeleton
 
         <!-- Home team -->
         <div class="flex-1 flex flex-col items-center gap-2">
-          <div class="w-14 h-14 rounded-2xl bg-white/70 shadow-sm flex items-center justify-center p-1.5">
+          <div
+            class="bg-white/70 shadow-sm flex items-center justify-center"
+            [class]="hero() ? 'w-16 h-16 sm:w-24 sm:h-24 rounded-2xl sm:rounded-3xl p-1.5 sm:p-2' : 'w-14 h-14 rounded-2xl p-1.5'"
+          >
             @if (match().home_team?.flag_url) {
               <app-img-skeleton
                 [src]="match().home_team!.flag_url!"
                 [alt]="match().home_team?.name ?? 'Local'"
-                wrapperClass="w-10 h-10 rounded-md"
+                [wrapperClass]="hero() ? 'w-11 h-11 sm:w-16 sm:h-16 rounded-lg' : 'w-10 h-10 rounded-md'"
                 imgClass="w-full h-full object-contain"
               />
             } @else {
               <span class="text-xs font-bold text-gris">?</span>
             }
           </div>
-          <span class="text-sm font-bold text-noche text-center leading-tight">{{ match().home_team?.name ?? 'Por definir' }}</span>
+          <span
+            class="font-bold text-noche text-center leading-tight"
+            [class]="hero() ? 'font-display text-base sm:text-xl' : 'text-sm'"
+          >{{ match().home_team?.name ?? 'Por definir' }}</span>
         </div>
 
         <!-- Score / Input -->
         <div class="flex flex-col items-center gap-2 min-w-[112px]">
           @if (isFinished()) {
-            <div class="flex flex-col items-center gap-1.5">
-              <span class="text-[10px] font-bold uppercase tracking-wider text-cancha">Resultado final</span>
-              <div class="glass-heavy rounded-2xl px-5 py-3 text-center ring-1 ring-cancha/25">
-                <div class="text-3xl font-black text-gris tracking-tight tabular-nums">
-                  {{ match().home_score ?? 0 }}&nbsp;–&nbsp;{{ match().away_score ?? 0 }}
-                </div>
+            <div class="flex flex-col items-center gap-1">
+              <span class="text-[10px] font-bold uppercase tracking-[0.18em] text-cancha">Resultado final</span>
+              <div class="score-display text-noche" [class]="hero() ? 'text-5xl sm:text-7xl' : 'text-5xl'">
+                {{ match().home_score ?? 0 }}<span class="text-gris/30 mx-1">–</span>{{ match().away_score ?? 0 }}
               </div>
             </div>
           } @else if (!predictionOpen()) {
-            <div class="flex flex-col items-center gap-1.5">
-              <span class="text-[10px] font-bold uppercase tracking-wider text-gris/50">Mi predicción</span>
-              <div class="glass-heavy rounded-2xl px-5 py-3 text-center">
-                <div class="text-3xl font-black text-noche tracking-tight tabular-nums">
-                  {{ predictionHome() !== '' ? predictionHome() : '–' }}&nbsp;–&nbsp;{{ predictionAway() !== '' ? predictionAway() : '–' }}
-                </div>
+            <div class="flex flex-col items-center gap-1">
+              <span class="text-[10px] font-bold uppercase tracking-[0.18em] text-gris/50">Mi predicción</span>
+              <div class="score-display text-gris" [class]="hero() ? 'text-5xl sm:text-7xl' : 'text-5xl'">
+                {{ predictionHome() !== '' ? predictionHome() : '–' }}<span class="text-gris/30 mx-1">–</span>{{ predictionAway() !== '' ? predictionAway() : '–' }}
               </div>
-              <span class="text-[10px] text-gris/50 font-medium uppercase tracking-wider">Predicción cerrada</span>
+              <span class="text-[10px] text-gris/50 font-medium uppercase tracking-wider">Cerrada</span>
             </div>
           } @else {
             @if (hasPrediction()) {
@@ -86,19 +99,23 @@ import { ImgSkeletonComponent } from '../../../../shared/components/img-skeleton
               <input
                 type="number"
                 min="0"
+                placeholder="0"
                 [value]="predictionHome()"
                 (input)="onInput($event, 'home')"
                 [disabled]="saving()"
-                class="glass-score-input w-14 text-center text-2xl font-black text-noche rounded-xl py-2 disabled:opacity-50"
+                class="glass-score-input text-center font-black text-noche rounded-xl disabled:opacity-50"
+                [class]="hero() ? 'w-14 sm:w-20 text-2xl sm:text-4xl py-2 sm:py-3' : 'w-14 text-2xl py-2'"
               />
               <span class="text-lg font-black text-gris/35">–</span>
               <input
                 type="number"
                 min="0"
+                placeholder="0"
                 [value]="predictionAway()"
                 (input)="onInput($event, 'away')"
                 [disabled]="saving()"
-                class="glass-score-input w-14 text-center text-2xl font-black text-noche rounded-xl py-2 disabled:opacity-50"
+                class="glass-score-input text-center font-black text-noche rounded-xl disabled:opacity-50"
+                [class]="hero() ? 'w-14 sm:w-20 text-2xl sm:text-4xl py-2 sm:py-3' : 'w-14 text-2xl py-2'"
               />
             </div>
 
@@ -111,7 +128,7 @@ import { ImgSkeletonComponent } from '../../../../shared/components/img-skeleton
                 Guardando...
               </span>
             } @else if (hasPrediction() && !saveError()) {
-              <span class="inline-flex items-center gap-1.5 text-xs text-cancha font-semibold">
+              <span class="animate-pop-in inline-flex items-center gap-1.5 text-xs text-cancha font-semibold">
                 <span class="w-1.5 h-1.5 rounded-full bg-cancha"></span>
                 Guardado
               </span>
@@ -124,19 +141,25 @@ import { ImgSkeletonComponent } from '../../../../shared/components/img-skeleton
 
         <!-- Away team -->
         <div class="flex-1 flex flex-col items-center gap-2">
-          <div class="w-14 h-14 rounded-2xl bg-white/70 shadow-sm flex items-center justify-center p-1.5">
+          <div
+            class="bg-white/70 shadow-sm flex items-center justify-center"
+            [class]="hero() ? 'w-16 h-16 sm:w-24 sm:h-24 rounded-2xl sm:rounded-3xl p-1.5 sm:p-2' : 'w-14 h-14 rounded-2xl p-1.5'"
+          >
             @if (match().away_team?.flag_url) {
               <app-img-skeleton
                 [src]="match().away_team!.flag_url!"
                 [alt]="match().away_team?.name ?? 'Visitante'"
-                wrapperClass="w-10 h-10 rounded-md"
+                [wrapperClass]="hero() ? 'w-11 h-11 sm:w-16 sm:h-16 rounded-lg' : 'w-10 h-10 rounded-md'"
                 imgClass="w-full h-full object-contain"
               />
             } @else {
               <span class="text-xs font-bold text-gris">?</span>
             }
           </div>
-          <span class="text-sm font-bold text-noche text-center leading-tight">{{ match().away_team?.name ?? 'Por definir' }}</span>
+          <span
+            class="font-bold text-noche text-center leading-tight"
+            [class]="hero() ? 'font-display text-base sm:text-xl' : 'text-sm'"
+          >{{ match().away_team?.name ?? 'Por definir' }}</span>
         </div>
 
       </div>
@@ -147,6 +170,7 @@ export class MatchCardComponent {
   private readonly predictions = inject(PredictionService);
 
   readonly match = input.required<Match>();
+  readonly hero = input(false);
   readonly saving = signal(false);
   readonly saveError = signal(false);
   readonly pendingSave = signal(false);
@@ -154,6 +178,30 @@ export class MatchCardComponent {
   private debounceTimer: ReturnType<typeof setTimeout> | null = null;
   private readonly DEBOUNCE_MS = 800;
 
+  /** Ticks every 30 s so the hero countdown stays fresh. */
+  private readonly now = signal(Date.now());
+
+  constructor() {
+    const tick = setInterval(() => this.now.set(Date.now()), 30_000);
+    inject(DestroyRef).onDestroy(() => clearInterval(tick));
+  }
+
+  /** Time remaining until predictions close (1 h before kickoff), e.g. "2h 14m". */
+  readonly closesInLabel = computed(() => {
+    this.now();
+    const kickoff = new Date(this.match().utc_date).getTime();
+    const diff = kickoff - 60 * 60 * 1000 - Date.now();
+    if (diff <= 0) return '';
+    const totalMin = Math.floor(diff / 60_000);
+    const days = Math.floor(totalMin / 1440);
+    const hours = Math.floor((totalMin % 1440) / 60);
+    const mins = totalMin % 60;
+    if (days > 0) return `${days}d ${hours}h`;
+    if (hours > 0) return `${hours}h ${mins}m`;
+    return `${mins}m`;
+  });
+
+  readonly stageLabel = computed(() => formatStageLabel(this.match().group || this.match().stage));
   readonly isFinished = computed(() => this.match().status === 'FINISHED');
   readonly isLive = computed(() => this.match().status === 'IN_PLAY' || this.match().status === 'PAUSED');
   readonly dateLabel = computed(() => getRelativeDateLabel(this.match().utc_date));

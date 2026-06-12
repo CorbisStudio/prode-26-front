@@ -126,7 +126,7 @@ export class BracketPageComponent {
   readonly roundsWithMatches = computed(() => {
     const matches = this.matchesResource.value() ?? [];
 
-    const knockoutStages = ['ROUND_OF_32', 'ROUND_OF_16', 'QUARTER_FINALS', 'SEMI_FINALS', 'THIRD_PLACE', 'FINAL'];
+    const knockoutStages = ['LAST_32', 'LAST_16', 'QUARTER_FINALS', 'SEMI_FINALS', 'THIRD_PLACE', 'FINAL'];
 
     const map = new Map<string, typeof matches>();
     for (const match of matches) {
@@ -137,18 +137,18 @@ export class BracketPageComponent {
       map.get(match.stage)!.push(match);
     }
 
-    const stageOrder = ['ROUND_OF_32', 'ROUND_OF_16', 'QUARTER_FINALS', 'SEMI_FINALS', 'THIRD_PLACE', 'FINAL'];
+    const stageOrder = ['LAST_32', 'LAST_16', 'QUARTER_FINALS', 'SEMI_FINALS', 'THIRD_PLACE', 'FINAL'];
     const stageNames: Record<string, string> = {
-      ROUND_OF_32: '16avos de Final',
-      ROUND_OF_16: 'Octavos de Final',
+      LAST_32: '16avos de Final',
+      LAST_16: 'Octavos de Final',
       QUARTER_FINALS: 'Cuartos de Final',
       SEMI_FINALS: 'Semifinales',
       THIRD_PLACE: 'Tercer Puesto',
       FINAL: 'Final',
     };
     const stageMatchCounts: Record<string, number> = {
-      ROUND_OF_32: 16,
-      ROUND_OF_16: 8,
+      LAST_32: 16,
+      LAST_16: 8,
       QUARTER_FINALS: 4,
       SEMI_FINALS: 2,
       THIRD_PLACE: 1,

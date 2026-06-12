@@ -7,7 +7,7 @@
         <svg lucideTarget class="w-6 h-6 text-noche"></svg>
       </div>
       <div>
-        <h1 class="text-2xl font-black text-noche">Mis Predicciones</h1>
+        <h1 class="font-display text-3xl sm:text-4xl font-bold tracking-tight text-noche">Mis Predicciones</h1>
         <p class="text-sm text-gris mt-0.5">Tus pronósticos del Mundial</p>
       </div>
     </div>
@@ -49,12 +49,12 @@
   <!-- List -->
   } @else {
     <div class="space-y-3">
-      @for (row of rows(); track row.prediction.id) {
+      @for (row of rows(); track row.prediction.id; let i = $index) {
         @let pred = row.prediction;
         @let match = row.match;
         @let badge = getBadge(pred, match);
 
-        <article class="glass rounded-2xl p-5">
+        <article class="glass glass-interactive rounded-2xl p-5 animate-card-in" [style.animation-delay]="(i * 60) + 'ms'">
 
           <!-- Top: date + badge -->
           <div class="flex items-center justify-between mb-4">
@@ -108,10 +108,8 @@
             <div class="flex flex-col items-center gap-2 min-w-[96px]">
 
               <!-- Prediction -->
-              <div class="flex items-center gap-2">
-                <span class="text-2xl font-black text-noche tabular-nums">{{ pred.home_score }}</span>
-                <span class="text-lg text-gris/40 font-bold">-</span>
-                <span class="text-2xl font-black text-noche tabular-nums">{{ pred.away_score }}</span>
+              <div class="score-display text-4xl text-noche">
+                {{ pred.home_score }}<span class="text-gris/30 mx-1">–</span>{{ pred.away_score }}
               </div>
               <span class="text-[10px] text-gris/60 uppercase tracking-wider font-semibold">Tu predicción</span>
 
@@ -164,7 +162,7 @@
           @if (match) {
             <div class="mt-4 pt-3 border-t border-white/20 flex items-center gap-2">
               <span class="text-[11px] text-gris/50 font-medium uppercase tracking-wide">
-                {{ match.group || match.stage }}
+                {{ formatStageLabel(match.group || match.stage) }}
               </span>
             </div>
           }

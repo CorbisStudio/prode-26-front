@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 import { ProdeApiService } from '../../../../core/services/prode-api.service';
 import { BackendMatch, BackendPrediction } from '../../../../core/models/backend.model';
 import { getRelativeDateLabel, formatMatchTime } from '../../../../shared/utils/date.utils';
+import { formatStageLabel } from '../../../../shared/utils/label.utils';
 import {
   LucideTarget,
   LucideCircleAlert,
@@ -71,6 +72,7 @@ export class PredictionsPageComponent {
   );
 
   readonly getBadge = getPointsBadge;
+  readonly formatStageLabel = formatStageLabel;
   readonly dateLabel = (d: string) => getRelativeDateLabel(d);
   readonly timeLabel = formatMatchTime;
 }
