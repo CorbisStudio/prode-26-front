@@ -2,11 +2,12 @@ import { Component, input, computed, inject, signal } from '@angular/core';
 import { Match } from '../../../../core/models/match.model';
 import { PredictionService } from '../../../../core/services/prediction.service';
 import { getRelativeDateLabel, formatMatchTime, canPredict } from '../../../../shared/utils/date.utils';
+import { ImgSkeletonComponent } from '../../../../shared/components/img-skeleton/img-skeleton.component';
 
 @Component({
   selector: 'app-match-card',
   standalone: true,
-  imports: [],
+  imports: [ImgSkeletonComponent],
   template: `
     <article class="glass rounded-2xl p-4 mb-2">
 
@@ -43,7 +44,12 @@ import { getRelativeDateLabel, formatMatchTime, canPredict } from '../../../../s
         <div class="flex-1 flex flex-col items-center gap-2">
           <div class="w-14 h-14 rounded-2xl bg-white/70 shadow-sm flex items-center justify-center p-1.5">
             @if (match().home_team?.flag_url) {
-              <img [src]="match().home_team!.flag_url" [alt]="match().home_team?.name ?? 'Local'" class="w-10 h-10 object-contain" />
+              <app-img-skeleton
+                [src]="match().home_team!.flag_url!"
+                [alt]="match().home_team?.name ?? 'Local'"
+                wrapperClass="w-10 h-10 rounded-md"
+                imgClass="w-full h-full object-contain"
+              />
             } @else {
               <span class="text-xs font-bold text-gris">?</span>
             }
@@ -120,7 +126,12 @@ import { getRelativeDateLabel, formatMatchTime, canPredict } from '../../../../s
         <div class="flex-1 flex flex-col items-center gap-2">
           <div class="w-14 h-14 rounded-2xl bg-white/70 shadow-sm flex items-center justify-center p-1.5">
             @if (match().away_team?.flag_url) {
-              <img [src]="match().away_team!.flag_url" [alt]="match().away_team?.name ?? 'Visitante'" class="w-10 h-10 object-contain" />
+              <app-img-skeleton
+                [src]="match().away_team!.flag_url!"
+                [alt]="match().away_team?.name ?? 'Visitante'"
+                wrapperClass="w-10 h-10 rounded-md"
+                imgClass="w-full h-full object-contain"
+              />
             } @else {
               <span class="text-xs font-bold text-gris">?</span>
             }

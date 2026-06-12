@@ -78,6 +78,7 @@ export interface RankingEntry {
   profile_picture_url: string | null;
   total_points: number;
   exact_hits: number;
+  groups?: string[];
 }
 
 export interface TokenPair {

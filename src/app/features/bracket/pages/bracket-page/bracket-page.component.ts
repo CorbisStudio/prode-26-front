@@ -44,12 +44,16 @@ import { LucideTrophy } from '@lucide/angular';
                     <span class="w-8 h-px bg-gris-suave"></span>
                   </div>
 
-                  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div class="flex flex-wrap justify-center gap-4">
                     @for (match of round.matches; track match.id) {
-                      <article class="glass glass-interactive rounded-2xl p-4">
+                      <article class="w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)] max-w-sm glass glass-interactive rounded-2xl p-4">
 
                         <div class="text-xs text-gris/60 text-center mb-4 font-medium">
-                          {{ match.utc_date | date: 'dd/MM · HH:mm' }}
+                          @if (match.utc_date) {
+                            {{ match.utc_date | date: 'dd/MM · HH:mm' }}
+                          } @else {
+                            Fecha por definir
+                          }
                         </div>
 
                         <div class="space-y-3">
@@ -122,7 +126,7 @@ export class BracketPageComponent {
   readonly roundsWithMatches = computed(() => {
     const matches = this.matchesResource.value() ?? [];
 
-    const knockoutStages = ['ROUND_OF_16', 'QUARTER_FINALS', 'SEMI_FINALS', 'THIRD_PLACE', 'FINAL'];
+    const knockoutStages = ['ROUND_OF_32', 'ROUND_OF_16', 'QUARTER_FINALS', 'SEMI_FINALS', 'THIRD_PLACE', 'FINAL'];
 
     const map = new Map<string, typeof matches>();
     for (const match of matches) {
@@ -133,20 +137,47 @@ export class BracketPageComponent {
       map.get(match.stage)!.push(match);
     }
 
-    const stageOrder = ['ROUND_OF_16', 'QUARTER_FINALS', 'SEMI_FINALS', 'THIRD_PLACE', 'FINAL'];
+    const stageOrder = ['ROUND_OF_32', 'ROUND_OF_16', 'QUARTER_FINALS', 'SEMI_FINALS', 'THIRD_PLACE', 'FINAL'];
     const stageNames: Record<string, string> = {
+      ROUND_OF_32: '16avos de Final',
       ROUND_OF_16: 'Octavos de Final',
       QUARTER_FINALS: 'Cuartos de Final',
       SEMI_FINALS: 'Semifinales',
       THIRD_PLACE: 'Tercer Puesto',
       FINAL: 'Final',
     };
+    const stageMatchCounts: Record<string, number> = {
+      ROUND_OF_32: 16,
+      ROUND_OF_16: 8,
+      QUARTER_FINALS: 4,
+      SEMI_FINALS: 2,
+      THIRD_PLACE: 1,
+      FINAL: 1,
+    };
 
-    return stageOrder
-      .filter((stage) => map.has(stage))
-      .map((stage) => ({
+    return stageOrder.map((stage, stageIndex) => {
+      const realMatches = map.get(stage) ?? [];
+      const matchesForStage =
+        realMatches.length > 0
+          ? realMatches
+          : Array.from({ length: stageMatchCounts[stage] }, (_, i) => ({
+              id: -(stageIndex * 100 + i + 1),
+              stage,
+              group: '',
+              matchday: 0,
+              home_team: null,
+              away_team: null,
+              utc_date: '',
+              status: 'SCHEDULED' as const,
+              home_score: null,
+              away_score: null,
+              winner: null,
+            }));
+
+      return {
         name: stageNames[stage],
-        matches: map.get(stage)!,
-      }));
+        matches: matchesForStage,
+      };
+    });
   });
 }

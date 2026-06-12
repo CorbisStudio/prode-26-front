@@ -70,13 +70,11 @@
             <span
               class="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold"
               [class.bg-dorado]="badge.color === 'dorado'"
-              [class.text-noche]="badge.color === 'dorado' "
-              [class.text-white]="badge.color === 'gris'"
+              [class.text-noche]="badge.color === 'dorado'"
               [class.bg-celeste]="badge.color === 'celeste'"
               [class.bg-red-500]="badge.color === 'red'"
               [class.bg-gris]="badge.color === 'gris'"
-              [class.bg-opacity-15]="badge.color === 'gris'"
-              [class.text-gris]="badge.color === 'gris'"
+              [class.text-white]="badge.color !== 'dorado'"
             >
               @if (badge.icon === 'target') {
                 <svg lucideTarget class="w-3.5 h-3.5"></svg>

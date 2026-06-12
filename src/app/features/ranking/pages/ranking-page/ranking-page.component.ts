@@ -1,15 +1,17 @@
 import { Component, computed, effect, inject, signal } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import confetti from 'canvas-confetti';
 import { ProdeApiService } from '../../../../core/services/prode-api.service';
 import { AuthService } from '../../../../core/services/auth.service';
 import { LucideTrophy, LucideChevronLeft, LucideChevronRight } from '@lucide/angular';
+import { ImgSkeletonComponent } from '../../../../shared/components/img-skeleton/img-skeleton.component';
 
 const PAGE_SIZE = 20;
 
 @Component({
   selector: 'app-ranking-page',
   standalone: true,
-  imports: [LucideTrophy, LucideChevronLeft, LucideChevronRight],
+  imports: [LucideTrophy, LucideChevronLeft, LucideChevronRight, ImgSkeletonComponent, RouterLink],
   template: `
     <div class="space-y-6">
 
@@ -19,8 +21,16 @@ const PAGE_SIZE = 20;
           <svg lucideTrophy class="w-6 h-6 text-dorado-dark"></svg>
         </div>
         <div>
-          <h1 class="text-2xl font-black text-noche">Ranking Global</h1>
-          <p class="text-sm text-gris mt-0.5">¿Quién predice mejor en Corbis?</p>
+          @if (groupFilter()) {
+            <h1 class="text-2xl font-black text-noche">Ranking · {{ groupFilter() }}</h1>
+            <div class="flex items-center gap-2 mt-0.5">
+              <p class="text-sm text-gris">Filtrado por grupo</p>
+              <a routerLink="/ranking" class="text-xs font-semibold text-celeste-dark hover:underline">Ver ranking global</a>
+            </div>
+          } @else {
+            <h1 class="text-2xl font-black text-noche">Ranking Global</h1>
+            <p class="text-sm text-gris mt-0.5">¿Quién predice mejor en Corbis?</p>
+          }
         </div>
       </div>
 
@@ -29,10 +39,13 @@ const PAGE_SIZE = 20;
       } @else if (rankingResource.error()) {
         <div class="glass rounded-2xl p-16 text-center text-red-500">Error al cargar el ranking.</div>
       } @else {
-        @let entries = rankingResource.value() ?? [];
-        @if (entries.length === 0) {
+        @if (filteredEntries().length === 0) {
           <div class="glass rounded-2xl p-16 text-center text-gris">
-            Aún no hay participantes en el ranking.
+            @if (groupFilter()) {
+              No hay participantes del grupo <strong>{{ groupFilter() }}</strong> en el ranking.
+            } @else {
+              Aún no hay participantes en el ranking.
+            }
           </div>
         } @else {
           <div class="glass rounded-2xl overflow-hidden">
@@ -75,10 +88,11 @@ const PAGE_SIZE = 20;
                       <td class="py-4 px-5">
                         <div class="flex items-center gap-3">
                           @if (entry.profile_picture_url) {
-                            <img
+                            <app-img-skeleton
                               [src]="entry.profile_picture_url"
                               [alt]="entry.full_name"
-                              class="w-9 h-9 rounded-full object-cover ring-2 ring-white/60"
+                              wrapperClass="w-9 h-9 rounded-full ring-2 ring-white/60"
+                              imgClass="w-full h-full object-cover"
                             />
                           } @else {
                             <div class="w-9 h-9 rounded-full bg-celeste/15 flex items-center justify-center text-celeste-dark text-sm font-black ring-2 ring-white/60">
@@ -106,7 +120,7 @@ const PAGE_SIZE = 20;
             @if (totalPages() > 1) {
               <div class="flex items-center justify-between px-6 py-4 border-t border-white/25">
                 <div class="text-sm text-gris">
-                  {{ startIndex() + 1 }} – {{ endIndex() }} de {{ entries.length }} jugadores
+                  {{ startIndex() + 1 }} – {{ endIndex() }} de {{ filteredEntries().length }} jugadores
                 </div>
                 <div class="flex items-center gap-2">
                   <button
@@ -140,29 +154,50 @@ const PAGE_SIZE = 20;
 export class RankingPageComponent {
   private readonly api = inject(ProdeApiService);
   private readonly auth = inject(AuthService);
+  private readonly route = inject(ActivatedRoute);
 
   readonly rankingResource = this.api.getRanking();
   readonly currentPage = signal(1);
   private readonly confettiLaunched = signal(false);
 
+  readonly groupFilter = signal(this.route.snapshot.queryParamMap.get('group')?.trim() ?? '');
+
   readonly entries = computed(() => this.rankingResource.value() ?? []);
 
+  readonly filteredEntries = computed(() => {
+    const all = this.entries();
+    const filter = this.groupFilter().toLowerCase();
+
+    if (!filter) return all;
+
+    const filtered = all.filter((entry) => entry.groups?.some((group) => group.toLowerCase() === filter));
+
+    // Recompute positions inside the filtered ranking
+    return filtered.map((entry, index) => ({ ...entry, position: index + 1 }));
+  });
+
   readonly totalPages = computed(() => {
-    const count = this.entries().length;
+    const count = this.filteredEntries().length;
     return Math.ceil(count / PAGE_SIZE);
   });
 
   readonly startIndex = computed(() => (this.currentPage() - 1) * PAGE_SIZE);
-  readonly endIndex = computed(() => Math.min(this.currentPage() * PAGE_SIZE, this.entries().length));
+  readonly endIndex = computed(() => Math.min(this.currentPage() * PAGE_SIZE, this.filteredEntries().length));
 
   readonly paginatedEntries = computed(() => {
-    const all = this.entries();
+    const all = this.filteredEntries();
     return all.slice(this.startIndex(), this.endIndex());
   });
 
   constructor() {
     effect(() => {
-      const entries = this.entries();
+      // Reset pagination when the group filter changes
+      this.groupFilter();
+      this.currentPage.set(1);
+    });
+
+    effect(() => {
+      const entries = this.filteredEntries();
       const user = this.auth.user();
 
       if (entries.length === 0 || !user || this.confettiLaunched()) return;
