@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class ProdeApiService {
   private readonly http = inject(HttpClient);
-  readonly baseUrl = 'https://prode.vera-demo.site/api';
+  readonly baseUrl = 'http://a1b294b0dce6246168e6682809e8fef5-1925402808.us-west-2.elb.amazonaws.com/api';
 
   // ─── Auth ───
   login(email: string, password: string): Observable<TokenPair> {
