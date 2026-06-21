@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { TokenPair } from '../models/backend.model';
+import { ProdeApiService } from './prode-api.service';
 
 const ACCESS_KEY = 'prode_access_token';
 const REFRESH_KEY = 'prode_refresh_token';
@@ -37,7 +38,8 @@ export interface ActivationResponse extends TokenPair {
 export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly router = inject(Router);
-  private readonly baseUrl = 'https://prode.vera-demo.site/api';
+  private readonly api = inject(ProdeApiService);
+  private get baseUrl() { return this.api.baseUrl; }
 
   private readonly currentUser = signal<AuthUser | null>(this.loadUser());
 
