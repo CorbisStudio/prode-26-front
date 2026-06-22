@@ -1,14 +1,14 @@
-import { Component, computed, effect, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal, LOCALE_ID } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { parseISO, format, isToday, isTomorrow } from 'date-fns';
-import { es } from 'date-fns/locale';
+import { es, enUS } from 'date-fns/locale';
 import { Match } from '../../../../core/models/match.model';
 import { ProdeApiService } from '../../../../core/services/prode-api.service';
 import { MatchCardComponent } from '../../components/match-card/match-card.component';
 import { StandingRowComponent } from '../../../standings/components/standing-row/standing-row.component';
 import { calculateStandingsFromMatches } from '../../../../core/utils/standings-calculator';
 import { formatStageLabel } from '../../../../shared/utils/label.utils';
-import { canPredict } from '../../../../shared/utils/date.utils';
+import { canPredict, getRelativeDateLabel, getDateFnsLocale } from '../../../../shared/utils/date.utils';
 import { LucideFilter, LucideCalendar, LucideChevronDown } from '@lucide/angular';
 
 type StatusFilter = 'ALL' | 'FINISHED' | 'UPCOMING' | 'ARGENTINA';
@@ -28,13 +28,7 @@ interface DatePill {
   isPast: boolean;
 }
 
-function getDateLabel(dateStr: string): string {
-  const d = parseISO(dateStr);
-  if (isToday(d)) return 'Hoy';
-  if (isTomorrow(d)) return 'Mañana';
-  const label = format(d, "EEEE d 'de' MMMM", { locale: es });
-  return label.charAt(0).toUpperCase() + label.slice(1);
-}
+
 
 @Component({
   selector: 'app-matches-page',
@@ -45,7 +39,7 @@ function getDateLabel(dateStr: string): string {
 
       <!-- Page header + filters -->
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <h1 class="font-display text-3xl sm:text-4xl font-bold tracking-tight text-noche">Partidos</h1>
+        <h1 class="font-display text-3xl sm:text-4xl font-bold tracking-tight text-noche" i18n>Partidos</h1>
 
         <div class="flex items-center gap-3 flex-wrap">
 
@@ -59,6 +53,7 @@ function getDateLabel(dateStr: string): string {
               [class.font-semibold]="viewMode() === 'fecha'"
               [class.text-gris]="viewMode() !== 'fecha'"
               class="px-4 py-1.5 rounded-full text-sm transition-all duration-200"
+              i18n
             >
               Por fecha
             </button>
@@ -70,6 +65,7 @@ function getDateLabel(dateStr: string): string {
               [class.font-semibold]="viewMode() === 'grupo'"
               [class.text-gris]="viewMode() !== 'grupo'"
               class="px-4 py-1.5 rounded-full text-sm transition-all duration-200"
+              i18n
             >
               Por grupo
             </button>
@@ -81,6 +77,7 @@ function getDateLabel(dateStr: string): string {
               [class.font-semibold]="viewMode() === 'equipos'"
               [class.text-gris]="viewMode() !== 'equipos'"
               class="px-4 py-1.5 rounded-full text-sm transition-all duration-200"
+              i18n
             >
               Equipos
             </button>
@@ -95,10 +92,10 @@ function getDateLabel(dateStr: string): string {
                 (ngModelChange)="statusFilter.set($event)"
                 class="bg-transparent border-0 text-sm text-gris focus:outline-none px-0 cursor-pointer appearance-none min-w-0 max-w-[140px]"
               >
-                <option value="ALL">Todos</option>
-                <option value="UPCOMING">Próximos</option>
-                <option value="FINISHED">Finalizados</option>
-                <option value="ARGENTINA">Argentina 🇦🇷</option>
+                <option value="ALL" i18n>Todos</option>
+                <option value="UPCOMING" i18n>Próximos</option>
+                <option value="FINISHED" i18n>Finalizados</option>
+                <option value="ARGENTINA" i18n>Argentina 🇦🇷</option>
               </select>
               <svg lucideChevronDown class="w-3.5 h-3.5 text-gris shrink-0 -ml-0.5"></svg>
             </div>
@@ -113,7 +110,7 @@ function getDateLabel(dateStr: string): string {
           <div class="flex items-center gap-2.5 mb-3">
             <span class="w-1 h-5 rounded-full bg-dorado"></span>
             <h2 class="text-[11px] font-bold uppercase tracking-[0.18em] text-gris/70">
-              {{ hm.status === 'IN_PLAY' || hm.status === 'PAUSED' ? 'Ahora en juego' : 'Próximo partido' }}
+              {{ heroSectionTitle(hm.status) }}
             </h2>
           </div>
           <app-match-card [match]="hm" [hero]="true" />
@@ -147,16 +144,16 @@ function getDateLabel(dateStr: string): string {
 
       <!-- Content -->
       @if (matchesResource.isLoading()) {
-        <div class="glass rounded-2xl p-16 text-center text-gris">Cargando...</div>
+        <div class="glass rounded-2xl p-16 text-center text-gris" i18n>Cargando...</div>
       } @else if (matchesResource.error()) {
-        <div class="glass rounded-2xl p-16 text-center text-red-500">Error al cargar los datos. Intenta más tarde.</div>
+        <div class="glass rounded-2xl p-16 text-center text-red-500" i18n>Error al cargar los datos. Intenta más tarde.</div>
       } @else {
 
         <!-- Standings view -->
         @if (viewMode() === 'equipos') {
           @let groups = standings();
           @if (groups.length === 0) {
-            <div class="glass rounded-2xl p-16 text-center text-gris">No hay datos disponibles.</div>
+            <div class="glass rounded-2xl p-16 text-center text-gris" i18n>No hay datos disponibles.</div>
           } @else {
             <div class="space-y-6">
               @for (group of groups; track group.group) {
@@ -168,15 +165,15 @@ function getDateLabel(dateStr: string): string {
                     <table class="w-full text-sm">
                       <thead>
                         <tr class="glass-table-header">
-                          <th class="py-3 px-4 text-center w-12 text-xs font-bold text-gris uppercase tracking-wider">#</th>
-                          <th class="py-3 px-4 text-left text-xs font-bold text-gris uppercase tracking-wider">Equipo</th>
-                          <th class="py-3 px-4 text-center text-xs font-bold text-gris uppercase tracking-wider">PJ</th>
-                          <th class="py-3 px-4 text-center text-xs font-bold text-gris uppercase tracking-wider">PG</th>
-                          <th class="py-3 px-4 text-center text-xs font-bold text-gris uppercase tracking-wider">PE</th>
-                          <th class="py-3 px-4 text-center text-xs font-bold text-gris uppercase tracking-wider">PP</th>
-                          <th class="py-3 px-4 text-center text-xs font-bold text-gris uppercase tracking-wider">GF:GC</th>
-                          <th class="py-3 px-4 text-center text-xs font-bold text-gris uppercase tracking-wider">DG</th>
-                          <th class="py-3 px-4 text-center text-xs font-bold text-gris uppercase tracking-wider">Pts</th>
+                          <th class="py-3 px-4 text-center w-12 text-xs font-bold text-gris uppercase tracking-wider" i18n>#</th>
+                          <th class="py-3 px-4 text-left text-xs font-bold text-gris uppercase tracking-wider" i18n>Equipo</th>
+                          <th class="py-3 px-4 text-center text-xs font-bold text-gris uppercase tracking-wider" i18n>PJ</th>
+                          <th class="py-3 px-4 text-center text-xs font-bold text-gris uppercase tracking-wider" i18n>PG</th>
+                          <th class="py-3 px-4 text-center text-xs font-bold text-gris uppercase tracking-wider" i18n>PE</th>
+                          <th class="py-3 px-4 text-center text-xs font-bold text-gris uppercase tracking-wider" i18n>PP</th>
+                          <th class="py-3 px-4 text-center text-xs font-bold text-gris uppercase tracking-wider" i18n>GF:GC</th>
+                          <th class="py-3 px-4 text-center text-xs font-bold text-gris uppercase tracking-wider" i18n>DG</th>
+                          <th class="py-3 px-4 text-center text-xs font-bold text-gris uppercase tracking-wider" i18n>Pts</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -194,7 +191,7 @@ function getDateLabel(dateStr: string): string {
         <!-- Date / Group view -->
         } @else {
           @if (groupedMatches().length === 0) {
-            <div class="glass rounded-2xl p-16 text-center text-gris">No se encontraron partidos.</div>
+            <div class="glass rounded-2xl p-16 text-center text-gris" i18n>No se encontraron partidos.</div>
           } @else {
             <div class="space-y-10">
               @for (group of groupedMatches(); track group.label; let i = $index) {
@@ -217,7 +214,7 @@ function getDateLabel(dateStr: string): string {
                 @if (separatorIndex() === i) {
                   <div class="flex items-center gap-4 py-6">
                     <div class="flex-1 h-px bg-gris-suave"></div>
-                    <span class="text-xs font-semibold text-gris uppercase tracking-wider">Próximos partidos</span>
+                    <span class="text-xs font-semibold text-gris uppercase tracking-wider" i18n>Próximos partidos</span>
                     <div class="flex-1 h-px bg-gris-suave"></div>
                   </div>
                 }
@@ -231,8 +228,16 @@ function getDateLabel(dateStr: string): string {
 })
 export class MatchesPageComponent {
   private readonly api = inject(ProdeApiService);
+  private readonly localeId = inject(LOCALE_ID);
+  private get dfnsLocale() { return getDateFnsLocale(this.localeId); }
 
   readonly formatStageLabel = formatStageLabel;
+
+  heroSectionTitle(status: string): string {
+    return status === 'IN_PLAY' || status === 'PAUSED'
+      ? $localize`Ahora en juego`
+      : $localize`Próximo partido`;
+  }
 
   readonly statusFilter = signal<StatusFilter>('ALL');
   readonly viewMode = signal<ViewMode>('fecha');
@@ -294,7 +299,7 @@ export class MatchesPageComponent {
       const d = parseISO(match.utc_date);
       const dateKey = format(d, 'yyyy-MM-dd');
       if (!map.has(dateKey)) {
-        const label = format(d, 'EEE d', { locale: es });
+        const label = format(d, this.dfnsLocale.code === enUS.code ? 'EEE, MMM d' : 'EEE d', { locale: this.dfnsLocale });
         map.set(dateKey, {
           key: dateKey,
           label: label.charAt(0).toUpperCase() + label.slice(1),
@@ -358,7 +363,7 @@ export class MatchesPageComponent {
 
     for (const match of this.filteredMatches()) {
       const dateKey = format(parseISO(match.utc_date), 'yyyy-MM-dd');
-      const displayLabel = getDateLabel(match.utc_date);
+      const displayLabel = getRelativeDateLabel(match.utc_date, this.dfnsLocale);
 
       if (!map.has(dateKey)) {
         map.set(dateKey, { dateKey, label: displayLabel, matches: [] });

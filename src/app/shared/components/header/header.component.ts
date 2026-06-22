@@ -1,20 +1,21 @@
 import { Component, computed, inject, signal, ElementRef, HostListener } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
+import { LanguageSelectorComponent } from '../language-selector/language-selector.component';
 import { LucideLogIn, LucideLogOut, LucideMenu, LucideX, LucideUserPlus } from '@lucide/angular';
 
 const NAV_ITEMS = [
-  { path: '/', label: 'Inicio', exact: true },
-  { path: '/partidos', label: 'Partidos', exact: false },
-  { path: '/predicciones', label: 'Predicciones', exact: false },
-  { path: '/eliminatorias', label: 'Eliminatorias', exact: false },
-  { path: '/ranking', label: 'Ranking', exact: false },
+  { path: '/', label: $localize`Inicio`, exact: true },
+  { path: '/partidos', label: $localize`Partidos`, exact: false },
+  { path: '/predicciones', label: $localize`Predicciones`, exact: false },
+  { path: '/eliminatorias', label: $localize`Eliminatorias`, exact: false },
+  { path: '/ranking', label: $localize`Ranking`, exact: false },
 ];
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, LucideLogIn, LucideLogOut, LucideMenu, LucideX, LucideUserPlus],
+  imports: [RouterLink, RouterLinkActive, LanguageSelectorComponent, LucideLogIn, LucideLogOut, LucideMenu, LucideX, LucideUserPlus],
   templateUrl: './header.component.html',
 })
 export class HeaderComponent {

@@ -4,8 +4,13 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:es": "ng serve --configuration=es",
+    "start:en": "ng serve --configuration=en",
     "build": "ng build",
+    "build:es": "ng build --localize=es",
+    "build:en": "ng build --localize=en",
     "watch": "ng build --watch --configuration development",
+    "extract-i18n": "ng extract-i18n",
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "ng lint",
@@ -26,12 +31,21 @@
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "esbuild",
+      "lmdb",
+      "msgpackr-extract"
+    ]
+  },
   "devDependencies": {
     "@analogjs/vite-plugin-angular": "^1.14.1",
     "@analogjs/vitest-angular": "^1.14.1",
     "@angular-devkit/build-angular": "^20.3.25",
     "@angular/cli": "^20.3.25",
     "@angular/compiler-cli": "^20.3.24",
+    "@angular/localize": "^20.3.25",
     "@eslint/js": "^9.23.0",
     "@tailwindcss/postcss": "^4.3.0",
     "@types/canvas-confetti": "^1.9.0",

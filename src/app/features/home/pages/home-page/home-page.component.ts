@@ -36,15 +36,15 @@ import {
       <!-- Hero -->
       <section class="text-center pt-12 pb-4">
         <div class="inline-flex items-center gap-2 surface-pill rounded-full px-4 py-1.5 mb-8">
-          <span class="text-[11px] font-semibold text-gris tracking-wider uppercase">Prode Oficial · Corbis</span>
+          <span class="text-[11px] font-semibold text-gris tracking-wider uppercase" i18n>Prode Oficial · Corbis</span>
         </div>
 
-        <h1 class="text-4xl sm:text-5xl md:text-6xl font-black text-noche mb-5 leading-[1.1] tracking-tight">
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-black text-noche mb-5 leading-[1.1] tracking-tight" i18n>
           Predecí.<br />
           <span class="text-celeste-dark">Competí. Dominá.</span>
         </h1>
 
-        <p class="text-lg text-gris max-w-lg mx-auto leading-relaxed">
+        <p class="text-lg text-gris max-w-lg mx-auto leading-relaxed" i18n>
           El prode del Mundial 2026 que une al equipo. Demostrá lo que sabés (o no) de fútbol y divertite
         </p>
 
@@ -52,6 +52,7 @@ import {
           <a
             [routerLink]="isAuthenticated() ? '/partidos' : '/login'"
             class="btn-dorado inline-flex items-center gap-2 font-bold px-8 py-3.5 rounded-full text-sm"
+            i18n
           >
             <svg lucideTarget class="w-4 h-4"></svg>
             Empezar a jugar
@@ -59,12 +60,13 @@ import {
           <a
             routerLink="/partidos"
             class="surface-elevated inline-flex items-center gap-2 text-noche font-semibold px-7 py-3.5 rounded-full text-sm"
+            i18n
           >
             Ver los Partidos
             <svg lucideArrowRight class="w-4 h-4"></svg>
           </a>
         </div>
-        <p class="text-xs text-gris/50 tracking-wide mt-5">Velocidad · Precisión · Resultados</p>
+        <p class="text-xs text-gris/50 tracking-wide mt-5" i18n>Velocidad · Precisión · Resultados</p>
       </section>
 
       <!-- Reglas del juego — Jerarquía alta -->
@@ -74,8 +76,8 @@ import {
             <svg lucideBookOpen class="w-6 h-6 text-dorado-dark"></svg>
           </div>
           <div>
-            <h2 class="text-2xl sm:text-3xl font-black text-noche">Las Reglas del Juego</h2>
-            <p class="text-sm text-gris mt-0.5">Cómo se suman los puntos</p>
+            <h2 class="text-2xl sm:text-3xl font-black text-noche" i18n>Las Reglas del Juego</h2>
+            <p class="text-sm text-gris mt-0.5" i18n>Cómo se suman los puntos</p>
           </div>
         </div>
 
@@ -86,13 +88,13 @@ import {
             </div>
             <div class="flex-1">
               <div class="flex items-center gap-3 mb-2">
-                <p class="font-black text-noche text-base">Resultado correcto</p>
+                <p class="font-black text-noche text-base" i18n>Resultado correcto</p>
                 <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-celeste text-white text-xs font-black">1</span>
               </div>
-              <p class="text-sm text-gris leading-relaxed">
+              <p class="text-sm text-gris leading-relaxed" i18n>
                 Acertás quién gana (o si empatan), sin importar el resultado exacto.
               </p>
-              <p class="text-sm text-celeste-dark font-semibold mt-3">Ej: predecís 2-1 y termina 3-1 → <span class="text-noche">1 punto</span></p>
+              <p class="text-sm text-celeste-dark font-semibold mt-3" i18n>Ej: predecís 2-1 y termina 3-1 → <span class="text-noche">1 punto</span></p>
             </div>
           </div>
 
@@ -102,13 +104,13 @@ import {
             </div>
             <div class="flex-1">
               <div class="flex items-center gap-3 mb-2">
-                <p class="font-black text-noche text-base">Resultado exacto</p>
+                <p class="font-black text-noche text-base" i18n>Resultado exacto</p>
                 <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-dorado text-noche text-xs font-black">3</span>
               </div>
-              <p class="text-sm text-gris leading-relaxed">
+              <p class="text-sm text-gris leading-relaxed" i18n>
                 Acertás el marcador exacto del partido, gol por gol.
               </p>
-              <p class="text-sm text-dorado-dark font-semibold mt-3">Ej: predecís 2-1 y termina 2-1 → <span class="text-noche">3 puntos</span></p>
+              <p class="text-sm text-dorado-dark font-semibold mt-3" i18n>Ej: predecís 2-1 y termina 2-1 → <span class="text-noche">3 puntos</span></p>
             </div>
           </div>
 
@@ -118,19 +120,19 @@ import {
             </div>
             <div class="flex-1">
               <div class="flex items-center gap-3 mb-2">
-                <p class="font-black text-noche text-base">Límite de tiempo</p>
+                <p class="font-black text-noche text-base" i18n>Límite de tiempo</p>
                 <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-red-500 text-white text-xs font-black">!</span>
               </div>
-              <p class="text-sm text-gris leading-relaxed">
+              <p class="text-sm text-gris leading-relaxed" i18n>
                 Las predicciones se cierran <strong>1 hora antes</strong> del inicio de cada partido. Una vez cerrado, no se puede modificar.
               </p>
-              <p class="text-sm text-red-500 font-semibold mt-3">Planificá con anticipación.</p>
+              <p class="text-sm text-red-500 font-semibold mt-3" i18n>Planificá con anticipación.</p>
             </div>
           </div>
         </div>
 
         <div class="border-t border-slate-100 pt-6">
-          <p class="text-sm text-gris/60 leading-relaxed text-center max-w-2xl mx-auto">
+          <p class="text-sm text-gris/60 leading-relaxed text-center max-w-2xl mx-auto" i18n>
             Los puntos se acreditan automáticamente al finalizar el dia.
             El ranking refleja la suma total de puntos de todos los partidos jugados esa fecha.
           </p>
@@ -143,38 +145,38 @@ import {
           <div class="w-11 h-11 rounded-xl bg-celeste-light flex items-center justify-center mx-auto mb-3">
             <svg lucideMapPin class="w-5 h-5 text-celeste"></svg>
           </div>
-          <p class="text-xl font-black text-noche">USA · CAN · MEX</p>
-          <p class="text-xs text-gris mt-1 font-medium">Sedes del Mundial 2026</p>
+          <p class="text-xl font-black text-noche" i18n>USA · CAN · MEX</p>
+          <p class="text-xs text-gris mt-1 font-medium" i18n>Sedes del Mundial 2026</p>
         </div>
 
         <div class="surface rounded-2xl p-6 text-center">
           <div class="w-11 h-11 rounded-xl bg-dorado-light flex items-center justify-center mx-auto mb-3">
             <svg lucideTrophy class="w-5 h-5 text-dorado"></svg>
           </div>
-          <p class="text-xl font-black text-noche">48 equipos</p>
-          <p class="text-xs text-gris mt-1 font-medium">Primer Mundial expandido</p>
+          <p class="text-xl font-black text-noche" i18n>48 equipos</p>
+          <p class="text-xs text-gris mt-1 font-medium" i18n>Primer Mundial expandido</p>
         </div>
 
         <div class="surface rounded-2xl p-6 text-center">
           <div class="w-11 h-11 rounded-xl bg-cancha-light flex items-center justify-center mx-auto mb-3">
             <svg lucideCalendar class="w-5 h-5 text-cancha"></svg>
           </div>
-          <p class="text-xl font-black text-noche">104 partidos</p>
-          <p class="text-xs text-gris mt-1 font-medium">Para predecir y ganar</p>
+          <p class="text-xl font-black text-noche" i18n>104 partidos</p>
+          <p class="text-xs text-gris mt-1 font-medium" i18n>Para predecir y ganar</p>
         </div>
       </section>
 
       <!-- Features -->
       <section>
-        <h2 class="text-lg font-bold text-noche mb-5">¿Cómo funciona?</h2>
+        <h2 class="text-lg font-bold text-noche mb-5" i18n>¿Cómo funciona?</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div class="surface rounded-2xl p-6 flex items-start gap-4">
             <div class="w-10 h-10 rounded-lg bg-celeste-light flex items-center justify-center shrink-0">
               <svg lucideTarget class="w-5 h-5 text-celeste"></svg>
             </div>
             <div>
-              <p class="font-bold text-noche text-sm mb-1">Predecí cada partido</p>
-              <p class="text-xs text-gris leading-relaxed">
+              <p class="font-bold text-noche text-sm mb-1" i18n>Predecí cada partido</p>
+              <p class="text-xs text-gris leading-relaxed" i18n>
                 Antes de que empiece cada partido, ingresá tu pronóstico con el marcador exacto que creés que va a terminar.
               </p>
             </div>
@@ -185,8 +187,8 @@ import {
               <svg lucideTrophy class="w-5 h-5 text-dorado"></svg>
             </div>
             <div>
-              <p class="font-bold text-noche text-sm mb-1">Sumá puntos automáticamente</p>
-              <p class="text-xs text-gris leading-relaxed">
+              <p class="font-bold text-noche text-sm mb-1" i18n>Sumá puntos automáticamente</p>
+              <p class="text-xs text-gris leading-relaxed" i18n>
                 Al finalizar cada partido, los puntos se acreditan solos. Acertar el resultado te da 1 punto; el marcador exacto, 3 puntos.
               </p>
             </div>
@@ -197,8 +199,8 @@ import {
               <svg lucideChartColumn class="w-5 h-5 text-cancha"></svg>
             </div>
             <div>
-              <p class="font-bold text-noche text-sm mb-1">Seguí la tabla de posiciones</p>
-              <p class="text-xs text-gris leading-relaxed">
+              <p class="font-bold text-noche text-sm mb-1" i18n>Seguí la tabla de posiciones</p>
+              <p class="text-xs text-gris leading-relaxed" i18n>
                 Mirá cómo va cada grupo del Mundial en tiempo real y planificá mejor tus próximas predicciones.
               </p>
             </div>
@@ -209,8 +211,8 @@ import {
               <svg lucideUsers class="w-5 h-5 text-dorado"></svg>
             </div>
             <div>
-              <p class="font-bold text-noche text-sm mb-1">Competí contra el equipo</p>
-              <p class="text-xs text-gris leading-relaxed">
+              <p class="font-bold text-noche text-sm mb-1" i18n>Competí contra el equipo</p>
+              <p class="text-xs text-gris leading-relaxed" i18n>
                 El ranking muestra a todos los participantes. ¿Quién domina el Prode de Corbis este Mundial?
               </p>
             </div>
@@ -228,8 +230,8 @@ import {
             <svg lucideCalendar class="w-5 h-5 text-celeste"></svg>
           </div>
           <div>
-            <p class="font-bold text-noche text-sm">Partidos</p>
-            <p class="text-xs text-gris mt-0.5">Fixture completo</p>
+            <p class="font-bold text-noche text-sm" i18n>Partidos</p>
+            <p class="text-xs text-gris mt-0.5" i18n>Fixture completo</p>
           </div>
         </a>
 
@@ -241,8 +243,8 @@ import {
             <svg lucideTarget class="w-5 h-5 text-dorado"></svg>
           </div>
           <div>
-            <p class="font-bold text-noche text-sm">Predicciones</p>
-            <p class="text-xs text-gris mt-0.5">Tus pronósticos</p>
+            <p class="font-bold text-noche text-sm" i18n>Predicciones</p>
+            <p class="text-xs text-gris mt-0.5" i18n>Tus pronósticos</p>
           </div>
         </a>
 
@@ -254,8 +256,8 @@ import {
             <svg lucideTrophy class="w-5 h-5 text-dorado"></svg>
           </div>
           <div>
-            <p class="font-bold text-noche text-sm">Ranking</p>
-            <p class="text-xs text-gris mt-0.5">Tabla de jugadores</p>
+            <p class="font-bold text-noche text-sm" i18n>Ranking</p>
+            <p class="text-xs text-gris mt-0.5" i18n>Tabla de jugadores</p>
           </div>
         </a>
 
@@ -267,8 +269,8 @@ import {
             <svg lucideChartColumn class="w-5 h-5 text-celeste"></svg>
           </div>
           <div>
-            <p class="font-bold text-noche text-sm">Posiciones</p>
-            <p class="text-xs text-gris mt-0.5">Grupos del Mundial</p>
+            <p class="font-bold text-noche text-sm" i18n>Posiciones</p>
+            <p class="text-xs text-gris mt-0.5" i18n>Grupos del Mundial</p>
           </div>
         </a>
       </section>

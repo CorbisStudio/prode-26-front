@@ -18,18 +18,18 @@ import { LucideChartColumn } from '@lucide/angular';
           <svg lucideChartColumn class="w-6 h-6 text-celeste-dark"></svg>
         </div>
         <div>
-          <h1 class="font-display text-3xl sm:text-4xl font-bold tracking-tight text-noche">Posiciones por Grupo</h1>
-          <p class="text-sm text-gris mt-0.5">Clasificación de la fase de grupos</p>
+          <h1 class="font-display text-3xl sm:text-4xl font-bold tracking-tight text-noche" i18n>Posiciones por Grupo</h1>
+          <p class="text-sm text-gris mt-0.5" i18n>Clasificación de la fase de grupos</p>
         </div>
       </div>
 
       @defer (when !matchesResource.isLoading()) {
         @if (matchesResource.error()) {
-          <div class="glass rounded-2xl p-16 text-center text-red-500">Error al cargar las posiciones.</div>
+          <div class="glass rounded-2xl p-16 text-center text-red-500" i18n>Error al cargar las posiciones.</div>
         } @else {
           @let groups = standings();
           @if (groups.length === 0) {
-            <div class="glass rounded-2xl p-16 text-center text-gris">No hay datos disponibles.</div>
+            <div class="glass rounded-2xl p-16 text-center text-gris" i18n>No hay datos disponibles.</div>
           } @else {
             <div class="space-y-6">
               @for (group of groups; track group.group) {
@@ -41,15 +41,15 @@ import { LucideChartColumn } from '@lucide/angular';
                     <table class="w-full text-sm">
                       <thead>
                         <tr class="glass-table-header">
-                          <th class="py-3 px-4 text-center w-12 text-xs font-bold text-gris uppercase tracking-wider">#</th>
-                          <th class="py-3 px-4 text-left text-xs font-bold text-gris uppercase tracking-wider">Equipo</th>
-                          <th class="py-3 px-4 text-center text-xs font-bold text-gris uppercase tracking-wider">PJ</th>
-                          <th class="py-3 px-4 text-center text-xs font-bold text-gris uppercase tracking-wider">PG</th>
-                          <th class="py-3 px-4 text-center text-xs font-bold text-gris uppercase tracking-wider">PE</th>
-                          <th class="py-3 px-4 text-center text-xs font-bold text-gris uppercase tracking-wider">PP</th>
-                          <th class="py-3 px-4 text-center text-xs font-bold text-gris uppercase tracking-wider">GF:GC</th>
-                          <th class="py-3 px-4 text-center text-xs font-bold text-gris uppercase tracking-wider">DG</th>
-                          <th class="py-3 px-4 text-center text-xs font-bold text-gris uppercase tracking-wider">Pts</th>
+                          <th class="py-3 px-4 text-center w-12 text-xs font-bold text-gris uppercase tracking-wider" i18n>#</th>
+                          <th class="py-3 px-4 text-left text-xs font-bold text-gris uppercase tracking-wider" i18n>Equipo</th>
+                          <th class="py-3 px-4 text-center text-xs font-bold text-gris uppercase tracking-wider" i18n>PJ</th>
+                          <th class="py-3 px-4 text-center text-xs font-bold text-gris uppercase tracking-wider" i18n>PG</th>
+                          <th class="py-3 px-4 text-center text-xs font-bold text-gris uppercase tracking-wider" i18n>PE</th>
+                          <th class="py-3 px-4 text-center text-xs font-bold text-gris uppercase tracking-wider" i18n>PP</th>
+                          <th class="py-3 px-4 text-center text-xs font-bold text-gris uppercase tracking-wider" i18n>GF:GC</th>
+                          <th class="py-3 px-4 text-center text-xs font-bold text-gris uppercase tracking-wider" i18n>DG</th>
+                          <th class="py-3 px-4 text-center text-xs font-bold text-gris uppercase tracking-wider" i18n>Pts</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -65,7 +65,7 @@ import { LucideChartColumn } from '@lucide/angular';
           }
         }
       } @placeholder {
-        <div class="glass rounded-2xl p-16 text-center text-gris">Cargando posiciones...</div>
+        <div class="glass rounded-2xl p-16 text-center text-gris" i18n>Cargando posiciones...</div>
       }
     </div>
   `,

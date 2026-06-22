@@ -1,8 +1,8 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, LOCALE_ID } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ProdeApiService } from '../../../../core/services/prode-api.service';
 import { BackendMatch, BackendPrediction } from '../../../../core/models/backend.model';
-import { getRelativeDateLabel, formatMatchTime } from '../../../../shared/utils/date.utils';
+import { getRelativeDateLabel, formatMatchTime, getDateFnsLocale } from '../../../../shared/utils/date.utils';
 import { formatStageLabel } from '../../../../shared/utils/label.utils';
 import {
   LucideTarget,
@@ -50,6 +50,7 @@ function getPointsBadge(pred: BackendPrediction, match: BackendMatch | undefined
 })
 export class PredictionsPageComponent {
   private readonly api = inject(ProdeApiService);
+  private readonly localeId = inject(LOCALE_ID);
 
   readonly predictionsResource = this.api.getPredictions();
   readonly matchesResource = this.api.getMatches();
@@ -73,6 +74,6 @@ export class PredictionsPageComponent {
 
   readonly getBadge = getPointsBadge;
   readonly formatStageLabel = formatStageLabel;
-  readonly dateLabel = (d: string) => getRelativeDateLabel(d);
-  readonly timeLabel = formatMatchTime;
+  readonly dateLabel = (d: string) => getRelativeDateLabel(d, getDateFnsLocale(this.localeId));
+  readonly timeLabel = (d: string) => formatMatchTime(d, getDateFnsLocale(this.localeId));
 }

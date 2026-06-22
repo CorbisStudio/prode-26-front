@@ -22,29 +22,29 @@ const PAGE_SIZE = 20;
         </div>
         <div>
           @if (groupFilter()) {
-            <h1 class="font-display text-3xl sm:text-4xl font-bold tracking-tight text-noche">Ranking · {{ groupFilter() }}</h1>
+            <h1 class="font-display text-3xl sm:text-4xl font-bold tracking-tight text-noche" i18n>Ranking · {{ groupFilter() }}</h1>
             <div class="flex items-center gap-2 mt-0.5">
-              <p class="text-sm text-gris">Filtrado por grupo</p>
-              <a routerLink="/ranking" class="text-xs font-semibold text-celeste-dark hover:underline">Ver ranking global</a>
+              <p class="text-sm text-gris" i18n>Filtrado por grupo</p>
+              <a routerLink="/ranking" class="text-xs font-semibold text-celeste-dark hover:underline" i18n>Ver ranking global</a>
             </div>
           } @else {
-            <h1 class="font-display text-3xl sm:text-4xl font-bold tracking-tight text-noche">Ranking Global</h1>
-            <p class="text-sm text-gris mt-0.5">¿Quién predice mejor en Corbis?</p>
+            <h1 class="font-display text-3xl sm:text-4xl font-bold tracking-tight text-noche" i18n>Ranking Global</h1>
+            <p class="text-sm text-gris mt-0.5" i18n>¿Quién predice mejor en Corbis?</p>
           }
         </div>
       </div>
 
       @if (rankingResource.isLoading()) {
-        <div class="glass rounded-2xl p-16 text-center text-gris">Cargando ranking...</div>
+        <div class="glass rounded-2xl p-16 text-center text-gris" i18n>Cargando ranking...</div>
       } @else if (rankingResource.error()) {
-        <div class="glass rounded-2xl p-16 text-center text-red-500">Error al cargar el ranking.</div>
+        <div class="glass rounded-2xl p-16 text-center text-red-500" i18n>Error al cargar el ranking.</div>
       } @else {
         @if (filteredEntries().length === 0) {
           <div class="glass rounded-2xl p-16 text-center text-gris">
             @if (groupFilter()) {
-              No hay participantes del grupo <strong>{{ groupFilter() }}</strong> en el ranking.
+              <ng-container i18n>No hay participantes del grupo <strong>{{ groupFilter() }}</strong> en el ranking.</ng-container>
             } @else {
-              Aún no hay participantes en el ranking.
+              <ng-container i18n>Aún no hay participantes en el ranking.</ng-container>
             }
           </div>
         } @else {
@@ -53,10 +53,10 @@ const PAGE_SIZE = 20;
               <table class="w-full text-sm">
                 <thead>
                   <tr class="glass-table-header">
-                    <th class="py-3.5 px-5 text-center w-16 text-xs font-bold text-gris uppercase tracking-wider">#</th>
-                    <th class="py-3.5 px-5 text-left text-xs font-bold text-gris uppercase tracking-wider">Jugador</th>
-                    <th class="py-3.5 px-5 text-center text-xs font-bold text-gris uppercase tracking-wider">Exactos</th>
-                    <th class="py-3.5 px-5 text-center text-xs font-bold text-gris uppercase tracking-wider">Puntos</th>
+                    <th class="py-3.5 px-5 text-center w-16 text-xs font-bold text-gris uppercase tracking-wider" i18n>#</th>
+                    <th class="py-3.5 px-5 text-left text-xs font-bold text-gris uppercase tracking-wider" i18n>Jugador</th>
+                    <th class="py-3.5 px-5 text-center text-xs font-bold text-gris uppercase tracking-wider" i18n>Exactos</th>
+                    <th class="py-3.5 px-5 text-center text-xs font-bold text-gris uppercase tracking-wider" i18n>Puntos</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -119,7 +119,7 @@ const PAGE_SIZE = 20;
             <!-- Pagination -->
             @if (totalPages() > 1) {
               <div class="flex items-center justify-between px-6 py-4 border-t border-white/25">
-                <div class="text-sm text-gris">
+                <div class="text-sm text-gris" i18n>
                   {{ startIndex() + 1 }} – {{ endIndex() }} de {{ filteredEntries().length }} jugadores
                 </div>
                 <div class="flex items-center gap-2">

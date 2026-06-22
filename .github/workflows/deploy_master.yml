@@ -57,18 +57,14 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
+      - name: Render k8s manifests with image tag
+        env:
+          IMAGE_TAG: dev_${{ github.sha }}
+        run: envsubst < k8s/01-deploy.yaml > k8s/01-deploy.rendered.yaml
+
       - name: Apply k8s manifests
         uses: kodermax/kubectl-aws-eks@master
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
-          args: apply -f k8s/
-
-      - name: Deploy new image
-        uses: kodermax/kubectl-aws-eks@master
-        env:
-          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          IMAGE_TAG: dev_${{ github.sha }}
-        with:
-          args: set image deployment/prode-front prode-front=${{ steps.login-ecr.outputs.registry }}/prode-front:dev_${{ github.sha }}
+          args: apply -f k8s/01-deploy.rendered.yaml -f k8s/02-service.yaml

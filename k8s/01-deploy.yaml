@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: prode-front
-        image: 714022400124.dkr.ecr.us-west-2.amazonaws.com/prode-front:latest
+        image: 714022400124.dkr.ecr.us-west-2.amazonaws.com/prode-front:${IMAGE_TAG}
         ports:
         - containerPort: 80
