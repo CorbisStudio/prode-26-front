@@ -35,49 +35,15 @@ const PAGE_SIZE = 20;
       </div>
 
       @if (myEntry(); as entry) {
-        <div class="glass rounded-2xl p-4 flex items-center gap-4 border border-dorado/20 bg-dorado/[0.03]">
-          <div class="flex flex-col items-center justify-center min-w-[3.5rem]">
-            <span class="text-[10px] font-bold text-gris uppercase tracking-wider" i18n>Tu posición</span>
-            <span class="text-2xl font-black text-noche leading-none mt-0.5">#{{ entry.position }}</span>
+        <div class="surface-heavy rounded-2xl p-5 flex items-center gap-4 border-l-4 border-dorado">
+          <div class="w-12 h-12 rounded-full bg-dorado/15 flex items-center justify-center shrink-0">
+            <span class="font-display text-xl font-black text-dorado-dark">#{{ entry.position }}</span>
           </div>
-
-          <!-- Profile: desktop only -->
-          <div class="hidden sm:flex items-center gap-3 flex-1 min-w-0">
-            <div class="w-px h-10 bg-white/40"></div>
-            @if (entry.profile_picture_url) {
-              <app-img-skeleton
-                [src]="entry.profile_picture_url"
-                [alt]="entry.full_name"
-                wrapperClass="w-10 h-10 rounded-full ring-2 ring-white/60"
-                imgClass="w-full h-full object-cover"
-              />
-            } @else {
-              <div class="w-10 h-10 rounded-full bg-celeste/15 flex items-center justify-center text-celeste-dark text-sm font-black ring-2 ring-white/60">
-                {{ entry.full_name.charAt(0).toUpperCase() }}
-              </div>
-            }
-            <div class="min-w-0">
-              <p class="font-semibold text-noche truncate">{{ entry.full_name }}</p>
-              <p class="text-xs text-gris/70">{{ entry.username }}</p>
-            </div>
-          </div>
-
-          <!-- Mobile stats -->
-          <div class="flex sm:hidden flex-1 items-center justify-around gap-2">
-            <div class="text-center">
-              <span class="text-[10px] font-bold text-gris uppercase tracking-wider" i18n>Puntos</span>
-              <p class="text-xl font-black text-noche leading-none mt-0.5">{{ entry.total_points }}</p>
-            </div>
-            <div class="text-center">
-              <span class="text-[10px] font-bold text-gris uppercase tracking-wider" i18n>Exactos</span>
-              <p class="text-xl font-black text-noche leading-none mt-0.5">{{ entry.exact_hits }}</p>
-            </div>
-          </div>
-
-          <!-- Desktop points -->
-          <div class="hidden sm:block text-right min-w-[4rem]">
-            <span class="text-[10px] font-bold text-gris uppercase tracking-wider" i18n>Puntos</span>
-            <p class="text-xl font-black text-noche leading-none mt-0.5">{{ entry.total_points }}</p>
+          <div>
+            <p class="text-sm text-gris" i18n>Tu lugar en el ranking</p>
+            <p class="font-bold text-noche">
+              {{ entry.total_points }} pts · {{ entry.exact_hits }} exactos
+            </p>
           </div>
         </div>
       }
