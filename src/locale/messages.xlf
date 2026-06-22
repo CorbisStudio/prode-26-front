@@ -713,7 +713,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/header/header.component.html</context>
-          <context context-type="linenumber">126,127</context>
+          <context context-type="linenumber">124,125</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2255303770232063350" datatype="html">
@@ -977,7 +977,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">105</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/standings/pages/standings-page/standings-page.component.ts</context>
@@ -1219,60 +1219,79 @@
           <context context-type="linenumber">32,33</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="3335551741811421417" datatype="html">
-        <source>Cargando ranking...</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
-          <context context-type="linenumber">38,39</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="4085520041729870969" datatype="html">
-        <source>Error al cargar el ranking.</source>
+      <trans-unit id="1004273585248647019" datatype="html">
+        <source>Tu posición</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
           <context context-type="linenumber">40,41</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="5640191675053187292" datatype="html">
-        <source>No hay participantes del grupo <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/><x id="INTERPOLATION" equiv-text="{{ groupFilter() }}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> en el ranking.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
-          <context context-type="linenumber">45,46</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="1473735061628863591" datatype="html">
-        <source>Aún no hay participantes en el ranking.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
-          <context context-type="linenumber">47</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="2939099431806912711" datatype="html">
-        <source>Jugador</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
-          <context context-type="linenumber">57,58</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="3775760315769351531" datatype="html">
-        <source>Exactos</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
-          <context context-type="linenumber">58,59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3813323018858009867" datatype="html">
         <source>Puntos</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
-          <context context-type="linenumber">59,60</context>
+          <context context-type="linenumber">68,69</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
+          <context context-type="linenumber">79,80</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
+          <context context-type="linenumber">107,108</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3775760315769351531" datatype="html">
+        <source>Exactos</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
+          <context context-type="linenumber">72,73</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
+          <context context-type="linenumber">106,107</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3335551741811421417" datatype="html">
+        <source>Cargando ranking...</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
+          <context context-type="linenumber">86,87</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4085520041729870969" datatype="html">
+        <source>Error al cargar el ranking.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
+          <context context-type="linenumber">88,89</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5640191675053187292" datatype="html">
+        <source>No hay participantes del grupo <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;"/><x id="INTERPOLATION" equiv-text="{{ groupFilter() }}"/><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;"/> en el ranking.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
+          <context context-type="linenumber">93,94</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1473735061628863591" datatype="html">
+        <source>Aún no hay participantes en el ranking.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
+          <context context-type="linenumber">95</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2939099431806912711" datatype="html">
+        <source>Jugador</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
+          <context context-type="linenumber">105,106</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8523260185096983613" datatype="html">
         <source> <x id="INTERPOLATION" equiv-text="{{ startIndex() + 1 }}"/> – <x id="INTERPOLATION_1" equiv-text="{{ endIndex() }}"/> de <x id="INTERPOLATION_2" equiv-text="{{ filteredEntries().length }}"/> jugadores </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
-          <context context-type="linenumber">123,124</context>
+          <context context-type="linenumber">171,172</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5864682613007382610" datatype="html">
@@ -1343,14 +1362,14 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/header/header.component.html</context>
-          <context context-type="linenumber">121,122</context>
+          <context context-type="linenumber">119,120</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3647616048271413511" datatype="html">
         <source>Toggle menu</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/header/header.component.html</context>
-          <context context-type="linenumber">89,90</context>
+          <context context-type="linenumber">87,88</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7728513701937951957" datatype="html">

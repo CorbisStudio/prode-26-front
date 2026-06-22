@@ -1442,6 +1442,14 @@
           <context context-type="linenumber">58,59</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="1004273585248647019" datatype="html">
+        <source>Tu posición</source>
+        <target>Your position</target>
+      <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
+          <context context-type="linenumber">40,41</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="3813323018858009867" datatype="html">
         <source>Puntos</source>
         <target>Points</target>
