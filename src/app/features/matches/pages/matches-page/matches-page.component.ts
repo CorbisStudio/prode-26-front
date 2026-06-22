@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, signal, LOCALE_ID } from '@angular/core';
+import { Component, computed, effect, inject, signal, LOCALE_ID, AfterViewInit, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { parseISO, format, isToday, isTomorrow } from 'date-fns';
 import { es, enUS } from 'date-fns/locale';
@@ -9,7 +9,7 @@ import { StandingRowComponent } from '../../../standings/components/standing-row
 import { calculateStandingsFromMatches } from '../../../../core/utils/standings-calculator';
 import { formatStageLabel } from '../../../../shared/utils/label.utils';
 import { canPredict, getRelativeDateLabel, getDateFnsLocale } from '../../../../shared/utils/date.utils';
-import { LucideFilter, LucideCalendar, LucideChevronDown } from '@lucide/angular';
+import { LucideFilter, LucideCalendar, LucideChevronDown, LucideChevronUp } from '@lucide/angular';
 
 type StatusFilter = 'ALL' | 'FINISHED' | 'UPCOMING' | 'ARGENTINA';
 type ViewMode = 'fecha' | 'grupo' | 'equipos';
@@ -33,9 +33,9 @@ interface DatePill {
 @Component({
   selector: 'app-matches-page',
   standalone: true,
-  imports: [MatchCardComponent, StandingRowComponent, LucideFilter, LucideCalendar, LucideChevronDown, FormsModule],
+  imports: [MatchCardComponent, StandingRowComponent, LucideFilter, LucideCalendar, LucideChevronDown, LucideChevronUp, FormsModule],
   template: `
-    <div class="space-y-6">
+    <div class="space-y-6 relative">
 
       <!-- Page header + filters -->
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -223,10 +223,23 @@ interface DatePill {
           }
         }
       }
+
+      <!-- Scroll to top button -->
+      @if (showScrollToTop()) {
+        <button
+          (click)="scrollToTop()"
+          class="fixed bottom-6 right-6 z-40 flex items-center justify-center w-12 h-12 rounded-full glass-liquid shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 animate-pop-in"
+          i18n-aria-label
+          aria-label="Volver arriba"
+        >
+          <svg lucideChevronUp class="w-5 h-5 text-noche"></svg>
+        </button>
+      }
+
     </div>
   `,
 })
-export class MatchesPageComponent {
+export class MatchesPageComponent implements AfterViewInit, OnDestroy {
   private readonly api = inject(ProdeApiService);
   private readonly localeId = inject(LOCALE_ID);
   private get dfnsLocale() { return getDateFnsLocale(this.localeId); }
@@ -330,6 +343,9 @@ export class MatchesPageComponent {
     return -1;
   });
 
+  readonly showScrollToTop = signal(false);
+  private scrollListener?: () => void;
+
   private wasLoading = true;
 
   constructor() {
@@ -348,6 +364,18 @@ export class MatchesPageComponent {
     });
   }
 
+  ngAfterViewInit(): void {
+    const handleScroll = () => {
+      this.showScrollToTop.set(window.scrollY > 300);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    this.scrollListener = () => window.removeEventListener('scroll', handleScroll);
+  }
+
+  ngOnDestroy(): void {
+    this.scrollListener?.();
+  }
+
   scrollToDate(key: string): void {
     this.selectedDateKey.set(key);
     const el = document.getElementById(`date-${key}`);
@@ -356,6 +384,10 @@ export class MatchesPageComponent {
     const headerHeight = 88; // header h-16 + padding top
     const top = el.getBoundingClientRect().top + window.scrollY - headerHeight;
     window.scrollTo({ top, behavior: 'smooth' });
+  }
+
+  scrollToTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   private groupByDate(): MatchGroup[] {
