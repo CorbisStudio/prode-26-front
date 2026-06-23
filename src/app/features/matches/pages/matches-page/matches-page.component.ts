@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, signal, LOCALE_ID, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, computed, effect, ElementRef, inject, signal, viewChild, LOCALE_ID, AfterViewInit, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { parseISO, format, isToday, isTomorrow } from 'date-fns';
 import { es, enUS } from 'date-fns/locale';
@@ -119,10 +119,11 @@ interface DatePill {
 
       <!-- Date Pills Timeline -->
       @if (viewMode() === 'fecha' && datePills().length > 0) {
-        <div class="glass-liquid sticky top-20 z-30 rounded-2xl py-2 px-3 overflow-x-auto flex gap-2">
+        <div #datePillsContainer class="glass-liquid sticky top-20 z-30 rounded-2xl py-2 px-3 overflow-x-auto flex gap-2">
           @for (pill of datePills(); track pill.key) {
             @let isActive = activeDateKey() === pill.key;
             <button
+              [attr.data-pill-key]="pill.key"
               (click)="scrollToDate(pill.key)"
               class="whitespace-nowrap rounded-full px-3 py-1.5 text-xs font-medium transition-colors border shrink-0 inline-flex items-center gap-1.5"
               [class.bg-celeste]="isActive"
@@ -376,14 +377,38 @@ export class MatchesPageComponent implements AfterViewInit, OnDestroy {
     this.scrollListener?.();
   }
 
+  private readonly pillsContainer = viewChild<ElementRef<HTMLDivElement>>('datePillsContainer');
+
   scrollToDate(key: string): void {
     this.selectedDateKey.set(key);
+    this.scrollPillIntoView(key);
+
     const el = document.getElementById(`date-${key}`);
     if (!el) return;
 
     const headerHeight = 88; // header h-16 + padding top
     const top = el.getBoundingClientRect().top + window.scrollY - headerHeight;
     window.scrollTo({ top, behavior: 'smooth' });
+  }
+
+  private scrollPillIntoView(key: string): void {
+    const container = this.pillsContainer()?.nativeElement;
+    if (!container) return;
+
+    const pill = container.querySelector(`[data-pill-key="${key}"]`) as HTMLElement | null;
+    if (!pill) return;
+
+    const containerWidth = container.clientWidth;
+    const pillWidth = pill.clientWidth;
+    const pillOffsetLeft = pill.offsetLeft;
+
+    // Center the pill inside the rail.
+    const targetScrollLeft = pillOffsetLeft - containerWidth / 2 + pillWidth / 2;
+
+    container.scrollTo({
+      left: Math.max(0, targetScrollLeft),
+      behavior: 'smooth',
+    });
   }
 
   scrollToTop(): void {
