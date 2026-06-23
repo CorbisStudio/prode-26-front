@@ -1094,6 +1094,14 @@
           <context context-type="linenumber">153,154</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="8297608167082958436" datatype="html">
+        <source>Volver arriba</source>
+        <target>Back to top</target>
+      <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/matches/pages/matches-page/matches-page.component.ts</context>
+          <context context-type="linenumber">233,234</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="5763417600313466140" datatype="html">
         <source>Error al cargar los datos. Intenta más tarde.</source>
         <target>Error loading data. Please try again later.</target>
@@ -1440,6 +1448,14 @@
       <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
           <context context-type="linenumber">58,59</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3216691444980474705" datatype="html">
+        <source>Tu lugar en el ranking</source>
+        <target>Your place in the ranking</target>
+      <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
+          <context context-type="linenumber">43,44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1004273585248647019" datatype="html">

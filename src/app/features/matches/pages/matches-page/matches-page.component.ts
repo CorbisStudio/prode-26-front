@@ -119,7 +119,7 @@ interface DatePill {
 
       <!-- Date Pills Timeline -->
       @if (viewMode() === 'fecha' && datePills().length > 0) {
-        <div class="glass-liquid no-scrollbar sticky top-20 z-30 rounded-2xl py-2 px-3 overflow-x-auto flex gap-2">
+        <div class="glass-liquid sticky top-20 z-30 rounded-2xl py-2 px-3 overflow-x-auto flex gap-2">
           @for (pill of datePills(); track pill.key) {
             @let isActive = activeDateKey() === pill.key;
             <button

@@ -1,7 +1,8 @@
-import { Component, effect, inject, OnInit } from '@angular/core';
+import { afterNextRender, Component, effect, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { PredictionService } from './core/services/prediction.service';
 import { AuthService } from './core/services/auth.service';
+import { SeoService } from './core/services/seo.service';
 
 @Component({
   selector: 'app-root',
@@ -12,12 +13,17 @@ import { AuthService } from './core/services/auth.service';
 export class AppComponent implements OnInit {
   private readonly predictions = inject(PredictionService);
   private readonly auth = inject(AuthService);
+  private readonly seo = inject(SeoService);
 
   constructor() {
     effect(() => {
       if (this.auth.isAuthenticated()) {
         this.predictions.loadPredictions();
       }
+    });
+
+    afterNextRender(() => {
+      this.seo.start();
     });
   }
 

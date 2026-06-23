@@ -34,6 +34,7 @@ interface Language {
           @for (lang of languages; track lang.code) {
             <a
               [href]="buildUrl(lang.code)"
+              (click)="selectLanguage($event, lang.code)"
               class="block px-4 py-2 text-sm transition-colors duration-200"
               [class.bg-slate-50]="lang.code === localeId"
               [class.text-noche]="lang.code === localeId"
@@ -76,6 +77,12 @@ export class LanguageSelectorComponent {
     }
   }
 
+  selectLanguage(event: MouseEvent, code: string): void {
+    event.preventDefault();
+    this.setLocaleCookie(code);
+    window.location.href = this.buildUrl(code);
+  }
+
   buildUrl(targetCode: string): string {
     const path = window.location.pathname;
     const search = window.location.search;
@@ -93,5 +100,11 @@ export class LanguageSelectorComponent {
     }
 
     return newPath + search + hash;
+  }
+
+  private setLocaleCookie(locale: string): void {
+    const maxAge = 60 * 60 * 24 * 365; // 1 year
+    const secure = window.location.protocol === 'https:' ? '; Secure' : '';
+    document.cookie = `locale=${locale}; Path=/; Max-Age=${maxAge}; SameSite=Lax${secure}`;
   }
 }

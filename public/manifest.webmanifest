@@ -1,0 +1,18 @@
+{
+  "name": "Corbis Prode Mundial 2026",
+  "short_name": "Corbis Prode",
+  "description": "El Prode oficial del Mundial 2026. Predecí resultados, competí con tus amigos y dominá el ranking con el equipo de Corbis.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1A2744",
+  "theme_color": "#1A2744",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon",
+      "purpose": "any maskable"
+    }
+  ]
+}
