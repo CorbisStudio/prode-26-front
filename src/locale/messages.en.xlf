@@ -966,6 +966,14 @@
           <context context-type="linenumber">96,97</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="1871815084270998195" datatype="html">
+        <source>No disponible para tu grupo</source>
+        <target>Not available for your group</target>
+      <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/matches/components/match-card/match-card.component.ts</context>
+          <context context-type="linenumber">95,96</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="1346600529865844229" datatype="html">
         <source>Cerrada</source>
         <target>Closed</target>

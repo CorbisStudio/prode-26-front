@@ -4,11 +4,13 @@ import { parseISO, format, isToday, isTomorrow } from 'date-fns';
 import { es, enUS } from 'date-fns/locale';
 import { Match } from '../../../../core/models/match.model';
 import { ProdeApiService } from '../../../../core/services/prode-api.service';
+import { AuthService } from '../../../../core/services/auth.service';
 import { MatchCardComponent } from '../../components/match-card/match-card.component';
 import { StandingRowComponent } from '../../../standings/components/standing-row/standing-row.component';
 import { calculateStandingsFromMatches } from '../../../../core/utils/standings-calculator';
 import { formatStageLabel } from '../../../../shared/utils/label.utils';
 import { canPredict, getRelativeDateLabel, getDateFnsLocale } from '../../../../shared/utils/date.utils';
+import { canUserPredictMatch } from '../../../../shared/utils/prediction.utils';
 import { LucideFilter, LucideCalendar, LucideChevronDown, LucideChevronUp } from '@lucide/angular';
 
 type StatusFilter = 'ALL' | 'FINISHED' | 'UPCOMING' | 'ARGENTINA';
@@ -242,6 +244,7 @@ interface DatePill {
 })
 export class MatchesPageComponent implements AfterViewInit, OnDestroy {
   private readonly api = inject(ProdeApiService);
+  private readonly auth = inject(AuthService);
   private readonly localeId = inject(LOCALE_ID);
   private get dfnsLocale() { return getDateFnsLocale(this.localeId); }
 
@@ -271,11 +274,12 @@ export class MatchesPageComponent implements AfterViewInit, OnDestroy {
   /** Featured match: a live one wins; otherwise the next match still open for predictions. */
   readonly heroMatch = computed<Match | null>(() => {
     const matches = this.matchesResource.value() ?? [];
+    const userGroups = this.auth.user()?.groups ?? [];
     const live = matches.find((m) => m.status === 'IN_PLAY' || m.status === 'PAUSED');
     if (live) return live;
     return (
       matches
-        .filter((m) => (m.status === 'SCHEDULED' || m.status === 'TIMED') && canPredict(m.utc_date))
+        .filter((m) => (m.status === 'SCHEDULED' || m.status === 'TIMED') && canUserPredictMatch(userGroups, m))
         .sort((a, b) => a.utc_date.localeCompare(b.utc_date))[0] ?? null
     );
   });

@@ -5,6 +5,7 @@ import { ProdeApiService } from '../../../../core/services/prode-api.service';
 import { AuthService } from '../../../../core/services/auth.service';
 import { LucideTrophy, LucideChevronLeft, LucideChevronRight } from '@lucide/angular';
 import { ImgSkeletonComponent } from '../../../../shared/components/img-skeleton/img-skeleton.component';
+import { filterRankingByUserGroups } from '../../../../shared/utils/prediction.utils';
 
 const PAGE_SIZE = 20;
 
@@ -176,17 +177,22 @@ export class RankingPageComponent {
 
   readonly groupFilter = signal(this.route.snapshot.queryParamMap.get('group')?.trim() ?? '');
 
-  readonly entries = computed(() => this.rankingResource.value() ?? []);
+  readonly allEntries = computed(() => this.rankingResource.value() ?? []);
+
+  readonly visibleEntries = computed(() =>
+    filterRankingByUserGroups(this.allEntries(), this.auth.user()?.groups ?? [])
+  );
 
   readonly filteredEntries = computed(() => {
-    const all = this.entries();
+    const all = this.visibleEntries();
     const filter = this.groupFilter().toLowerCase();
 
-    if (!filter) return all;
+    const filtered = filter
+      ? all.filter((entry) => entry.groups?.some((group) => group.toLowerCase() === filter))
+      : all;
 
-    const filtered = all.filter((entry) => entry.groups?.some((group) => group.toLowerCase() === filter));
-
-    // Recompute positions inside the filtered ranking
+    // Recompute positions inside the visible ranking so the order is always
+    // sequential, even when the backend sent global positions across mixed groups.
     return filtered.map((entry, index) => ({ ...entry, position: index + 1 }));
   });
 

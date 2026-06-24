@@ -16,6 +16,7 @@ export interface AuthUser {
   last_name: string;
   email: string;
   profile_picture_url?: string | null;
+  groups?: string[];
 }
 
 export interface RegisterResponse {
@@ -31,6 +32,7 @@ export interface ActivationResponse extends TokenPair {
     last_name: string;
     is_staff: boolean;
     profile_picture_url?: string | null;
+    groups?: string[];
   };
 }
 
@@ -45,6 +47,28 @@ export class AuthService {
 
   readonly user = computed(() => this.currentUser());
   readonly isAuthenticated = computed(() => this.currentUser() !== null);
+  readonly userGroups = computed(() => this.currentUser()?.groups ?? []);
+
+  isInGroup(name: string): boolean {
+    return this.userGroups().some((g) => g.toUpperCase() === name.toUpperCase());
+  }
+
+  isClient(): boolean {
+    return this.isInGroup('CLIENT');
+  }
+
+  isManager(): boolean {
+    return this.isInGroup('MANAGER');
+  }
+
+  isCorbister(): boolean {
+    return this.isInGroup('CORBISTER');
+  }
+
+  /** Users in CLIENT or MANAGER groups can only predict knockout-stage matches. */
+  isRestrictedToKnockout(): boolean {
+    return this.isClient() || this.isManager();
+  }
 
   async register(first_name: string, email: string, password: string): Promise<RegisterResponse> {
     return await firstValueFrom(
@@ -68,6 +92,7 @@ export class AuthService {
       last_name: data.user.last_name,
       email: data.user.email,
       profile_picture_url: data.user.profile_picture_url || null,
+      groups: data.user.groups,
     };
 
     this.currentUser.set(user);
@@ -96,6 +121,7 @@ export class AuthService {
         last_name: payload['last_name'] || '',
         email: payload['email'] || '',
         profile_picture_url: payload['profile_picture_url'] || null,
+        groups: payload['groups'],
       };
       this.currentUser.set(fallbackUser);
       localStorage.setItem('prode_user_data', JSON.stringify(fallbackUser));
@@ -116,6 +142,7 @@ export class AuthService {
           last_name: string;
           is_staff: boolean;
           profile_picture_url?: string | null;
+          groups?: string[];
         }>(`${this.baseUrl}/profile/`, {
           headers: { Authorization: `Bearer ${token}` },
         })
@@ -129,6 +156,7 @@ export class AuthService {
         last_name: data.last_name,
         email: data.email,
         profile_picture_url: data.profile_picture_url || null,
+        groups: data.groups,
       };
     } catch {
       return null;

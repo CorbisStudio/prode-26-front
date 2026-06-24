@@ -1,7 +1,9 @@
 import { Component, DestroyRef, input, computed, inject, signal, LOCALE_ID } from '@angular/core';
 import { Match } from '../../../../core/models/match.model';
 import { PredictionService } from '../../../../core/services/prediction.service';
+import { AuthService } from '../../../../core/services/auth.service';
 import { getRelativeDateLabel, formatMatchTime, canPredict, getDateFnsLocale } from '../../../../shared/utils/date.utils';
+import { canUserPredictMatch, isRestrictedToKnockout, isKnockoutStage } from '../../../../shared/utils/prediction.utils';
 import { formatStageLabel } from '../../../../shared/utils/label.utils';
 import { ImgSkeletonComponent } from '../../../../shared/components/img-skeleton/img-skeleton.component';
 
@@ -89,7 +91,11 @@ import { ImgSkeletonComponent } from '../../../../shared/components/img-skeleton
               <div class="score-display text-gris" [class]="hero() ? 'text-5xl sm:text-7xl' : 'text-5xl'">
                 {{ predictionHome() !== '' ? predictionHome() : '–' }}<span class="text-gris/30 mx-1">–</span>{{ predictionAway() !== '' ? predictionAway() : '–' }}
               </div>
-              <span class="text-[10px] text-gris/50 font-medium uppercase tracking-wider" i18n>Cerrada</span>
+              @if (blockedByGroupStage()) {
+                <span class="text-[10px] text-gris/50 font-medium uppercase tracking-wider text-center leading-tight" i18n>No disponible para tu grupo</span>
+              } @else {
+                <span class="text-[10px] text-gris/50 font-medium uppercase tracking-wider" i18n>Cerrada</span>
+              }
             </div>
           } @else {
             @if (hasPrediction()) {
@@ -168,6 +174,7 @@ import { ImgSkeletonComponent } from '../../../../shared/components/img-skeleton
 })
 export class MatchCardComponent {
   private readonly predictions = inject(PredictionService);
+  private readonly auth = inject(AuthService);
 
   readonly match = input.required<Match>();
   readonly hero = input(false);
@@ -212,7 +219,12 @@ export class MatchCardComponent {
   readonly isLive = computed(() => this.match().status === 'IN_PLAY' || this.match().status === 'PAUSED');
   readonly dateLabel = computed(() => getRelativeDateLabel(this.match().utc_date, getDateFnsLocale(this.localeId)));
   readonly matchTime = computed(() => formatMatchTime(this.match().utc_date, getDateFnsLocale(this.localeId)));
-  readonly predictionOpen = computed(() => canPredict(this.match().utc_date));
+  readonly predictionOpen = computed(() => canUserPredictMatch(this.auth.user()?.groups ?? [], this.match()));
+  readonly predictionClosedByTime = computed(() => !canPredict(this.match().utc_date));
+  readonly blockedByGroupStage = computed(() => {
+    if (this.predictionClosedByTime()) return false;
+    return isRestrictedToKnockout(this.auth.user()?.groups ?? []) && !isKnockoutStage(this.match().stage);
+  });
 
   readonly predictionHome = computed(() => {
     const p = this.predictions.getPrediction(this.match().id);
