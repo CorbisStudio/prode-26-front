@@ -1386,12 +1386,12 @@
           <context context-type="linenumber">27,28</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5359341519896315907" datatype="html">
-        <source>Ver ranking global</source>
-        <target>View global ranking</target>
+      <trans-unit id="8470717472542445288" datatype="html">
+        <source>Limpiar filtros</source>
+        <target>Clear filters</target>
       <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
-          <context context-type="linenumber">28,29</context>
+          <context context-type="linenumber">29,30</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7219969784369768716" datatype="html">
@@ -1399,7 +1399,55 @@
         <target>Global Ranking</target>
       <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
-          <context context-type="linenumber">31,32</context>
+          <context context-type="linenumber">33,34</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
+          <context context-type="linenumber">52,53</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="770027163302742669" datatype="html">
+        <source>Viendo todos los participantes</source>
+        <target>Viewing all participants</target>
+      <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
+          <context context-type="linenumber">35,36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7011864403545565045" datatype="html">
+        <source>Ver managers y clientes</source>
+        <target>View managers and clients</target>
+      <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
+          <context context-type="linenumber">36,37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6042298058290105846" datatype="html">
+        <source>Ranking · Managers y Clientes</source>
+        <target>Ranking · Managers and Clients</target>
+      <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
+          <context context-type="linenumber">39,40</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
+          <context context-type="linenumber">46,47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5604460337564488372" datatype="html">
+        <source>Filtrado por tu grupo</source>
+        <target>Filtered by your group</target>
+      <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
+          <context context-type="linenumber">41,42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3879572838054327600" datatype="html">
+        <source>Ver todos</source>
+        <target>View all</target>
+      <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
+          <context context-type="linenumber">42,43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6012562182662090307" datatype="html">
@@ -1407,7 +1455,23 @@
         <target>Who predicts best at Corbis?</target>
       <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
-          <context context-type="linenumber">32,33</context>
+          <context context-type="linenumber">47,48</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
+          <context context-type="linenumber">50,51</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
+          <context context-type="linenumber">53,54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9162884085417484500" datatype="html">
+        <source>Ranking · Corbisters</source>
+        <target>Ranking · Corbisters</target>
+      <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
+          <context context-type="linenumber">49,50</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3335551741811421417" datatype="html">
@@ -1415,7 +1479,7 @@
         <target>Loading ranking...</target>
       <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
-          <context context-type="linenumber">38,39</context>
+          <context context-type="linenumber">73,74</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4085520041729870969" datatype="html">
@@ -1423,7 +1487,7 @@
         <target>Error loading ranking.</target>
       <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
-          <context context-type="linenumber">40,41</context>
+          <context context-type="linenumber">75,76</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5640191675053187292" datatype="html">
@@ -1431,7 +1495,7 @@
         <target>There are no participants in group <x id="START_TAG_STRONG" ctype="x-strong" equiv-text="&lt;strong&gt;" /><x id="INTERPOLATION" equiv-text="{{ groupFilter() }}" /><x id="CLOSE_TAG_STRONG" ctype="x-strong" equiv-text="&lt;/strong&gt;" /> en el ranking.</target>
       <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
-          <context context-type="linenumber">45,46</context>
+          <context context-type="linenumber">80,81</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1473735061628863591" datatype="html">
@@ -1439,7 +1503,7 @@
         <target>There are no participants in the ranking yet.</target>
       <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">82</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2939099431806912711" datatype="html">
@@ -1447,7 +1511,7 @@
         <target>Player</target>
       <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
-          <context context-type="linenumber">57,58</context>
+          <context context-type="linenumber">92,93</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3775760315769351531" datatype="html">
@@ -1455,7 +1519,7 @@
         <target>Exact</target>
       <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
-          <context context-type="linenumber">58,59</context>
+          <context context-type="linenumber">93,94</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3216691444980474705" datatype="html">
@@ -1463,7 +1527,7 @@
         <target>Your place in the ranking</target>
       <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
-          <context context-type="linenumber">43,44</context>
+          <context context-type="linenumber">64,65</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1004273585248647019" datatype="html">
@@ -1479,15 +1543,15 @@
         <target>Points</target>
       <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
-          <context context-type="linenumber">59,60</context>
+          <context context-type="linenumber">94,95</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8523260185096983613" datatype="html">
         <source> <x id="INTERPOLATION" equiv-text="{{ startIndex() + 1 }}" /> – <x id="INTERPOLATION_1" equiv-text="{{ endIndex() }}" /> de <x id="INTERPOLATION_2" equiv-text="{{ filteredEntries().length }}" /> jugadores </source>
-        <target> –  of  players </target>
+        <target> <x id="INTERPOLATION" equiv-text="{{ startIndex() + 1 }}" /> – <x id="INTERPOLATION_1" equiv-text="{{ endIndex() }}" /> of <x id="INTERPOLATION_2" equiv-text="{{ filteredEntries().length }}" /> players </target>
       <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
-          <context context-type="linenumber">123,124</context>
+          <context context-type="linenumber">158,159</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5864682613007382610" datatype="html">

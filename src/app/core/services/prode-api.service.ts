@@ -1,4 +1,4 @@
-import { Injectable, ResourceRef, inject } from '@angular/core';
+import { Injectable, ResourceRef, Signal, inject, signal } from '@angular/core';
 import { httpResource } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import { BackendMatch, BackendPrediction, BackendLeague, TokenPair, RankingEntry } from '../models/backend.model';
@@ -51,8 +51,10 @@ export class ProdeApiService {
     });
   }
 
-  getRanking(): ResourceRef<RankingEntry[] | undefined> {
-    return httpResource<RankingEntry[]>(() => `${this.baseUrl}/ranking/`);
+  getRanking(
+    endpoint: Signal<string> = signal(`${this.baseUrl}/ranking/`)
+  ): ResourceRef<RankingEntry[] | undefined> {
+    return httpResource<RankingEntry[]>(() => endpoint());
   }
 
   getLeagues(): ResourceRef<BackendLeague[] | undefined> {

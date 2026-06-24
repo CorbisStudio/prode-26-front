@@ -1,5 +1,5 @@
 import { Component, computed, effect, inject, signal } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import confetti from 'canvas-confetti';
 import { ProdeApiService } from '../../../../core/services/prode-api.service';
 import { AuthService } from '../../../../core/services/auth.service';
@@ -26,8 +26,28 @@ const PAGE_SIZE = 20;
             <h1 class="font-display text-3xl sm:text-4xl font-bold tracking-tight text-noche" i18n>Ranking · {{ groupFilter() }}</h1>
             <div class="flex items-center gap-2 mt-0.5">
               <p class="text-sm text-gris" i18n>Filtrado por grupo</p>
-              <a routerLink="/ranking" class="text-xs font-semibold text-celeste-dark hover:underline" i18n>Ver ranking global</a>
+              <a routerLink="/ranking" class="text-xs font-semibold text-celeste-dark hover:underline" i18n>Limpiar filtros</a>
             </div>
+          } @else if (isManager()) {
+            @if (showAllRanking()) {
+              <h1 class="font-display text-3xl sm:text-4xl font-bold tracking-tight text-noche" i18n>Ranking Global</h1>
+              <div class="flex items-center gap-2 mt-0.5">
+                <p class="text-sm text-gris" i18n>Viendo todos los participantes</p>
+                <button (click)="toggleShowAllRanking()" class="text-xs font-semibold text-celeste-dark hover:underline" i18n>Ver managers y clientes</button>
+              </div>
+            } @else {
+              <h1 class="font-display text-3xl sm:text-4xl font-bold tracking-tight text-noche" i18n>Ranking · Managers y Clientes</h1>
+              <div class="flex items-center gap-2 mt-0.5">
+                <p class="text-sm text-gris" i18n>Filtrado por tu grupo</p>
+                <button (click)="toggleShowAllRanking()" class="text-xs font-semibold text-celeste-dark hover:underline" i18n>Ver todos</button>
+              </div>
+            }
+          } @else if (isClient()) {
+            <h1 class="font-display text-3xl sm:text-4xl font-bold tracking-tight text-noche" i18n>Ranking · Managers y Clientes</h1>
+            <p class="text-sm text-gris mt-0.5" i18n>¿Quién predice mejor en Corbis?</p>
+          } @else if (isCorbister()) {
+            <h1 class="font-display text-3xl sm:text-4xl font-bold tracking-tight text-noche" i18n>Ranking · Corbisters</h1>
+            <p class="text-sm text-gris mt-0.5" i18n>¿Quién predice mejor en Corbis?</p>
           } @else {
             <h1 class="font-display text-3xl sm:text-4xl font-bold tracking-tight text-noche" i18n>Ranking Global</h1>
             <p class="text-sm text-gris mt-0.5" i18n>¿Quién predice mejor en Corbis?</p>
@@ -170,18 +190,42 @@ export class RankingPageComponent {
   private readonly api = inject(ProdeApiService);
   private readonly auth = inject(AuthService);
   private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
 
-  readonly rankingResource = this.api.getRanking();
+  readonly shouldUseEliminatoriaEndpoint = computed(() => {
+    // Manager en vista default (Managers y Clientes) → eliminatoria
+    if (this.isManager() && !this.showAllRanking()) return true;
+    // Client → eliminatoria
+    if (this.isClient()) return true;
+    return false;
+  });
+
+  readonly rankingEndpoint = computed(() => {
+    if (this.shouldUseEliminatoriaEndpoint()) {
+      return `${this.api.baseUrl}/ranking/eliminatoria/`;
+    }
+    return `${this.api.baseUrl}/ranking/`;
+  });
+
+  readonly rankingResource = this.api.getRanking(this.rankingEndpoint);
   readonly currentPage = signal(1);
   private readonly confettiLaunched = signal(false);
 
   readonly groupFilter = signal(this.route.snapshot.queryParamMap.get('group')?.trim() ?? '');
+  readonly showAllRanking = signal(this.route.snapshot.queryParamMap.get('view') === 'all');
 
   readonly allEntries = computed(() => this.rankingResource.value() ?? []);
+  readonly isManager = computed(() => this.auth.isManager());
+  readonly isClient = computed(() => this.auth.isClient());
+  readonly isCorbister = computed(() => this.auth.isCorbister());
 
-  readonly visibleEntries = computed(() =>
-    filterRankingByUserGroups(this.allEntries(), this.auth.user()?.groups ?? [])
-  );
+  readonly visibleEntries = computed(() => {
+    const entries = this.allEntries();
+    if (this.isManager() && this.showAllRanking()) {
+      return entries;
+    }
+    return filterRankingByUserGroups(entries, this.auth.user()?.groups ?? []);
+  });
 
   readonly filteredEntries = computed(() => {
     const all = this.visibleEntries();
@@ -217,8 +261,9 @@ export class RankingPageComponent {
 
   constructor() {
     effect(() => {
-      // Reset pagination when the group filter changes
+      // Reset pagination when the visible ranking changes
       this.groupFilter();
+      this.showAllRanking();
       this.currentPage.set(1);
     });
 
@@ -262,6 +307,16 @@ export class RankingPageComponent {
     };
 
     frame();
+  }
+
+  toggleShowAllRanking(): void {
+    const next = !this.showAllRanking();
+    this.showAllRanking.set(next);
+    void this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { view: next ? 'all' : null },
+      queryParamsHandling: 'merge',
+    });
   }
 
   prevPage(): void {

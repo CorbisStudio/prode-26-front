@@ -37,7 +37,8 @@ export function canUserPredictMatch(userGroups: string[] = [], match: Match): bo
  * Filter ranking entries according to the current user's groups.
  *
  * - CLIENT users see only CLIENT and MANAGER entries.
- * - CORBISTER users see only CORBISTER and MANAGER entries.
+ * - MANAGER users see only CLIENT and MANAGER entries.
+ * - CORBISTER users see only CORBISTER entries.
  * - Any other group (ADMIN, EXTERNAL, etc.) sees the full ranking.
  */
 export interface RankableEntry {
@@ -50,7 +51,10 @@ export function filterRankingByUserGroups<T extends RankableEntry>(
 ): T[] {
   const normalizedUserGroups = userGroups.map((g) => g.toUpperCase());
 
-  if (normalizedUserGroups.includes(USER_GROUPS.CLIENT)) {
+  if (
+    normalizedUserGroups.includes(USER_GROUPS.CLIENT) ||
+    normalizedUserGroups.includes(USER_GROUPS.MANAGER)
+  ) {
     return entries.filter((entry) =>
       entry.groups?.some((g) => {
         const ng = g.toUpperCase();
@@ -61,10 +65,7 @@ export function filterRankingByUserGroups<T extends RankableEntry>(
 
   if (normalizedUserGroups.includes(USER_GROUPS.CORBISTER)) {
     return entries.filter((entry) =>
-      entry.groups?.some((g) => {
-        const ng = g.toUpperCase();
-        return ng === USER_GROUPS.CORBISTER || ng === USER_GROUPS.MANAGER;
-      }),
+      entry.groups?.some((g) => g.toUpperCase() === USER_GROUPS.CORBISTER),
     );
   }
 
