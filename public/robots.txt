@@ -1,7 +1,12 @@
 User-agent: *
 Allow: /
-Disallow: /login
-Disallow: /register
-Disallow: /activate
+Allow: /es/
+Disallow: /es/login
+Disallow: /es/register
+Disallow: /es/activate
+Allow: /en/
+Disallow: /en/login
+Disallow: /en/register
+Disallow: /en/activate
 
 Sitemap: https://prode.corbis.com/sitemap.xml
