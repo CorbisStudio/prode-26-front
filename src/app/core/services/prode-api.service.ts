@@ -7,9 +7,8 @@ import { Observable } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class ProdeApiService {
   private readonly http = inject(HttpClient);
-  readonly baseUrl = 'http://a1b294b0dce6246168e6682809e8fef5-1925402808.us-west-2.elb.amazonaws.com/api';
+  readonly baseUrl = 'https://prode-api.corbisstudio.com/api';
 
-  // ─── Auth ───
   login(email: string, password: string): Observable<TokenPair> {
     return this.http.post<TokenPair>(`${this.baseUrl}/token/`, { email, password });
   }
@@ -22,7 +21,6 @@ export class ProdeApiService {
     return this.http.post(`${this.baseUrl}/token/verify/`, { token });
   }
 
-  // ─── Matches ───
   getMatches(
     group?: string,
     stage?: string,
@@ -41,7 +39,6 @@ export class ProdeApiService {
     return httpResource<BackendMatch>(() => `${this.baseUrl}/matches/${id}/`);
   }
 
-  // ─── Predictions ───
   getPredictions(): ResourceRef<BackendPrediction[] | undefined> {
     return httpResource<BackendPrediction[]>(() => `${this.baseUrl}/predictions/`);
   }
@@ -54,12 +51,10 @@ export class ProdeApiService {
     });
   }
 
-  // ─── Ranking ───
   getRanking(): ResourceRef<RankingEntry[] | undefined> {
     return httpResource<RankingEntry[]>(() => `${this.baseUrl}/ranking/`);
   }
 
-  // ─── Leagues ───
   getLeagues(): ResourceRef<BackendLeague[] | undefined> {
     return httpResource<BackendLeague[]>(() => `${this.baseUrl}/leagues/`);
   }
