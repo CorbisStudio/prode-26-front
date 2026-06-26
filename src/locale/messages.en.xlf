@@ -372,7 +372,7 @@
       </trans-unit>
       <trans-unit id="6058769311656343928" datatype="html">
         <source>Prode Oficial · Corbis</source>
-        <target>CORBIS CLIENT CHALLENGE</target>
+        <target>CORBIS CHALLENGE</target>
       <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/home/pages/home-page/home-page.component.ts</context>
           <context context-type="linenumber">39,40</context>
@@ -380,7 +380,7 @@
       </trans-unit>
       <trans-unit id="5014461560300928637" datatype="html">
         <source> Predecí.<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;" /><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;text-celeste-dark&quot;&gt;" />Competí. Dominá.<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></source>
-        <target> Predict.<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;" /><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;text-celeste-dark&quot;&gt;" />Compete. Enjoy the Game.<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></target>
+        <target> Predict.<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;" /><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;text-celeste-dark&quot;&gt;" />Deliver. Enjoy the Game.<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;" /></target>
       <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/home/pages/home-page/home-page.component.ts</context>
           <context context-type="linenumber">43,47</context>
@@ -388,7 +388,7 @@
       </trans-unit>
       <trans-unit id="6572940307094253743" datatype="html">
         <source> El prode del Mundial 2026 que une al equipo. Demostrá lo que sabés (o no) de fútbol y divertite </source>
-        <target>Join Corbis' World Cup 2026 prediction challenge. Make your picks, test your soccer instincts, and have some fun along the way.</target>
+        <target>Test your instincts for upcoming matches, compete with colleagues, and have fun along the way.</target>
       <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/home/pages/home-page/home-page.component.ts</context>
           <context context-type="linenumber">48,49</context>
@@ -412,7 +412,7 @@
       </trans-unit>
       <trans-unit id="1065368691094200280" datatype="html">
         <source>Velocidad · Precisión · Resultados</source>
-        <target>Speed · Precision · Results</target>
+        <target>Fun fact: The term “Prode” stands for "Pronósticos Deportivos" (in Spanish) and is a widely used acronym in Argentina, the current World Champion.   </target>
       <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/home/pages/home-page/home-page.component.ts</context>
           <context context-type="linenumber">69,70</context>
