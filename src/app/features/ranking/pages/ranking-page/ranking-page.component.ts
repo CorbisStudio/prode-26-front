@@ -36,14 +36,14 @@ const PAGE_SIZE = 20;
                 <button (click)="toggleShowAllRanking()" class="text-xs font-semibold text-celeste-dark hover:underline" i18n>Ver managers y clientes</button>
               </div>
             } @else {
-              <h1 class="font-display text-3xl sm:text-4xl font-bold tracking-tight text-noche" i18n>Ranking · Managers y Clientes</h1>
+              <h1 class="font-display text-3xl sm:text-4xl font-bold tracking-tight text-noche" i18n>Ranking</h1>
               <div class="flex items-center gap-2 mt-0.5">
                 <p class="text-sm text-gris" i18n>Filtrado por tu grupo</p>
                 <button (click)="toggleShowAllRanking()" class="text-xs font-semibold text-celeste-dark hover:underline" i18n>Ver todos</button>
               </div>
             }
           } @else if (isClient()) {
-            <h1 class="font-display text-3xl sm:text-4xl font-bold tracking-tight text-noche" i18n>Ranking · Managers y Clientes</h1>
+            <h1 class="font-display text-3xl sm:text-4xl font-bold tracking-tight text-noche" i18n>Ranking</h1>
             <p class="text-sm text-gris mt-0.5" i18n>¿Quién predice mejor en Corbis?</p>
           } @else if (isCorbister()) {
             <h1 class="font-display text-3xl sm:text-4xl font-bold tracking-tight text-noche" i18n>Ranking · Corbisters</h1>
