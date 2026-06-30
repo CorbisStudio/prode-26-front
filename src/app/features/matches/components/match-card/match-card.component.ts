@@ -89,10 +89,11 @@ import { ImgSkeletonComponent } from '../../../../shared/components/img-skeleton
                 <span [class.opacity-55]="winnerSide() === 'home'">{{ match().away_score ?? 0 }}</span>
               </div>
               @if (isPenaltyShootout()) {
-                <div class="flex items-center gap-1 mt-0.5">
-                  <span class="text-[14px] font-semibold text-gris/80 tabular-nums">{{ match().penalties_home }}</span>
-                  <span class="text-[10px] text-gris/40 font-bold uppercase tracking-widest" i18n>pen</span>
-                  <span class="text-[14px] font-semibold text-gris/80 tabular-nums">{{ match().penalties_away }}</span>
+                <div class="mt-1.5 px-2 py-0.5 rounded-full bg-gris/5 inline-flex items-center gap-1.5">
+                  <span class="text-[9px] font-bold text-gris/40 uppercase tracking-widest" i18n>Penales</span>
+                  <span class="text-sm font-semibold text-gris/80 tabular-nums">
+                    {{ match().penalties_home }}<span class="text-gris/30 mx-0.5">–</span>{{ match().penalties_away }}
+                  </span>
                 </div>
               }
             </div>

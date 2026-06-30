@@ -6,106 +6,106 @@
         <source>Fase Eliminatoria</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/bracket/pages/bracket-page/bracket-page.component.ts</context>
-          <context context-type="linenumber">19,20</context>
+          <context context-type="linenumber">20,21</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4485790982155366043" datatype="html">
         <source>El camino hacia la gloria</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/bracket/pages/bracket-page/bracket-page.component.ts</context>
-          <context context-type="linenumber">20,21</context>
+          <context context-type="linenumber">21,22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7286433278687496253" datatype="html">
         <source>Error al cargar los datos.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/bracket/pages/bracket-page/bracket-page.component.ts</context>
-          <context context-type="linenumber">26,27</context>
+          <context context-type="linenumber">27,28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6895592146950031572" datatype="html">
         <source>Los partidos de eliminatoria aún no están definidos.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/bracket/pages/bracket-page/bracket-page.component.ts</context>
-          <context context-type="linenumber">34,35</context>
+          <context context-type="linenumber">35,36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8760320553538033995" datatype="html">
         <source>Volvé cuando finalice la fase de grupos.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/bracket/pages/bracket-page/bracket-page.component.ts</context>
-          <context context-type="linenumber">35,36</context>
+          <context context-type="linenumber">36,37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3624630631158395228" datatype="html">
         <source>Fecha por definir</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/bracket/pages/bracket-page/bracket-page.component.ts</context>
-          <context context-type="linenumber">55,56</context>
+          <context context-type="linenumber">57,58</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3957460409837704113" datatype="html">
         <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;w-1.5 h-1.5 rounded-full bg-cancha&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> Final </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/bracket/pages/bracket-page/bracket-page.component.ts</context>
-          <context context-type="linenumber">101,102</context>
+          <context context-type="linenumber">103,104</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6426675579600126342" datatype="html">
         <source>Cargando eliminatorias...</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/bracket/pages/bracket-page/bracket-page.component.ts</context>
-          <context context-type="linenumber">116,117</context>
+          <context context-type="linenumber">118,119</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2906587845957718064" datatype="html">
         <source>Local</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/bracket/pages/bracket-page/bracket-page.component.ts</context>
-          <context context-type="linenumber">124</context>
+          <context context-type="linenumber">126</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/matches/components/match-card/match-card.component.ts</context>
-          <context context-type="linenumber">192</context>
+          <context context-type="linenumber">198</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2819560367916465927" datatype="html">
         <source>Visitante</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/bracket/pages/bracket-page/bracket-page.component.ts</context>
-          <context context-type="linenumber">125</context>
+          <context context-type="linenumber">127</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/matches/components/match-card/match-card.component.ts</context>
-          <context context-type="linenumber">193</context>
+          <context context-type="linenumber">199</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6967052101432716969" datatype="html">
         <source>16avos de Final</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/bracket/pages/bracket-page/bracket-page.component.ts</context>
-          <context context-type="linenumber">145</context>
+          <context context-type="linenumber">148</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2022720818358265526" datatype="html">
         <source>Octavos de Final</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/bracket/pages/bracket-page/bracket-page.component.ts</context>
-          <context context-type="linenumber">146</context>
+          <context context-type="linenumber">149</context>
         </context-group>
       </trans-unit>
       <trans-unit id="303363162385147824" datatype="html">
         <source>Cuartos de Final</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/bracket/pages/bracket-page/bracket-page.component.ts</context>
-          <context context-type="linenumber">147</context>
+          <context context-type="linenumber">150</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6268544102809151427" datatype="html">
         <source>Semifinales</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/bracket/pages/bracket-page/bracket-page.component.ts</context>
-          <context context-type="linenumber">148</context>
+          <context context-type="linenumber">151</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/utils/label.utils.ts</context>
@@ -120,14 +120,14 @@
         <source>Tercer Puesto</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/bracket/pages/bracket-page/bracket-page.component.ts</context>
-          <context context-type="linenumber">149</context>
+          <context context-type="linenumber">152</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4609200447119745819" datatype="html">
         <source>Final</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/bracket/pages/bracket-page/bracket-page.component.ts</context>
-          <context context-type="linenumber">150</context>
+          <context context-type="linenumber">153</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/utils/label.utils.ts</context>
@@ -781,95 +781,95 @@
         <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;w-1.5 h-1.5 rounded-full bg-cancha&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> Finalizado </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/matches/components/match-card/match-card.component.ts</context>
-          <context context-type="linenumber">28,30</context>
+          <context context-type="linenumber">29,31</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1275189880106876405" datatype="html">
         <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> En vivo </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/matches/components/match-card/match-card.component.ts</context>
-          <context context-type="linenumber">33,35</context>
+          <context context-type="linenumber">34,36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8221939949179539846" datatype="html">
         <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;w-1.5 h-1.5 rounded-full bg-gris&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> Cerrado </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/matches/components/match-card/match-card.component.ts</context>
-          <context context-type="linenumber">38,40</context>
+          <context context-type="linenumber">39,41</context>
         </context-group>
       </trans-unit>
       <trans-unit id="9192654095476887664" datatype="html">
         <source> Cierra en <x id="INTERPOLATION" equiv-text="{{ closesInLabel() }}"/> </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/matches/components/match-card/match-card.component.ts</context>
-          <context context-type="linenumber">46,47</context>
+          <context context-type="linenumber">47,48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6549246695969448163" datatype="html">
         <source>Resultado final</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/matches/components/match-card/match-card.component.ts</context>
-          <context context-type="linenumber">83,84</context>
+          <context context-type="linenumber">85,86</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="795981590994940348" datatype="html">
-        <source>pen</source>
+      <trans-unit id="8624919502200364045" datatype="html">
+        <source>Penales</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/matches/components/match-card/match-card.component.ts</context>
-          <context context-type="linenumber">90,91</context>
+          <context context-type="linenumber">93,94</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6123324799449058369" datatype="html">
         <source>Mi predicción</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/matches/components/match-card/match-card.component.ts</context>
-          <context context-type="linenumber">97,98</context>
+          <context context-type="linenumber">102,103</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/matches/components/match-card/match-card.component.ts</context>
-          <context context-type="linenumber">109,110</context>
+          <context context-type="linenumber">114,115</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1871815084270998195" datatype="html">
         <source>No disponible para tu grupo</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/matches/components/match-card/match-card.component.ts</context>
-          <context context-type="linenumber">102,103</context>
+          <context context-type="linenumber">107,108</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1346600529865844229" datatype="html">
         <source>Cerrada</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/matches/components/match-card/match-card.component.ts</context>
-          <context context-type="linenumber">104,105</context>
+          <context context-type="linenumber">109,110</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6660825914807446128" datatype="html">
         <source><x id="START_TAG__SVG_SVG" ctype="x-_svg_svg" equiv-text="&lt;svg class=&quot;animate-spin h-3 w-3 text-gris&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; fill=&quot;none&quot; viewBox=&quot;0 0 24 24&quot;&gt;"/><x id="START_TAG__SVG_CIRCLE" ctype="x-_svg_circle" equiv-text="&lt;circle class=&quot;opacity-25&quot; cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;10&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;4&quot;&gt;"/><x id="CLOSE_TAG__SVG_CIRCLE" ctype="x-_svg_circle" equiv-text="&lt;/circle&gt;"/><x id="START_TAG__SVG_PATH" ctype="x-_svg_path" equiv-text="&lt;path class=&quot;opacity-75&quot; fill=&quot;currentColor&quot; d=&quot;M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z&quot;&gt;"/><x id="CLOSE_TAG__SVG_PATH" ctype="x-_svg_path" equiv-text="&lt;/path&gt;"/><x id="CLOSE_TAG__SVG_SVG" ctype="x-_svg_svg" equiv-text="&lt;/svg&gt;"/> Guardando... </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/matches/components/match-card/match-card.component.ts</context>
-          <context context-type="linenumber">137,142</context>
+          <context context-type="linenumber">142,147</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1421368655537725751" datatype="html">
         <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;w-1.5 h-1.5 rounded-full bg-cancha&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> Guardado </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/matches/components/match-card/match-card.component.ts</context>
-          <context context-type="linenumber">145,147</context>
+          <context context-type="linenumber">150,152</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4004336807077086680" datatype="html">
         <source>Error al guardar</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/matches/components/match-card/match-card.component.ts</context>
-          <context context-type="linenumber">150,151</context>
+          <context context-type="linenumber">155,156</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2081261988685761021" datatype="html">
         <source>Por definir</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/matches/components/match-card/match-card.component.ts</context>
-          <context context-type="linenumber">194</context>
+          <context context-type="linenumber">200</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7204929103129223406" datatype="html">
@@ -1158,49 +1158,49 @@
         <source>Resultado</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.html</context>
-          <context context-type="linenumber">134,135</context>
+          <context context-type="linenumber">136,137</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2003489121789724747" datatype="html">
         <source>En vivo</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.html</context>
-          <context context-type="linenumber">140,141</context>
+          <context context-type="linenumber">142,143</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1029150937787246789" datatype="html">
         <source>Pendiente</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.ts</context>
-          <context context-type="linenumber">23</context>
+          <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2891604574493474817" datatype="html">
         <source>Calculando…</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.ts</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4115547609960203752" datatype="html">
         <source>3 pts · Exacto</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.ts</context>
-          <context context-type="linenumber">29</context>
+          <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5461516516779821719" datatype="html">
         <source>1 pt · Ganador</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.ts</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1105635833608584385" datatype="html">
         <source>0 pts</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.ts</context>
-          <context context-type="linenumber">34</context>
+          <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6918866643237317433" datatype="html">
