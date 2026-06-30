@@ -66,7 +66,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/matches/components/match-card/match-card.component.ts</context>
-          <context context-type="linenumber">185</context>
+          <context context-type="linenumber">192</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2819560367916465927" datatype="html">
@@ -77,7 +77,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/matches/components/match-card/match-card.component.ts</context>
-          <context context-type="linenumber">186</context>
+          <context context-type="linenumber">193</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6967052101432716969" datatype="html">
@@ -286,36 +286,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/home/pages/register-page/register-page.component.html</context>
           <context context-type="linenumber">133,134</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="1339073535651733806" datatype="html">
-        <source> Predecí.<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/>Competí.<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;text-dorado&quot;&gt;"/>Dominá.<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/home/pages/activate-page/activate-page.component.html</context>
-          <context context-type="linenumber">146,149</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/home/pages/login-page/login-page.component.html</context>
-          <context context-type="linenumber">116,119</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/home/pages/register-page/register-page.component.html</context>
-          <context context-type="linenumber">143,146</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="6024414736240028684" datatype="html">
-        <source> El Prode que une al equipo.<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br /&gt;"/>¿Quién sabe más de fútbol? </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/home/pages/activate-page/activate-page.component.html</context>
-          <context context-type="linenumber">150,152</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/home/pages/login-page/login-page.component.html</context>
-          <context context-type="linenumber">120,122</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/home/pages/register-page/register-page.component.html</context>
-          <context context-type="linenumber">147,149</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6058769311656343928" datatype="html">
@@ -596,6 +566,14 @@
           <context context-type="linenumber">259,260</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
+          <context context-type="linenumber">39,40</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
+          <context context-type="linenumber">46,47</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/shared/components/header/header.component.ts</context>
           <context context-type="linenumber">12</context>
         </context-group>
@@ -834,57 +812,64 @@
           <context context-type="linenumber">83,84</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="6123324799449058369" datatype="html">
-        <source>Mi predicción</source>
+      <trans-unit id="795981590994940348" datatype="html">
+        <source>pen</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/matches/components/match-card/match-card.component.ts</context>
           <context context-type="linenumber">90,91</context>
         </context-group>
+      </trans-unit>
+      <trans-unit id="6123324799449058369" datatype="html">
+        <source>Mi predicción</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/matches/components/match-card/match-card.component.ts</context>
-          <context context-type="linenumber">102,103</context>
+          <context context-type="linenumber">97,98</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/matches/components/match-card/match-card.component.ts</context>
+          <context context-type="linenumber">109,110</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1871815084270998195" datatype="html">
         <source>No disponible para tu grupo</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/matches/components/match-card/match-card.component.ts</context>
-          <context context-type="linenumber">95,96</context>
+          <context context-type="linenumber">102,103</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1346600529865844229" datatype="html">
         <source>Cerrada</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/matches/components/match-card/match-card.component.ts</context>
-          <context context-type="linenumber">97,98</context>
+          <context context-type="linenumber">104,105</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6660825914807446128" datatype="html">
         <source><x id="START_TAG__SVG_SVG" ctype="x-_svg_svg" equiv-text="&lt;svg class=&quot;animate-spin h-3 w-3 text-gris&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; fill=&quot;none&quot; viewBox=&quot;0 0 24 24&quot;&gt;"/><x id="START_TAG__SVG_CIRCLE" ctype="x-_svg_circle" equiv-text="&lt;circle class=&quot;opacity-25&quot; cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;10&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;4&quot;&gt;"/><x id="CLOSE_TAG__SVG_CIRCLE" ctype="x-_svg_circle" equiv-text="&lt;/circle&gt;"/><x id="START_TAG__SVG_PATH" ctype="x-_svg_path" equiv-text="&lt;path class=&quot;opacity-75&quot; fill=&quot;currentColor&quot; d=&quot;M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z&quot;&gt;"/><x id="CLOSE_TAG__SVG_PATH" ctype="x-_svg_path" equiv-text="&lt;/path&gt;"/><x id="CLOSE_TAG__SVG_SVG" ctype="x-_svg_svg" equiv-text="&lt;/svg&gt;"/> Guardando... </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/matches/components/match-card/match-card.component.ts</context>
-          <context context-type="linenumber">130,135</context>
+          <context context-type="linenumber">137,142</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1421368655537725751" datatype="html">
         <source><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span class=&quot;w-1.5 h-1.5 rounded-full bg-cancha&quot;&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/> Guardado </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/matches/components/match-card/match-card.component.ts</context>
-          <context context-type="linenumber">138,140</context>
+          <context context-type="linenumber">145,147</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4004336807077086680" datatype="html">
         <source>Error al guardar</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/matches/components/match-card/match-card.component.ts</context>
-          <context context-type="linenumber">143,144</context>
+          <context context-type="linenumber">150,151</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2081261988685761021" datatype="html">
         <source>Por definir</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/matches/components/match-card/match-card.component.ts</context>
-          <context context-type="linenumber">187</context>
+          <context context-type="linenumber">194</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7204929103129223406" datatype="html">
@@ -1183,6 +1168,41 @@
           <context context-type="linenumber">140,141</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="1029150937787246789" datatype="html">
+        <source>Pendiente</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.ts</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2891604574493474817" datatype="html">
+        <source>Calculando…</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4115547609960203752" datatype="html">
+        <source>3 pts · Exacto</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.ts</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5461516516779821719" datatype="html">
+        <source>1 pt · Ganador</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.ts</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1105635833608584385" datatype="html">
+        <source>0 pts</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.ts</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="6918866643237317433" datatype="html">
         <source>Ranking · <x id="INTERPOLATION" equiv-text="{{ groupFilter() }}"/></source>
         <context-group purpose="location">
@@ -1227,17 +1247,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
           <context context-type="linenumber">36,37</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="6042298058290105846" datatype="html">
-        <source>Ranking · Managers y Clientes</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
-          <context context-type="linenumber">39,40</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/features/ranking/pages/ranking-page/ranking-page.component.ts</context>
-          <context context-type="linenumber">46,47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5604460337564488372" datatype="html">

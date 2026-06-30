@@ -1,6 +1,7 @@
 import { Component, computed, inject } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { ProdeApiService } from '../../../../core/services/prode-api.service';
+import { getMatchWinner } from '../../../../shared/utils/match.utils';
 import { LucideTrophy } from '@lucide/angular';
 
 @Component({
@@ -46,6 +47,7 @@ import { LucideTrophy } from '@lucide/angular';
 
                   <div class="flex flex-wrap justify-center gap-4">
                     @for (match of round.matches; track match.id) {
+                      @let winner = getWinner(match);
                       <article class="w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)] max-w-sm glass glass-interactive rounded-2xl p-4">
 
                         <div class="text-xs text-gris/60 text-center mb-4 font-medium">
@@ -58,7 +60,7 @@ import { LucideTrophy } from '@lucide/angular';
 
                         <div class="space-y-3">
                           <!-- Home team -->
-                          <div class="flex items-center justify-between">
+                          <div class="flex items-center justify-between" [class.opacity-55]="winner === 'away'">
                             <div class="flex items-center gap-2.5">
                               <div class="w-8 h-8 rounded-xl bg-white/70 flex items-center justify-center p-0.5 shrink-0">
                                 @if (match.home_team?.flag_url) {
@@ -78,7 +80,7 @@ import { LucideTrophy } from '@lucide/angular';
                           <div class="border-t border-white/30"></div>
 
                           <!-- Away team -->
-                          <div class="flex items-center justify-between">
+                          <div class="flex items-center justify-between" [class.opacity-55]="winner === 'home'">
                             <div class="flex items-center gap-2.5">
                               <div class="w-8 h-8 rounded-xl bg-white/70 flex items-center justify-center p-0.5 shrink-0">
                                 @if (match.away_team?.flag_url) {
@@ -123,6 +125,7 @@ export class BracketPageComponent {
 
   readonly defaultHomeAlt = $localize`Local`;
   readonly defaultAwayAlt = $localize`Visitante`;
+  readonly getWinner = getMatchWinner;
 
   readonly matchesResource = this.api.getMatches();
 
@@ -175,6 +178,15 @@ export class BracketPageComponent {
               home_score: null,
               away_score: null,
               winner: null,
+              duration: null,
+              penalties_home: null,
+              penalties_away: null,
+              regular_time_home: null,
+              regular_time_away: null,
+              extra_time_home: null,
+              extra_time_away: null,
+              half_time_home: null,
+              half_time_away: null,
             }));
 
       return {

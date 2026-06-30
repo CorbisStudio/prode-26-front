@@ -940,10 +940,34 @@
       </trans-unit>
       <trans-unit id="9192654095476887664" datatype="html">
         <source> Cierra en <x id="INTERPOLATION" equiv-text="{{ closesInLabel() }}" /> </source>
-        <target>Closes in </target>
+        <target>Closes in <x id="INTERPOLATION" equiv-text="{{ closesInLabel() }}" /></target>
       <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/matches/components/match-card/match-card.component.ts</context>
           <context context-type="linenumber">44,45</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3616191027804458021" datatype="html">
+        <source>d</source>
+        <target>d</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/matches/components/match-card/match-card.component.ts</context>
+          <context context-type="linenumber">213,215</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8398233202919865612" datatype="html">
+        <source>h</source>
+        <target>h</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/matches/components/match-card/match-card.component.ts</context>
+          <context context-type="linenumber">213,215</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8033953731717586115" datatype="html">
+        <source>m</source>
+        <target>m</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/matches/components/match-card/match-card.component.ts</context>
+          <context context-type="linenumber">213,215</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6549246695969448163" datatype="html">
@@ -954,7 +978,15 @@
           <context context-type="linenumber">81,82</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="6123324799449058369" datatype="html">
+      <trans-unit id="795981590994940348" datatype="html">
+        <source>pen</source>
+        <target>pen</target>
+      <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/matches/components/match-card/match-card.component.ts</context>
+          <context context-type="linenumber">90,91</context>
+        </context-group>
+      </trans-unit>
+            <trans-unit id="6123324799449058369" datatype="html">
         <source>Mi predicción</source>
         <target>My prediction</target>
       <context-group purpose="location">
@@ -1292,10 +1324,50 @@
       </trans-unit>
       <trans-unit id="4675432973349589414" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{ totalPoints() }}" /> pts</source>
-        <target> pts</target>
+        <target><x id="INTERPOLATION" equiv-text="{{ totalPoints() }}" /> pts</target>
       <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.html</context>
           <context context-type="linenumber">17,18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1029150937787246789" datatype="html">
+        <source>Pendiente</source>
+        <target>Pending</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.ts</context>
+          <context context-type="linenumber">22,24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2891604574493474817" datatype="html">
+        <source>Calculando…</source>
+        <target>Calculating…</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.ts</context>
+          <context context-type="linenumber">25,27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4115547609960203752" datatype="html">
+        <source>3 pts · Exacto</source>
+        <target>3 pts · Exact</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.ts</context>
+          <context context-type="linenumber">28,30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5461516516779821719" datatype="html">
+        <source>1 pt · Ganador</source>
+        <target>1 pt · Winner</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.ts</context>
+          <context context-type="linenumber">31,33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1105635833608584385" datatype="html">
+        <source>0 pts</source>
+        <target>0 pts</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.ts</context>
+          <context context-type="linenumber">34,35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8977374271285998879" datatype="html">

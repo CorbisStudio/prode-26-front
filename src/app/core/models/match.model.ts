@@ -10,6 +10,8 @@ export type MatchStatus =
   | 'SUSPENDED'
   | 'CANCELLED';
 
+export type MatchDuration = 'REGULAR' | 'EXTRA_TIME' | 'PENALTY_SHOOTOUT';
+
 export interface Match {
   id: number;
   stage: string;
@@ -22,6 +24,13 @@ export interface Match {
   home_score: number | null;
   away_score: number | null;
   winner: string | null;
+  duration: MatchDuration | null;
+  penalties_home: number | null;
+  penalties_away: number | null;
+  regular_time_home: number | null;
+  regular_time_away: number | null;
+  extra_time_home: number | null;
+  extra_time_away: number | null;
 }
 
 export interface MatchPrediction {

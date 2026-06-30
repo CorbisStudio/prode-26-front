@@ -5,6 +5,7 @@ import { AuthService } from '../../../../core/services/auth.service';
 import { getRelativeDateLabel, formatMatchTime, canPredict, getDateFnsLocale } from '../../../../shared/utils/date.utils';
 import { canUserPredictMatch, isRestrictedToKnockout, isKnockoutStage } from '../../../../shared/utils/prediction.utils';
 import { formatStageLabel } from '../../../../shared/utils/label.utils';
+import { getMatchWinner } from '../../../../shared/utils/match.utils';
 import { ImgSkeletonComponent } from '../../../../shared/components/img-skeleton/img-skeleton.component';
 
 @Component({
@@ -73,6 +74,7 @@ import { ImgSkeletonComponent } from '../../../../shared/components/img-skeleton
           <span
             class="font-bold text-noche text-center leading-tight"
             [class]="hero() ? 'font-display text-base sm:text-xl' : 'text-sm'"
+            [class.opacity-55]="winnerSide() === 'away'"
           >{{ match().home_team?.name ?? tbdLabel }}</span>
         </div>
 
@@ -82,8 +84,17 @@ import { ImgSkeletonComponent } from '../../../../shared/components/img-skeleton
             <div class="flex flex-col items-center gap-1">
               <span class="text-[10px] font-bold uppercase tracking-[0.18em] text-cancha" i18n>Resultado final</span>
               <div class="score-display text-noche" [class]="hero() ? 'text-5xl sm:text-7xl' : 'text-5xl'">
-                {{ match().home_score ?? 0 }}<span class="text-gris/30 mx-1">–</span>{{ match().away_score ?? 0 }}
+                <span [class.opacity-55]="winnerSide() === 'away'">{{ match().home_score ?? 0 }}</span>
+                <span class="text-gris/30 mx-1">–</span>
+                <span [class.opacity-55]="winnerSide() === 'home'">{{ match().away_score ?? 0 }}</span>
               </div>
+              @if (isPenaltyShootout()) {
+                <div class="flex items-center gap-1 mt-0.5">
+                  <span class="text-[14px] font-semibold text-gris/80 tabular-nums">{{ match().penalties_home }}</span>
+                  <span class="text-[10px] text-gris/40 font-bold uppercase tracking-widest" i18n>pen</span>
+                  <span class="text-[14px] font-semibold text-gris/80 tabular-nums">{{ match().penalties_away }}</span>
+                </div>
+              }
             </div>
           } @else if (!predictionOpen()) {
             <div class="flex flex-col items-center gap-1">
@@ -165,6 +176,7 @@ import { ImgSkeletonComponent } from '../../../../shared/components/img-skeleton
           <span
             class="font-bold text-noche text-center leading-tight"
             [class]="hero() ? 'font-display text-base sm:text-xl' : 'text-sm'"
+            [class.opacity-55]="winnerSide() === 'home'"
           >{{ match().away_team?.name ?? tbdLabel }}</span>
         </div>
 
@@ -216,7 +228,9 @@ export class MatchCardComponent {
 
   readonly stageLabel = computed(() => formatStageLabel(this.match().group || this.match().stage));
   readonly isFinished = computed(() => this.match().status === 'FINISHED');
+  readonly winnerSide = computed(() => getMatchWinner(this.match()));
   readonly isLive = computed(() => this.match().status === 'IN_PLAY' || this.match().status === 'PAUSED');
+  readonly isPenaltyShootout = computed(() => this.match().duration === 'PENALTY_SHOOTOUT');
   readonly dateLabel = computed(() => getRelativeDateLabel(this.match().utc_date, getDateFnsLocale(this.localeId)));
   readonly matchTime = computed(() => formatMatchTime(this.match().utc_date, getDateFnsLocale(this.localeId)));
   readonly predictionOpen = computed(() => canUserPredictMatch(this.auth.user()?.groups ?? [], this.match()));

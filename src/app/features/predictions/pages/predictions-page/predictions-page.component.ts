@@ -4,6 +4,7 @@ import { ProdeApiService } from '../../../../core/services/prode-api.service';
 import { BackendMatch, BackendPrediction } from '../../../../core/models/backend.model';
 import { getRelativeDateLabel, formatMatchTime, getDateFnsLocale } from '../../../../shared/utils/date.utils';
 import { formatStageLabel } from '../../../../shared/utils/label.utils';
+import { getMatchWinner } from '../../../../shared/utils/match.utils';
 import {
   LucideTarget,
   LucideCircleAlert,
@@ -20,18 +21,18 @@ interface PredictionRow {
 
 function getPointsBadge(pred: BackendPrediction, match: BackendMatch | undefined) {
   if (match?.status !== 'FINISHED') {
-    return { label: 'Pendiente', color: 'gris', icon: 'clock' } as const;
+    return { label: $localize`Pendiente`, color: 'gris', icon: 'clock' } as const;
   }
   if (!pred.is_scored) {
-    return { label: 'Calculando…', color: 'gris', icon: 'clock' } as const;
+    return { label: $localize`Calculando…`, color: 'gris', icon: 'clock' } as const;
   }
   if (pred.is_exact) {
-    return { label: '3 pts · Exacto', color: 'dorado', icon: 'target' } as const;
+    return { label: $localize`3 pts · Exacto`, color: 'dorado', icon: 'target' } as const;
   }
   if (pred.points > 0) {
-    return { label: '1 pt · Ganador', color: 'celeste', icon: 'shield' } as const;
+    return { label: $localize`1 pt · Ganador`, color: 'celeste', icon: 'shield' } as const;
   }
-  return { label: '0 pts', color: 'red', icon: 'x' } as const;
+  return { label: $localize`0 pts`, color: 'red', icon: 'x' } as const;
 }
 
 @Component({
@@ -73,6 +74,7 @@ export class PredictionsPageComponent {
   );
 
   readonly getBadge = getPointsBadge;
+  readonly getWinner = getMatchWinner;
   readonly formatStageLabel = formatStageLabel;
   readonly dateLabel = (d: string) => getRelativeDateLabel(d, getDateFnsLocale(this.localeId));
   readonly timeLabel = (d: string) => formatMatchTime(d, getDateFnsLocale(this.localeId));
