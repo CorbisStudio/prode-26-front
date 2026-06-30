@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class ProdeApiService {
   private readonly http = inject(HttpClient);
-  readonly baseUrl = 'https://prode-api.corbisstudio.com/api';
+  readonly baseUrl = 'http://prode-api.corbisstudio.com/api';
 
   login(email: string, password: string): Observable<TokenPair> {
     return this.http.post<TokenPair>(`${this.baseUrl}/token/`, { email, password });
