@@ -13,8 +13,24 @@
     </div>
 
     @if (rows().length > 0) {
-      <div class="glass-pill rounded-full px-4 py-2 text-sm font-semibold text-noche">
-        <span i18n>{{ totalPoints() }} pts</span>
+      <div class="flex items-center gap-2">
+        <div class="flex items-center gap-1.5 glass-pill rounded-full px-3 py-1.5">
+          <svg lucideArrowUpDown class="w-4 h-4 text-gris shrink-0"></svg>
+          <select
+            [ngModel]="sortMode()"
+            (ngModelChange)="sortMode.set($event)"
+            class="bg-transparent border-0 text-sm text-noche font-medium focus:outline-none px-1 cursor-pointer appearance-none min-w-[100px] max-w-[160px] truncate"
+          >
+            <option value="combined" i18n>Destacados</option>
+            <option value="date" i18n>Por fecha</option>
+            <option value="points" i18n>Por puntos</option>
+          </select>
+          <svg lucideChevronDown class="w-3.5 h-3.5 text-gris shrink-0"></svg>
+        </div>
+
+        <div class="glass-pill rounded-full px-4 py-2 text-sm font-semibold text-noche">
+          <span i18n>{{ totalPoints() }} pts</span>
+        </div>
       </div>
     }
   </div>
@@ -52,7 +68,8 @@
       @for (row of rows(); track row.prediction.id; let i = $index) {
         @let pred = row.prediction;
         @let match = row.match;
-        @let badge = getBadge(pred, match);
+        @let multiplier = match ? getMultiplier(match.stage) : 1;
+        @let badge = getBadge(pred, match, multiplier);
 
         <article class="glass glass-interactive rounded-2xl p-5 animate-card-in" [style.animation-delay]="(i * 60) + 'ms'">
 

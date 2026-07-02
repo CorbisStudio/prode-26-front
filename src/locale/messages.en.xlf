@@ -1346,28 +1346,52 @@
           <context context-type="linenumber">25,27</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="4115547609960203752" datatype="html">
-        <source>3 pts · Exacto</source>
-        <target>3 pts · Exact</target>
+      <trans-unit id="6365610514823823071" datatype="html">
+        <source><x id="PH" equiv-text="pred.points"/> pts · Exacto · ×<x id="PH_1" equiv-text="multiplier"/></source>
+        <target><x id="PH" equiv-text="pred.points"/> pts · Exact · ×<x id="PH_1" equiv-text="multiplier"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.ts</context>
-          <context context-type="linenumber">28,30</context>
+          <context context-type="linenumber">29,31</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5461516516779821719" datatype="html">
-        <source>1 pt · Ganador</source>
-        <target>1 pt · Winner</target>
+      <trans-unit id="1695608740055908161" datatype="html">
+        <source><x id="PH" equiv-text="pred.points"/> pts · Ganador · ×<x id="PH_1" equiv-text="multiplier"/></source>
+        <target><x id="PH" equiv-text="pred.points"/> pts · Winner · ×<x id="PH_1" equiv-text="multiplier"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.ts</context>
-          <context context-type="linenumber">31,33</context>
+          <context context-type="linenumber">32,34</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="1105635833608584385" datatype="html">
-        <source>0 pts</source>
-        <target>0 pts</target>
+      <trans-unit id="7524438510084291437" datatype="html">
+        <source><x id="PH" equiv-text="pred.points"/> pts · ×<x id="PH_1" equiv-text="multiplier"/></source>
+        <target><x id="PH" equiv-text="pred.points"/> pts · ×<x id="PH_1" equiv-text="multiplier"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.ts</context>
-          <context context-type="linenumber">34,35</context>
+          <context context-type="linenumber">35,36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4210719119492747834" datatype="html">
+        <source>Destacados</source>
+        <target>Featured</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.html</context>
+          <context context-type="linenumber">21,23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4193749255959959564" datatype="html">
+        <source>Por fecha</source>
+        <target>By date</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.html</context>
+          <context context-type="linenumber">24,26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6337046902382773036" datatype="html">
+        <source>Por puntos</source>
+        <target>By points</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.html</context>
+          <context context-type="linenumber">27,29</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8977374271285998879" datatype="html">
@@ -1375,7 +1399,7 @@
         <target>Loading predictions...</target>
       <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.html</context>
-          <context context-type="linenumber">24,26</context>
+          <context context-type="linenumber">40,42</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1908317282673826595" datatype="html">

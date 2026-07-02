@@ -21,3 +21,21 @@ export function getMatchWinner(match: Match): MatchWinner {
   if (away > home) return 'away';
   return 'draw';
 }
+
+export function getStageMultiplier(stage: string): number {
+  switch (stage) {
+    case 'LAST_32':
+    case 'LAST_16':
+      return 2;
+    case 'QUARTER_FINALS':
+      return 3;
+    case 'SEMI_FINALS':
+    case 'THIRD_PLACE':
+      return 4;
+    case 'FINAL':
+      return 5;
+    case 'GROUP_STAGE':
+    default:
+      return 1;
+  }
+}

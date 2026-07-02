@@ -1098,109 +1098,130 @@
           <context context-type="linenumber">11,12</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="4210719119492747834" datatype="html">
+        <source>Destacados</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.html</context>
+          <context context-type="linenumber">24,25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4193749255959959564" datatype="html">
+        <source>Por fecha</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.html</context>
+          <context context-type="linenumber">25,26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6337046902382773036" datatype="html">
+        <source>Por puntos</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.html</context>
+          <context context-type="linenumber">26,27</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="4675432973349589414" datatype="html">
         <source><x id="INTERPOLATION" equiv-text="{{ totalPoints() }}"/> pts</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.html</context>
-          <context context-type="linenumber">17,18</context>
+          <context context-type="linenumber">32,33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8977374271285998879" datatype="html">
         <source>Cargando predicciones...</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.html</context>
-          <context context-type="linenumber">24,26</context>
+          <context context-type="linenumber">40,42</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1908317282673826595" datatype="html">
         <source> Error al cargar las predicciones. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.html</context>
-          <context context-type="linenumber">29,30</context>
+          <context context-type="linenumber">45,46</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4355788532580249926" datatype="html">
         <source>Sin predicciones todavía</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.html</context>
-          <context context-type="linenumber">38,39</context>
+          <context context-type="linenumber">54,55</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4488743621775454827" datatype="html">
         <source>Velocidad. Precisión. Resultados.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.html</context>
-          <context context-type="linenumber">39,40</context>
+          <context context-type="linenumber">55,56</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1038295603790709574" datatype="html">
         <source>Ir a partidos</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.html</context>
-          <context context-type="linenumber">44,45</context>
+          <context context-type="linenumber">60,61</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3784132010831320634" datatype="html">
         <source>Partido #<x id="INTERPOLATION" equiv-text="{{ pred.match }}"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.html</context>
-          <context context-type="linenumber">65,66</context>
+          <context context-type="linenumber">82,83</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6963567150670631910" datatype="html">
         <source>Tu predicción</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.html</context>
-          <context context-type="linenumber">114,116</context>
+          <context context-type="linenumber">131,133</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5821355534384874282" datatype="html">
         <source>Resultado</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.html</context>
-          <context context-type="linenumber">136,137</context>
+          <context context-type="linenumber">153,154</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2003489121789724747" datatype="html">
         <source>En vivo</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.html</context>
-          <context context-type="linenumber">142,143</context>
+          <context context-type="linenumber">159,160</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1029150937787246789" datatype="html">
         <source>Pendiente</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.ts</context>
-          <context context-type="linenumber">24</context>
+          <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2891604574493474817" datatype="html">
         <source>Calculando…</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.ts</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="4115547609960203752" datatype="html">
-        <source>3 pts · Exacto</source>
+      <trans-unit id="6365610514823823071" datatype="html">
+        <source><x id="PH" equiv-text="pred.points"/> pts · Exacto · ×<x id="PH_1" equiv-text="multiplier"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.ts</context>
-          <context context-type="linenumber">30</context>
+          <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5461516516779821719" datatype="html">
-        <source>1 pt · Ganador</source>
+      <trans-unit id="1695608740055908161" datatype="html">
+        <source><x id="PH" equiv-text="pred.points"/> pts · Ganador · ×<x id="PH_1" equiv-text="multiplier"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.ts</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="1105635833608584385" datatype="html">
-        <source>0 pts</source>
+      <trans-unit id="7524438510084291437" datatype="html">
+        <source><x id="PH" equiv-text="pred.points"/> pts · ×<x id="PH_1" equiv-text="multiplier"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/features/predictions/pages/predictions-page/predictions-page.component.ts</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="linenumber">56</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6918866643237317433" datatype="html">

@@ -92,14 +92,14 @@ interface DatePill {
               <select
                 [ngModel]="statusFilter()"
                 (ngModelChange)="statusFilter.set($event)"
-                class="bg-transparent border-0 text-sm text-gris focus:outline-none px-0 cursor-pointer appearance-none min-w-0 max-w-[140px]"
+                class="bg-transparent border-0 text-sm text-noche font-medium focus:outline-none px-1 cursor-pointer appearance-none min-w-[80px] max-w-[160px] truncate"
               >
                 <option value="ALL" i18n>Todos</option>
                 <option value="UPCOMING" i18n>Próximos</option>
                 <option value="FINISHED" i18n>Finalizados</option>
                 <option value="ARGENTINA" i18n>Argentina 🇦🇷</option>
               </select>
-              <svg lucideChevronDown class="w-3.5 h-3.5 text-gris shrink-0 -ml-0.5"></svg>
+              <svg lucideChevronDown class="w-3.5 h-3.5 text-gris shrink-0"></svg>
             </div>
           }
 
